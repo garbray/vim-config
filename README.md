@@ -32,7 +32,7 @@ To make vim works really great in macOSX you can use the following thirdparties 
 
 ### cask
 
-here are all the cask (formulas)[https://formulae.brew.sh/cask/]
+here are all the cask [formulas](https://github.com/neoclide/coc.nvim)
 
 ### kitty term
 
@@ -76,9 +76,18 @@ python3 -m pip install --user --upgrade pynvim
 
 ## Other resoureces
 
-[cheatsheet vim](./cheatsheet-vim.md)
+Tmux basic usage
+
 [tmux](./tmux.md)
 
+CheatSheet
+
+[cheatsheet vim](./cheatsheet-vim.md)
+
+Search inside vim project
+
 [link search example](https://stackoverflow.com/questions/7950558/how-can-i-search-a-word-in-whole-project-folder-recursively)
+
+Nice talk about the usage of vim as a IDE
 [talk](https://www.youtube.com/watch?v=E-ZbrtoSuzw)
 [commands](https://www.keycdn.com/blog/vim-commands)

@@ -21,7 +21,7 @@ allows you to type inside a file
 
 allows you highlight text
 
-> COMMANDS Mode -> : /
+> COMMANDS Mode -> :, /
 
 allows you run commands inside your vim
 
