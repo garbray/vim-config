@@ -38,7 +38,6 @@ here are all the cask [formulas](https://github.com/neoclide/coc.nvim)
 
 ```
 brew cask install kitty
-
 ```
 
 ### Plug
@@ -60,7 +59,7 @@ brew install highlight
 
 ### ripgrep
 
-a faster search tahn grep
+a faster search than grep
 
 ```
 brew install ripgrep
@@ -74,7 +73,7 @@ In the case you decide to use `nvim` and use Coc as your intellisense plugin you
 python3 -m pip install --user --upgrade pynvim
 ```
 
-## Other resoureces
+## Other resources
 
 Tmux basic usage
 
