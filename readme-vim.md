@@ -172,51 +172,6 @@ ctrl-O
 ctrl-I cycle through :jumps
 g; / g, cycle through :changes
 
-## TMUX
-
-background terminals
-
-- sharing sessions via sockets
-
-tmux -> start a server
-
-ctrl - b <command> -> tmux do this command
-ctrl - b c -> new window
-ctrl - b , -> rename the new window name
-
-ctrl+b - p => previous virtual
-ctrl+b - n => next virtual
-ctrl+b - c => create
-ctrl+b - w => list window
-
-ctrl b % -> split vertical new window
-ctrl b : -> let you introduce a command, you can use split-window this will allow you to create a new vertical window
-
-resize screen:
-ctrl+b - :resize-pane -x number%
-
-### sessions
-
-most powerful items inside tmux
-
-tmux new -s name
-
-create a new tmux session
-htop
-
-ctrl b d => detach from the session
-ctrl b D => detach from a list of session
-
-tmux list-sessions
-
-list all your sessions then you reattach
-
-tmux attach -t session-name
-
-[tmux cheatsheet](https://gist.github.com/MohamedAlaa/2961058)
-[tmux resources](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/)
-// terminal buffer review
-
 ## project management in vim
 
 tabs for window containers,
@@ -290,20 +245,3 @@ conceal is a way to show the final product of your markdown files to enable or d
 :let conceallevel=0 -> disable
 :let conceallevel=1 -> enable
 
-## third partyes
-
-you should install the following thirdparties to make it working so great
-
-macosx
-preview files with highlight
-`sudo apt-get install highlight`
-faster search
-`brew install ripgrep`
-
-### error python3 nvim resolver
-
-python3 -m pip install --user --upgrade pynvim
-
-[link search example](https://stackoverflow.com/questions/7950558/how-can-i-search-a-word-in-whole-project-folder-recursively)
-[talk](https://www.youtube.com/watch?v=E-ZbrtoSuzw)
-[commands](https://www.keycdn.com/blog/vim-commands)
