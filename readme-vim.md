@@ -1,19 +1,37 @@
-# vim
+# VIM
 
 - vim as lightweight IDE
 - persistent session management using tmux
 - efficient workflow navigation using hotkeys
 - how to get rid of your mouse
 
-modes
-normal mode -> esc
-insert mode -> i, a, c
-visual mode -> v, V, ctrl v
-command-line mode -> : /
+## MODES
 
-i => insert
-a => append
-c => change
+Vim have four major modes
+
+> NORMAL mode -> esc
+
+allows you to only watch a file
+
+> INSERT mode -> i, a, c
+
+allows you to type inside a file
+
+> VISUAL Mode -> v, V, ctrl v
+
+allows you highlight text
+
+> COMMANDS Mode -> : /
+
+allows you run commands inside your vim
+
+## KEY TERMS
+
+Vim use the vi naming convention it means every operation you can perform is associated to a word
+
+> i = inset
+> a = append
+> c = change
 
 at vim you should think on operators, text objects and motions
 

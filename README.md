@@ -1,4 +1,14 @@
-# Vim configuration and commands
+# Vim as IDE
+
+Lately I have decided to use vim as my main IDE some of the points for it are:
+
+- vim is lightweight
+- persistent session management with tmux just works
+- efficient workflow navigation using hotkeys
+- use less your mouse
+- intellisense with [Coc](https://github.com/neoclide/coc.nvim)
+
+## Vim configuration and commands
 
 Here is my vim setup and the configurations I found best suite for me.
 
@@ -28,6 +38,7 @@ here are all the cask (formulas)[https://formulae.brew.sh/cask/]
 
 ```
 brew cask install kitty
+
 ```
 
 ### Plug
