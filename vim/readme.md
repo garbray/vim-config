@@ -37,28 +37,28 @@ at vim you should think on operators, text objects and motions
 
 ## Operators
 
-`d` delete
-`y` yank into the register
-`~` swap case
-`gu` make lowercase
-`gU` make uppercase
-`!` filter to external program
-`\<` shift left
-`\<` shift right
-`=` indent
+`d` delete\
+`y` yank into the register\
+`~` swap case\
+`gu` make lowercase\
+`gU` make uppercase\
+`!` filter to external program\
+`\<` shift left\
+`\<` shift right\
+`=` indent\
 
 ## text objects
 
-`aw` a word
-`iw` inner word
-`aW` a WORD
-`iW` inner WORD
-`ap` a paragraph
-`ip` inner paragraph
-`ab` a bracket
-`ib` inner bracket
-`at` a tag block
-`it` inner tag block
+`aw` a word\
+`iw` inner word\
+`aW` a WORD\
+`iW` inner WORD\
+`ap` a paragraph\
+`ip` inner paragraph\
+`ab` a bracket\
+`ib` inner bracket\
+`at` a tag block\
+`it` inner tag block\
 
 ## motions
 
