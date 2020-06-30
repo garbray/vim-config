@@ -40,6 +40,10 @@ here are all the cask [formulas](https://github.com/neoclide/coc.nvim)
 brew cask install kitty
 ```
 
+if you are a `ohmyzsh` user to fix the autocomplete feature in kitty you should run
+
+> export LANG="en_US.UTF-8"
+
 ### Plug
 
 is a minimalist vim plugin install [site](https://github.com/junegunn/vim-plug)
