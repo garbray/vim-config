@@ -81,7 +81,7 @@ python3 -m pip install --user --upgrade pynvim
 
 Tmux basic usage
 
-[tmux](./tmux.md)
+[tmux](./tmux/README.md)
 
 CheatSheet
 

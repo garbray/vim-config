@@ -27,3 +27,9 @@ brew install python
 
 # install python dependencies
 python3 -m pip install --user --updrage pynvim
+
+# install neovim
+brew install neovim
+
+# TODO curl file vimrc and copy for neovim and vim
+# copy tmux config file and webserver
