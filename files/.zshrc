@@ -139,9 +139,9 @@ export FYEL="\033[33m" # foreground yellow
 
 # ========== livenation - accounts - AACU ================
 
-export TM_AACU=/Users/bryan.garzon/workspace/ticketmaster/accounts-archtics-consolidate-user-webapp
-export TM_AACU_UI=/Users/bryan.garzon/workspace/ticketmaster/accounts-archtics-consolidate-user-webapp/accounts-archtics-consolidate-user-webapp-ui
-export TM_WEBCOMMON=/Users/bryan.garzon/workspace/ticketmaster/webapp-common-ui
+export TM_AACU=~/workspace/ticketmaster/accounts-archtics-consolidate-user-webapp
+export TM_AACU_UI=~/workspace/ticketmaster/accounts-archtics-consolidate-user-webapp/accounts-archtics-consolidate-user-webapp-ui
+export TM_WEBCOMMON=~/workspace/ticketmaster/webapp-common-ui
 alias mvni="$TM_AACU && mvn clean install"
 alias initSpring="$TM_AACU && cd accounts-archtics-consolidate-user-webapp-main && mvn spring-boot:run"
 
@@ -166,7 +166,7 @@ alias yb="yarn build"
 
 alias init_nvim="nvim ~/.config/nvim/init.vim"
 
-alias tmuxWeb="~/tmux-web.sh webDev"
+alias tmuxWeb="~/.config/tmux/tmux-web.sh webDev"
 
 # fix locale issue on kitty terminal
 export LANG="en_US.UTF-8"
