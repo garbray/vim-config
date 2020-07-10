@@ -44,7 +44,6 @@ brew tap homebrew/cask-fonts
 brew cask install font-fira-code
 echo "review if the font is updated https://github.com/tonsky/FiraCode/wiki/Installing"
 
-
 echo "$FGRN finish installing basic dependencies"
 echo "$FGRN copying config files"
 cp files/* ~/
