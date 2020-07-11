@@ -27,6 +27,8 @@ brew install highlight
 # install tmux
 brew install tmux
 
+# install window manager
+brew cask install amethyst
 # install python3
 brew install python
 
