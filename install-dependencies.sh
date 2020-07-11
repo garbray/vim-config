@@ -31,7 +31,7 @@ brew install tmux
 brew install python
 
 # install python dependencies
-python3 -m pip install --user --updrage pynvim
+python3 -m pip install --user --upgrade pynvim
 
 # install neovim
 brew install neovim
@@ -46,4 +46,6 @@ echo "review if the font is updated https://github.com/tonsky/FiraCode/wiki/Inst
 
 echo "$FGRN finish installing basic dependencies"
 echo "$FGRN copying config files"
-cp files/* ~/
+cp -r files/ ~/
+
+npm install -g neovim

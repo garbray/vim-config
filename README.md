@@ -101,6 +101,13 @@ python3 -m pip install --user --upgrade pynvim
 }
 ```
 
+coc install process
+
+```
+:CocInstall coc-actions coc-css coc-emmet coc-eslint coc-explorer coc-git coc-html coc-java coc-pairs coc-prettier coc-snippets coc-json coc-spell-checker coc-styled-components coc-svelt
+e coc-tsserver coc-yaml
+```
+
 ## Other resources
 
 Tmux basic usage
