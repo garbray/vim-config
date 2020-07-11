@@ -19,4 +19,8 @@ echo "$FGRN copy zshrc file"
 #copy kitty config
 cp -R ~/.config/kitty $repoPath/files/.config
 echo "$FGRN copy kitty file"
+
+#copy tmux config
+cp -R ~/.config/tmux $repoPath/files/.config
+echo "$FGRN copy tmux file"
 echo "$FGRN COPY DONE"
