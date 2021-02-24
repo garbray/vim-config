@@ -125,3 +125,7 @@ Search inside vim project
 Nice talk about the usage of vim as a IDE
 [talk](https://www.youtube.com/watch?v=E-ZbrtoSuzw)
 [commands](https://www.keycdn.com/blog/vim-commands)
+
+```
+chmod +x backup
+```
