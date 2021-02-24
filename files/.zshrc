@@ -1,130 +1,78 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Enable colors and change prompt:
+autoload -U colors && colors
+PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/bryan.garzon/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
+# ZSH_THEME="af-magic"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
+bindkey -s '^k' 'clear\n'
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 
-# git alias
-alias gp="git pull"
-alias gps="git push"
-alias gpd="git pull develop"
-alias gck="git checkout"
-alias gr="git rebase"
-alias grm="git rebase master"
-alias gd="git diff"
-alias gc="git commit"
-alias gli="git log --oneline"
-alias gca="git commit --amend"
-alias glg="git log --oneline --graph"
-#alias gsoft="git reset --soft $(git merge-base origin/master Head)"
-alias grh="git reset head --hard"
-alias grs="git reset head --soft"
+# Load aliases and shortcuts if existent.
+[ -f "$HOME/.config/zsh/gitAlias" ] && source "$HOME/.config/zsh/gitAlias"
+# basic auto/tab complete
+# autoload -U componit
+# zstyle ':completion:*' menu select
+# zmodload zsh/complist
+# compinit
+_comp_options+=(globdots)
 
-function gsoft() {
-  git reset --soft $(git merge-base origin/master Head)
+# vi mode
+bindkey -v
+export KEYTIMEOUT=1
+
+# use vim keys in tab complete menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
+
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
+  fi
 }
+zle -N zle-keymap-select
+zle-line-init() {
+    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    echo -ne "\e[5 q"
+}
+zle -N zle-line-init
+echo -ne '\e[5 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
-alias copyPath="pwd | pbcopy"
 
-export JAVA_HOME=$(/usr/libexec/java_home)
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # =============== terminal colors ========================
 
@@ -139,11 +87,12 @@ export FYEL="\033[33m" # foreground yellow
 
 # ========== livenation - accounts - AACU ================
 
-export TM_AACU=~/workspace/ticketmaster/accounts-archtics-consolidate-user-webapp
-export TM_AACU_UI=~/workspace/ticketmaster/accounts-archtics-consolidate-user-webapp/accounts-archtics-consolidate-user-webapp-ui
-export TM_WEBCOMMON=~/workspace/ticketmaster/webapp-common-ui
+export TM_AACU=~/workspace/ticketmaster/modern-accounts/accounts-archtics-consolidate-user-webapp
+export TM_AACU_UI=~/workspace/ticketmaster/modern-accounts/accounts-archtics-consolidate-user-webapp/accounts-archtics-consolidate-user-webapp-ui
+export TM_WEBCOMMON=~/workspace/ticketmaster/modern-accounts/webapp-common-ui
 alias mvni="$TM_AACU && mvn clean install"
 alias initSpring="$TM_AACU && cd accounts-archtics-consolidate-user-webapp-main && mvn spring-boot:run"
+alias runSpring="mvn clean install -Dmaven.test.skip=true spring-boot:run"
 
 function copyTmWebcommon() {
   myvar="$PWD"
@@ -157,16 +106,41 @@ function copyTmWebcommon() {
   cd "$myvar"
 }
 
-# alias npm
-alias yt="yarn test"
-alias ytw="yarn test --watch"
-alias ytwc="yarn test --watch --coverage"
-alias ys="yarn start"
-alias yb="yarn build"
-
-alias init_nvim="nvim ~/.config/nvim/init.vim"
-
-alias tmuxWeb="~/.config/tmux/tmux-web.sh webDev"
+function revertTmWebcommon() {
+  echo 'reverting webapp-common-ui'
+  rm $TM_AACU_UI/node_modules/webapp-common-ui/dist/
+  cd $TM_AACU_UI
+  yarn
+  echo "you should get back to the previous version"
+}
 
 # fix locale issue on kitty terminal
 export LANG="en_US.UTF-8"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+export BAT_THEME="gruvbox"
+
+# lf complements
+# LFCD="$GOPATH/src/github.com/gokcehan/lf/etc/lfcd.sh"  # source
+# LFCD="/path/to/lfcd.sh"                                #  pre-built binary, make sure to use absolute path
+# if [ -f "$LFCD" ]; then
+#     source "$LFCD"
+# fi
+
+# bindkey '^o' "lfcd\n"
+
+#highlighting
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+alias python=/usr/local/bin/python3.9
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+# export JAVA_HOME=$(/usr/libexec/java_home)
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_282`
+
+
