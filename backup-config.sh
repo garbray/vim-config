@@ -17,7 +17,7 @@ cp ~/.zshrc $repoPath/files
 echo "$FGRN copy zshrc file"
 
 #copy zhrc alias
-cp ~/.config/zsh $repoPath/files/.config
+cp -R ~/.config/zsh $repoPath/files/.config
 echo "$FGRN copy zsh import file"
 
 #copy kitty config

@@ -1,9 +1,12 @@
 set exrc " Wont open project .nvimrc without this here
 
 call plug#begin('~/.vim/plugged')
-
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
+" to be able to enable this we need to figure out
+" how to handle eslint and prettier
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'mattn/vim-lsp-settings'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
 " snippets
 " Plug 'hrsh7th/vim-vsnip'
 " Plug 'hrsh7th/vim-vsnip-integ'
@@ -13,7 +16,7 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 " Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 
 " until fix lsp error
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Neovim Tree shitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -33,7 +36,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
 " Plug 'vuciv/vim-bujo'
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 
 " telescope requirements...
 Plug 'nvim-lua/popup.nvim'
@@ -85,10 +88,6 @@ Plug 'voldikss/vim-floaterm'
 " prettier
 Plug 'sbdchd/neoformat'
 call plug#end()
-" sneak
-let g:sneak#label = 1
-let g:sneak#prompt = '🔎'
-let g:sneak#s_next = 1
 
 " Replace all is aliases to S
 nnoremap S :%s//g<left><left>
@@ -99,12 +98,6 @@ let g:vim_apm_log = 1
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_folding_level = 6
 set conceallevel=2
-
-" neoformat
-augroup fmt
-  autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
-augroup END
 
 if executable('rg')
     let g:rg_derive_root='true'

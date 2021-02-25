@@ -14,7 +14,3 @@ let g:gruvbox_invert_selection='0'
 colorscheme gruvbox
 set background=dark
 
-" let ayucolor="light"  " for light version of theme
-" let ayucolor="mirage" " for mirage version of theme
-" let ayucolor="dark"   " for dark version of theme
-" colorscheme ayu

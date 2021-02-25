@@ -53,6 +53,7 @@
     "gruvbox",
     "junegunn",
     "lafc",
+    "mattn",
     "maxlength",
     "mbbill",
     "morhetz",
@@ -61,6 +62,7 @@
     "objcpp",
     "opfirst",
     "pastdue",
+    "prabirshrestha",
     "prefetch",
     "prerender",
     "require'telescope",
@@ -80,14 +82,13 @@
     "xprops",
     "xstate"
   ],
-  "eslint.autoFixOnSave": true,
+  /*"eslint.autoFixOnSave": true,*/
+  /*"prettier.formatterPriority": -1,*/
+  "prettier.eslintIntegration": true,
   "styled-components.tags": ["styled", "css", "sty"],
   "styled-components.validate": true,
   "java.configuration.runtimes": [{
     "name": "JavaSE-1.8",
-    "path": "/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk"
-  }],
-  "codeLens.enable": true,
-  "java.referencesCodeLens.enabled": true,
-  "java.jdt.ls.vmargs": "-javaagent:/usr/local/share/lombok.jar"
+    "path": "/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home"
+  }]
 }
