@@ -42,7 +42,7 @@ function tmuxDev() {
 alias tas="tmux attach-session -t"
 
 function gsoft() {
-  git reset --soft $(git merge-base origin/master ead)
+  git reset --soft $(git merge-base origin/master Head)
 }
 
 function gsoftRebase() {

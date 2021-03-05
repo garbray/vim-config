@@ -1,19 +1,6 @@
 set exrc " Wont open project .nvimrc without this here
 
 call plug#begin('~/.vim/plugged')
-" to be able to enable this we need to figure out
-" how to handle eslint and prettier
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'mattn/vim-lsp-settings'
-" Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" snippets
-" Plug 'hrsh7th/vim-vsnip'
-" Plug 'hrsh7th/vim-vsnip-integ'
-" Plug 'SirVer/ultisnips'
-" Plug 'prabirshrestha/async.vim'
-" Plug 'thomasfaingnaert/vim-lsp-snippets'
-" Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 
 " until fix lsp error
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -30,6 +17,7 @@ Plug 'jparise/vim-graphql'
 Plug 'rust-lang/rust.vim'
 Plug 'tweekmonster/gofmt.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-signify'
 Plug 'vim-utils/vim-man'
 Plug 'mbbill/undotree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -45,7 +33,8 @@ Plug 'nvim-telescope/telescope.nvim'
 
 " color schema
 Plug 'gruvbox-community/gruvbox'
-
+Plug 'ayu-theme/ayu-vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 " Fire Nvim
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(69) } }
 
@@ -87,6 +76,24 @@ Plug 'mhinz/vim-startify'
 Plug 'voldikss/vim-floaterm'
 " prettier
 Plug 'sbdchd/neoformat'
+" dash
+Plug 'rizzatti/dash.vim'
+
+
+" I decide to not use lsp for now ALE analysis is sooo slow
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'mattn/vim-lsp-settings'
+" Plug 'dense-analysis/ale'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
+"
+" snippets
+" Plug 'hrsh7th/vim-vsnip'
+" Plug 'hrsh7th/vim-vsnip-integ'
+" Plug 'SirVer/ultisnips'
+" Plug 'prabirshrestha/async.vim'
+" Plug 'thomasfaingnaert/vim-lsp-snippets'
+" Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 call plug#end()
 
 " Replace all is aliases to S
@@ -97,7 +104,8 @@ let g:vim_apm_log = 1
 " disable folding
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_folding_level = 6
-set conceallevel=2
+set conceallevel=0
+let g:vim_markdown_conceal = 0
 
 if executable('rg')
     let g:rg_derive_root='true'

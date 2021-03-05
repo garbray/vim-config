@@ -140,7 +140,14 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
+# JAVA config
+# /usr/libexec/java_home --verbose // provide information of JAVA version current installed
 # export JAVA_HOME=$(/usr/libexec/java_home)
+export JDK_8=`/usr/libexec/java_home -v 1.8.0_282`
+export JDK_11=`/usr/libexec/java_home -v 11.0.10`
+# export JAVA_HOME=$JDK_8
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_282`
-
+# set other java enviroment
+alias java8='export JAVA_HOME=$JDK_8'
+alias java11='export JAVA_HOME=$JDK_11'
 
