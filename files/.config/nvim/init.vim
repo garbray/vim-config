@@ -12,6 +12,7 @@ Plug 'nvim-treesitter/playground'
 " Debugger Plugins
 " Plug 'puremourning/vimspector'
 " Plug 'szw/vim-maximizer'
+Plug 'metakirby5/codi.vim'
 
 Plug 'jparise/vim-graphql'
 Plug 'rust-lang/rust.vim'
@@ -24,7 +25,6 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
 " Plug 'vuciv/vim-bujo'
-" Plug 'sheerun/vim-polyglot'
 
 " telescope requirements...
 Plug 'nvim-lua/popup.nvim'
@@ -79,14 +79,19 @@ Plug 'sbdchd/neoformat'
 " dash
 Plug 'rizzatti/dash.vim'
 
-
 " I decide to not use lsp for now ALE analysis is sooo slow
 " Plug 'prabirshrestha/vim-lsp'
 " Plug 'mattn/vim-lsp-settings'
 " Plug 'dense-analysis/ale'
 " Plug 'prabirshrestha/asyncomplete.vim'
 " Plug 'prabirshrestha/asyncomplete-lsp.vim'
-"
+
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'nvim-lua/completion-nvim'
+" Plug 'tjdevries/nlua.nvim'
+" Plug 'tjdevries/lsp_extensions.nvim'
+" Plug 'glepnir/lspsaga.nvim'
+
 " snippets
 " Plug 'hrsh7th/vim-vsnip'
 " Plug 'hrsh7th/vim-vsnip-integ'
@@ -102,10 +107,11 @@ nnoremap S :%s//g<left><left>
 " let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools', 'CodeLLDB' ]
 let g:vim_apm_log = 1
 " disable folding
-let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_folding_level = 6
-set conceallevel=0
-let g:vim_markdown_conceal = 0
+" let g:vim_markdown_folding_disabled = 0
+" let g:vim_markdown_folding_level = 6
+" set conceallevel=0
+" let g:vim_markdown_conceal = 0
+" let g:vim_markdown_folding_level=0
 
 if executable('rg')
     let g:rg_derive_root='true'

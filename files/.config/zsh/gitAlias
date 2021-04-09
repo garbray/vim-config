@@ -45,6 +45,10 @@ function gsoft() {
   git reset --soft $(git merge-base origin/master Head)
 }
 
+function gsoftMain() {
+  git reset --soft $(git merge-base origin/main Head)
+}
+
 function gsoftRebase() {
   git reset --soft $(git merge-base origin/master Head)
   echo "$FGRN stash branch changes"

@@ -117,3 +117,6 @@ dist
 .DS_store
 .config/nvim/session
 sessions
+session
+
+/files/.config/nvim/.netrwhist

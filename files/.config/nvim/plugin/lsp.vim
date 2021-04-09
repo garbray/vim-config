@@ -29,10 +29,10 @@
  "     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
  " augroup END
 
-
  " " autocomplite
 " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 
 " let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server']
+
