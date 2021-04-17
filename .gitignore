@@ -119,6 +119,5 @@ dist
 sessions
 session
 
-/files/.config/nvim/.netrwhist
+/dotfiles/.config/nvim/.netrwhist
 .netrwhist
-
