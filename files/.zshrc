@@ -85,35 +85,6 @@ export FRED="\033[31m" # foreground red
 export FGRN="\033[32m" # foreground green
 export FYEL="\033[33m" # foreground yellow
 
-# ========== livenation - accounts - AACU ================
-
-export TM_AACU=~/workspace/ticketmaster/modern-accounts/accounts-archtics-consolidate-user-webapp
-export TM_AACU_UI=~/workspace/ticketmaster/modern-accounts/accounts-archtics-consolidate-user-webapp/accounts-archtics-consolidate-user-webapp-ui
-export TM_WEBCOMMON=~/workspace/ticketmaster/modern-accounts/webapp-common-ui
-alias mvni="$TM_AACU && mvn clean install"
-alias initSpring="$TM_AACU && cd accounts-archtics-consolidate-user-webapp-main && mvn spring-boot:run"
-alias runSpring="mvn clean install -Dmaven.test.skip=true spring-boot:run"
-
-function copyTmWebcommon() {
-  myvar="$PWD"
-  echo 'running yarn build'
-  $TM_WEBCOMMON && yarn build
-  echo 'yarn build completed'
-  echo 'copying dist files'
-  cp $TM_WEBCOMMON/dist/* $TM_AACU_UI/node_modules/webapp-common-ui/dist/
-  echo -e "$FGRN UPDATED NEW VERSION ON NODE_MODULES"
-  echo -e "$FYEL ====DONT FORGET TO ROLLBACK YOUR CHANGES AFTER YOU ARE DONE===="
-  cd "$myvar"
-}
-
-function revertTmWebcommon() {
-  echo 'reverting webapp-common-ui'
-  rm $TM_AACU_UI/node_modules/webapp-common-ui/dist/
-  cd $TM_AACU_UI
-  yarn
-  echo "you should get back to the previous version"
-}
-
 # fix locale issue on kitty terminal
 export LANG="en_US.UTF-8"
 
@@ -140,6 +111,10 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
+# Go config
+export GOPATH=$HOME/go
+export PATH=$PATH:$(go env GOPATH)/bin
+
 # JAVA config
 # /usr/libexec/java_home --verbose // provide information of JAVA version current installed
 # export JAVA_HOME=$(/usr/libexec/java_home)
@@ -151,3 +126,9 @@ export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_282`
 alias java8='export JAVA_HOME=$JDK_8'
 alias java11='export JAVA_HOME=$JDK_11'
 
+# current project specific
+alias hallmarktoken='export NPM_TOKEN=jYAtejNTw_unrJsPmjwi'
+alias removeToken='export NPM_TOKEN='
+alias cijob='export CI_JOB_TOKEN=jYAtejNTw_unrJsPmjwi'
+export NPM_TOKEN=jYAtejNTw_unrJsPmjwi
+export CI_JOB_TOKEN=jYAtejNTw_unrJsPmjwi

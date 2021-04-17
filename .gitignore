@@ -120,3 +120,5 @@ sessions
 session
 
 /files/.config/nvim/.netrwhist
+.netrwhist
+
