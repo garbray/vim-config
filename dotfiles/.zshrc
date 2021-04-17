@@ -85,9 +85,3 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 # alias java8='export JAVA_HOME=$JDK_8'
 # alias java11='export JAVA_HOME=$JDK_11'
 
-# current project specific
-alias hallmarktoken='export NPM_TOKEN=jYAtejNTw_unrJsPmjwi'
-alias removeToken='export NPM_TOKEN='
-alias cijob='export CI_JOB_TOKEN=jYAtejNTw_unrJsPmjwi'
-export NPM_TOKEN=jYAtejNTw_unrJsPmjwi
-export CI_JOB_TOKEN=jYAtejNTw_unrJsPmjwi
