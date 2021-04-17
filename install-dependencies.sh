@@ -82,4 +82,4 @@ npm i -g pyright
 npm i -g typescript typescript-language-server
 npm i -g vim-language-server
 npm i -g yaml-language-server
-
+git config --global core.editor "nvim"
