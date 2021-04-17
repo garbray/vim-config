@@ -1,38 +1,22 @@
- " command! Format execute 'lua vim.lsp.buf.formatting()'
- " function! s:on_lsp_buffer_enabled() abort
- "     setlocal omnifunc=lsp#complete
- "     setlocal signcolumn=yes
- "     if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
- "     nmap <buffer> gd <plug>(lsp-definition)
- "     nmap <buffer> gs <plug>(lsp-document-symbol-search)
- "     nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
- "     nmap <buffer> gr <plug>(lsp-references)
- "     nmap <buffer> gi <plug>(lsp-implementation)
- "     nmap <buffer> gt <plug>(lsp-type-definition)
- "     nmap <buffer> <leader>rn <plug>(lsp-rename)
- "     nmap <buffer> [g <plug>(lsp-previous-diagnostic)
- "     nmap <buffer> ]g <plug>(lsp-next-diagnostic)
- "     nmap <buffer> K <plug>(lsp-hover)
- "     inoremap <buffer> <expr><c-f> lsp#scroll(+4)
- "     inoremap <buffer> <expr><c-d> lsp#scroll(-4)
- "     " :LspCodeAction TODO and diagnostic
+set completeopt=menuone,noinsert,noselect
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
- "     let g:lsp_format_sync_timeout = 1000
- "     autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
-
- "     " refer to doc to add more commands
- " endfunction
-
- " augroup lsp_install
- "     au!
- "     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
- "     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
- " augroup END
-
- " " autocomplite
-" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
-
-" let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server']
+" TODO review if makes sense use sagas or not
+nnoremap <leader>gD :lua vim.lsp.buf.declaration()<CR>
+nnoremap <leader>gd :lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>gi :lua vim.lsp.buf.implementation()<CR>
+nnoremap <leader>K :Lspsaga hover_doc<CR>
+nnoremap <leader><c-k> :Lspsaga signature_help<CR>
+" nnoremap <leader><c-K> :Lspsaga vim.lsp.buf.signature_help()<CR>
+" nnoremap <leader>ca :lua vim.lsp.buf.code_action()<CR>
+nnoremap <leader>ca :Lspsaga code_action<CR>
+nnoremap <leader>gr :lua vim.lsp.buf.references()<CR>
+nnoremap <leader>rn :Lspsaga rename<CR>
+" nnoremap <leader>rn :lua vim.lsp.buf.rename()<CR>
+nnoremap <leader>gh :lua vim.lsp.buf.hover()<CR>
+nnoremap <leader>gsd :lua vim.lsp.util.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
+nnoremap <leader>gn :lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <leader>gp :lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <leader>vll :call LspLocationList()<CR>
+" buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 

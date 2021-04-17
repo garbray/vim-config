@@ -30,7 +30,11 @@ set updatetime=50
 set shortmess+=c
 
 set colorcolumn=80
-set nofoldenable
+
 " language support
 " set spelllang=en_us,fr_ch,es_mx
 " set spell
+set encoding=utf8
+set guifont=Hack_Nerd_Font:h11
+
+set completeopt=menuone,noselect
