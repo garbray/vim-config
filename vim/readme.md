@@ -37,28 +37,28 @@ at vim you should think on operators, text objects and motions
 
 ## Operators
 
-`d` delete\
-`y` yank into the register\
-`~` swap case\
-`gu` make lowercase\
-`gU` make uppercase\
-`!` filter to external program\
-`\<` shift left\
-`\<` shift right\
-`=` indent\
+<kbd>d</kbd> delete\
+<kbd>y</kbd> yank into the register\
+<kbd>~</kbd> swap case\
+<kbd>gu</kbd> make lowercase\
+<kbd>gU</kbd> make uppercase\
+<kbd>!</kbd> filter to external program\
+<kbd>\</kbd> shift left\
+<kbd>\</kbd> shift right\
+<kbd>=</kbd> indent
 
 ## text objects
 
-`aw` a word\
-`iw` inner word\
-`aW` a WORD\
-`iW` inner WORD\
-`ap` a paragraph\
-`ip` inner paragraph\
-`ab` a bracket\
-`ib` inner bracket\
-`at` a tag block\
-`it` inner tag block\
+<kbd>aw</kbd> a word\
+<kbd>iw</kbd> inner word\
+<kbd>aW</kbd> a WORD\
+<kbd>iW</kbd> inner WORD\
+<kbd>ap</kbd> a paragraph\
+<kbd>ip</kbd> inner paragraph\
+<kbd>ab</kbd> a bracket\
+<kbd>ib</kbd> inner bracket\
+<kbd>at</kbd> a tag block\
+<kbd>it</kbd> inner tag block
 
 ## motions
 
@@ -67,12 +67,6 @@ at vim you should think on operators, text objects and motions
 
 - => find and go to the next word you are over
   \#\ => find and go to the previous word you are over
-  aw => a word
-  aw => a word
-  aw => a word
-  aw => a word
-  aw => a word
-  aw => a word
   aw => a word
 
 create a new file
@@ -263,3 +257,7 @@ conceal is a way to show the final product of your markdown files to enable or d
 :let conceallevel=0 -> disable
 :let conceallevel=1 -> enable
 
+```
+Galooshi/vim-import-js
+review on git for import files
+```

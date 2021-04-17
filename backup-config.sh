@@ -16,6 +16,10 @@ echo "$FGRN copy tmux config file"
 cp ~/.zshrc $repoPath/files
 echo "$FGRN copy zshrc file"
 
+#copy zhrc alias
+cp -R ~/.config/zsh $repoPath/files/.config
+echo "$FGRN copy zsh import file"
+
 #copy kitty config
 cp -R ~/.config/kitty $repoPath/files/.config
 echo "$FGRN copy kitty file"

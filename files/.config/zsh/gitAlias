@@ -1,0 +1,70 @@
+alias zshconfig="vim ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"
+
+# git alias
+alias gp="git pull"
+alias gps="git push"
+alias gpd="git pull develop"
+alias gck="git checkout"
+alias gr="git rebase"
+alias grm="git rebase master"
+alias gd="git diff"
+alias gc="git commit"
+alias gli="git log --oneline"
+alias gca="git commit --amend"
+alias glg="git log --oneline --graph"
+alias grh="git reset head --hard"
+alias grs="git reset head --soft"
+# alias npm
+alias yt="yarn test"
+alias ytw="yarn test --watch"
+alias ytwc="yarn test --watch --coverage"
+alias ys="yarn start"
+alias yb="yarn build"
+
+# others
+alias ms="mvn spring-boot:run"
+alias copyPath="pwd | pbcopy"
+
+alias init_nvim="nvim ~/.config/nvim/init.vim"
+
+alias tmuxWeb="~/.config/tmux/tmux-web.sh webDev"
+
+function tmuxDev() {
+  if [ -z $1 ]; then
+    echo "$FRED create a tmux session webDev"
+    $(~/.config/tmux/tmux-web.sh webDev)
+  else
+    echo "$FRED create a tmux session $1"
+    $(~/.config/tmux/tmux-web.sh $1)
+  fi
+}
+alias tas="tmux attach-session -t"
+
+function gsoft() {
+  git reset --soft $(git merge-base origin/master Head)
+}
+
+function gsoftMain() {
+  git reset --soft $(git merge-base origin/main Head)
+}
+
+function gsoftRebase() {
+  git reset --soft $(git merge-base origin/master Head)
+  echo "$FGRN stash branch changes"
+  git stash
+  echo "$FGRN checkout master"
+  git checkout master
+  echo "$FGRN pull master"
+  git pull
+  echo "pull master"
+  if [ -z $1 ]; then
+    echo "$FRED you need to process rebase manually"
+  else
+    echo "$FYEL changing to branch $1"
+    git checkout $1
+    git rebase master
+    git stash pop
+  fi
+}
+

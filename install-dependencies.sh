@@ -5,14 +5,18 @@ echo "$FGRN copying dependencies"
 # install brew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-# install ohmyzsh
-$ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 # brew update
 brew update
 
 # install kitty
 brew cask install kitty
+
+brew install zsh
+
+# install ohmyzsh
+$ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+brew install zsh-syntax-highlighting
 
 # install plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -29,21 +33,34 @@ brew install tmux
 
 # install window manager
 brew cask install amethyst
+
+mkdir ~/.go
+
 # install python3
 brew install python
+brew install go
+brew install lua
+brew install luarocks
+brew install yarn node deno
+brew install rust
+brew install volta
 
 # install python dependencies
 python3 -m pip install --user --upgrade pynvim
-
-# install neovim
-brew install neovim
+brew install ranger
+brew install tree-sitter
+# install neovim until nightly release
+brew install neovim --HEAD
 
 #install dev dependencies
-brew install yarn node deno
 
+brew install speedtest-cli
+brew install htop
+brew install fzf
 # install fonts
 brew tap homebrew/cask-fonts
 brew cask install font-fira-code
+# brew install bat maybe not require to hightlight preview TBD
 echo "review if the font is updated https://github.com/tonsky/FiraCode/wiki/Installing"
 
 echo "$FGRN finish installing basic dependencies"
@@ -51,3 +68,4 @@ echo "$FGRN copying config files"
 cp -r files/ ~/
 
 npm install -g neovim
+
