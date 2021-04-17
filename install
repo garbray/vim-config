@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+mkdir -p ~/.config/nvim/plugin
+mkdir -p ~/.config/nvim/lua
+repoPath="$PWD"
+
+# review link wholesale
+# for f in `find . -regex ".*\.vim$\|.*\.lua$"`; do
+#     rm -rf ~/.config/nvim/$f
+#     ln -s $repoPath/dotfiles/.config/nvim/$f ~/.config/nvim/$f
+# done
+rm -rf ~/.config/nvim
+cp -rf $repoPath/dotfiles/.config/nvim ~/.config/nvim

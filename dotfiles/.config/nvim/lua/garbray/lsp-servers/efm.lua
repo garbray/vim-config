@@ -22,6 +22,15 @@ local efm_formatters = {
     lintIgnoreExitCode = true,
     formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
     formatStdin = true
+  },
+  flake8 = {
+    LintCommand = "flake8 --ignore=E501 --stdin-display-name ${INPUT} -",
+    lintStdin = true,
+    lintFormats = {"%f:%l:%c: %m"},
+  },
+  black = {
+    formatCommand = "black --quiet -",
+    formatStdin = true
   }
 }
 
@@ -38,7 +47,12 @@ nvim_lsp.efm.setup({
     "javascript.jsx",
     "typescript",
     "typescript.tsx",
-    "typescriptreact"
+    "typescriptreact",
+    "html",
+    "css",
+    "json",
+    "yaml",
+    "python",
   },
   settings = {
     rootMarkers = {'.git/'},
@@ -47,7 +61,11 @@ nvim_lsp.efm.setup({
       javascript = {efm_formatters.prettier, efm_formatters.eslint},
       javascriptreact = {efm_formatters.eslint},
       typescriptreact = {efm_formatters.prettier},
-      html = {}
+      html = {prettier},
+      css = {prettier},
+      json = {prettier},
+      yaml = {prettier},
+      python = {efm_formatters.flake8, efm_formatters.black}
     },
   },
 })
