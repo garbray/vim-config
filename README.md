@@ -6,7 +6,15 @@ Lately I have decided to use vim as my main IDE some of the points for it are:
 - persistent session management with tmux just works
 - efficient workflow navigation using hotkeys
 - use less your mouse
-- intellisense with [Coc](https://github.com/neoclide/coc.nvim)
+- intellisense with LSP (build in on neovim)
+
+## TODO list
+
+- [ ] Update readme
+- [x] LSP build in
+- [ ] efm server
+- [ ] remove old dependencies
+- [ ] create installation script
 
 ## Vim configuration and commands
 
@@ -22,7 +30,6 @@ To make vim works really great in macOSX you can use the following thirdparties 
 - Plug
 - highlight
 - ripgrep
-- coc
 
 ### brew install
 
@@ -75,37 +82,6 @@ In the case you decide to use `nvim` and use Coc as your intellisense plugin you
 
 ```
 python3 -m pip install --user --upgrade pynvim
-```
-
-```json
-{
-  "dependencies": {
-    "coc-actions": ">=1.4.0",
-    "coc-css": ">=1.2.3",
-    "coc-emmet": ">=1.1.4",
-    "coc-eslint": ">=1.2.7",
-    "coc-explorer": ">=0.7.9",
-    "coc-git": ">=1.7.13",
-    "coc-html": ">=1.2.4",
-    "coc-java": ">=1.4.11",
-    "coc-json": ">=1.2.6",
-    "coc-pairs": ">=1.2.21",
-    "coc-prettier": ">=1.1.14",
-    "coc-snippets": ">=2.1.26",
-    "coc-spell-checker": ">=1.2.0",
-    "coc-styled-components": ">=0.3.0",
-    "coc-svelte": ">=0.0.2",
-    "coc-tsserver": ">=1.5.1",
-    "coc-yaml": ">=1.0.4"
-  }
-}
-```
-
-coc install process
-
-```
-:CocInstall coc-actions coc-css coc-emmet coc-eslint coc-explorer coc-git coc-html coc-java coc-pairs coc-prettier coc-snippets coc-json coc-spell-checker coc-styled-components coc-svelt
-e coc-tsserver coc-yaml
 ```
 
 ## Other resources

@@ -43,8 +43,8 @@ at vim you should think on operators, text objects and motions
 <kbd>gu</kbd> make lowercase\
 <kbd>gU</kbd> make uppercase\
 <kbd>!</kbd> filter to external program\
-<kbd>\<</kbd> shift left\
-<kbd>\<</kbd> shift right\
+<kbd>\</kbd> shift left\
+<kbd>\</kbd> shift right\
 <kbd>=</kbd> indent
 
 ## text objects
