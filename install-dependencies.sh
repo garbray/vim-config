@@ -47,6 +47,7 @@ brew install volta
 
 # install python dependencies
 python3 -m pip install --user --upgrade pynvim
+
 brew install ranger
 brew install tree-sitter
 # install neovim until nightly release
@@ -59,13 +60,14 @@ brew install htop
 brew install fzf
 # install fonts
 brew tap homebrew/cask-fonts
-brew cask install font-fira-code
+brew install font-fira-code-nerd-font
+
 # brew install bat maybe not require to hightlight preview TBD
 echo "review if the font is updated https://github.com/tonsky/FiraCode/wiki/Installing"
 
 echo "$FGRN finish installing basic dependencies"
 echo "$FGRN copying config files"
-cp -r files/ ~/
+cp -r dotfiles/ ~/
 
 npm install -g neovim
 
