@@ -32,7 +32,7 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 [ -f "$HOME/.config/zsh/gitAlias" ] && source "$HOME/.config/zsh/gitAlias"
 
 # load vim terminal configuration
-[ -f "$HOME/.config/zsh/.vimconfig" ] && source "$HOME/.config/zsh/.vimconfig"
+[ -f "$HOME/.config/zsh/vimconfig" ] && source "$HOME/.config/zsh/vimconfig"
 
 # basic auto/tab complete
 # autoload -U componit
@@ -84,4 +84,7 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 # set other java enviroment
 # alias java8='export JAVA_HOME=$JDK_8'
 # alias java11='export JAVA_HOME=$JDK_11'
+
+# config localpath and install lua language server TODO automate this process
+#alias luamake=/Users/xxxxx/workspace/lua/lua-language-server/3rd/luamake/compile/luamake
 

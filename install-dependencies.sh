@@ -86,3 +86,6 @@ git config --global core.editor "nvim"
 
 # lua config
 brew install ninja
+
+# local env
+touch ~/.localenv
