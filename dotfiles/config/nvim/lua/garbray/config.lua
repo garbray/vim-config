@@ -1,3 +1,13 @@
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
+}
+
 local function documentHighlight(client, bufnr)
     -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then
@@ -16,7 +26,10 @@ local function documentHighlight(client, bufnr)
         )
     end
 end
-local lsp_config = {}
+
+local lsp_config = {
+    capabilities = capabilities,
+}
 
 function lsp_config.common_on_attach(client, bufnr)
     documentHighlight(client, bufnr)

@@ -1,6 +1,6 @@
 -- npm install -g typescript typescript-language-server
 require'lspconfig'.tsserver.setup{
-    cmd = {"typescript-language-server", "--stdio"},
+    capabilities = require'garbray.config'.capabilities,
     filetypes = {
       "javascript",
       "javascriptreact",
@@ -12,4 +12,5 @@ require'lspconfig'.tsserver.setup{
     on_attach = require'garbray.config'.tsserver_on_attach,
     settings = {documentFormatting = false},
 }
+
 

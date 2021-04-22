@@ -11,9 +11,9 @@ end
 
 local efm_formatters = {
   prettier = {
-    formatCommand = './node_modules/.bin/prettier --stdin-filepath ${INPUT}',
+    formatCommand = 'prettier --write --stdin-filepath ${INPUT}',
     formatStdin = true,
-    rootMarkers = {'package.json'},
+    -- rootMarkers = {'package.json',  '.git/'},
   },
   eslint = {
     lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
@@ -34,20 +34,43 @@ local efm_formatters = {
   }
 }
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- Code actions
+capabilities.textDocument.codeAction = {
+  dynamicRegistration = false;
+      codeActionLiteralSupport = {
+          codeActionKind = {
+              valueSet = {
+                 "",
+                 "quickfix",
+                 "refactor",
+                 "refactor.extract",
+                 "refactor.inline",
+                 "refactor.rewrite",
+                 "source",
+                 "source.organizeImports",
+              };
+          };
+      };
+}
+
 -- npm install -g eslint_d
 nvim_lsp.efm.setup({
   on_attach = on_attach,
+  root_dir = nvim_lsp.util.root_pattern('package.json', 'tsconfig.json', '.git'),
   cmd = {'efm-langserver', '-logfile', '/tmp/efm.log', '-loglevel', '5'},
   init_options = {
     documentFormatting = true,
   },
+  capabilities = capabilities,
   filetypes = {
-    "javascript",
-    "javascriptreact",
     "javascript.jsx",
-    "typescript",
-    "typescript.tsx",
+    "javascriptreact",
+    "javascript",
     "typescriptreact",
+    "typescript.tsx",
+    "typescript",
     "html",
     "css",
     "json",
@@ -59,13 +82,15 @@ nvim_lsp.efm.setup({
     languages = {
       typescript = {efm_formatters.prettier},
       javascript = {efm_formatters.prettier, efm_formatters.eslint},
+      -- javascript = { efm_formatters.eslint},
       javascriptreact = {efm_formatters.eslint},
       typescriptreact = {efm_formatters.prettier},
-      html = {prettier},
-      css = {prettier},
-      json = {prettier},
-      yaml = {prettier},
+      html = {efm_formatters.prettier},
+      css = {efm_formatters.prettier},
+      json = {efm_formatters.prettier},
+      yaml = {efm_formatters.prettier},
       python = {efm_formatters.flake8, efm_formatters.black}
     },
   },
 })
+
