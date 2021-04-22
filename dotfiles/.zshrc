@@ -21,6 +21,9 @@ bindkey '^e' edit-command-line
 # HYPHEN_INSENSITIVE="true"
 bindkey -s '^k' 'clear\n'
 
+autoload autosuggest-excute; zle -N autosuggest-excute
+bindkey '^\' autosuggest-excute
+
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
