@@ -86,3 +86,8 @@ git config --global core.editor "nvim"
 
 # lua config
 brew install ninja
+
+brew install zsh-autosuggestions
+
+# local env
+touch ~/.localenv

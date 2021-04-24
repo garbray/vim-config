@@ -1,8 +1,5 @@
 set path+=**
 set encoding=utf8
-" set guifont=DroidSansMono\ Nerd\ Font:h11
-" set guifont=DroidSansMono_Nerd_Font:h11
-set guifont=DroidSansMono\ Nerd\ Font\ 11
 
 call plug#begin('~/.vim/plugged')
 " lsp neovim
@@ -106,6 +103,11 @@ vnoremap <leader>p "_dP
 nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
+
+" spell checker\
+set spelllang=en_us
+nnoremap <leader>sc :set spell!<cr>
+" inoremap <leader>sc <C-O>:set spell!<cr>
 
 fun! TrimWhitespace()
     let l:save = winsaveview()

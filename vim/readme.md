@@ -43,8 +43,8 @@ at vim you should think on operators, text objects and motions
 <kbd>gu</kbd> make lowercase\
 <kbd>gU</kbd> make uppercase\
 <kbd>!</kbd> filter to external program\
-<kbd>\</kbd> shift left\
-<kbd>\</kbd> shift right\
+<kbd> \ </kbd> shift left\
+<kbd> \ </kbd> shift right\
 <kbd>=</kbd> indent
 
 ## text objects
@@ -62,16 +62,16 @@ at vim you should think on operators, text objects and motions
 
 ## motions
 
-% => go to first matching parent / bracket
+<kbd>%</kbd> => go to first matching parent / bracket
 [count]+ => down to first non blank char of line
 
-- => find and go to the next word you are over
-  \#\ => find and go to the previous word you are over
-  aw => a word
+<kbd>*</kbd> => find and go to the next word you are over\
+<kbd>#</kbd> => find and go to the previous word you are over\
+<kbd>a</kbd><kbd>w</kbd> => a word
 
 create a new file
 
-vsp filename -> creates a new file in a new split window and will saved after :w
+<kbd>v</kbd> <kbd>s</kbd> <kbd>p</kbd> filename -> creates a new file in a new split window and will saved after :w\
 
 ## PUTTING IT ALL TOGETHER
 

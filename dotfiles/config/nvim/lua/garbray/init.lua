@@ -6,4 +6,3 @@ require("garbray.treesitter")
 require("garbray.statusline")
 require("garbray.completion")
 require("garbray.telescope")
-
