@@ -104,9 +104,10 @@ nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
 
-" spell checker
+" spell checker\
 set spelllang=en_us
 nnoremap <leader>sc :set spell!<cr>
+" inoremap <leader>sc <C-O>:set spell!<cr>
 
 fun! TrimWhitespace()
     let l:save = winsaveview()

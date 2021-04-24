@@ -16,7 +16,7 @@ nnoremap <leader>gr :lua vim.lsp.buf.references()<CR>
 nnoremap <leader>rn :Lspsaga rename<CR>
 " nnoremap <leader>rn :lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>gh :lua vim.lsp.buf.hover()<CR>
-nnoremap <leader>gsd :lua vim.lsp.util.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()CR>
+nnoremap <leader>gsd :lua vim.lsp.util.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
 nnoremap <leader>gn :lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <leader>gp :lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <leader>vll :call LspLocationList()<CR>
