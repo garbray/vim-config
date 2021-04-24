@@ -12,8 +12,8 @@ Lately I have decided to use vim as my main IDE some of the points for it are:
 
 - [ ] Update readme
 - [x] LSP build in
-- [ ] efm server
-- [ ] remove old dependencies
+- [x] efm server
+- [x] remove old dependencies
 - [ ] create installation script
 
 ## Vim configuration and commands
