@@ -5,7 +5,7 @@ echo "$FGRN coping config files on the repo"
 repoPath="$PWD"
 
 #copy nvim
-cp -R ~/.config/nvim $repoPath/dotfiles/.config
+cp -R ~/.config/nvim $repoPath/dotfiles/config
 echo "$FGRN copy nivm file"
 
 #copy tmux
@@ -17,14 +17,14 @@ cp ~/.zshrc $repoPath/dotfiles
 echo "$FGRN copy zshrc file"
 
 #copy zhrc alias
-cp -R ~/.config/zsh $repoPath/dotfiles/.config
+cp -R ~/.config/zsh $repoPath/dotfiles/config
 echo "$FGRN copy zsh import file"
 
 #copy kitty config
-cp -R ~/.config/kitty $repoPath/dotfiles/.config
+cp -R ~/.config/kitty $repoPath/dotfiles/config
 echo "$FGRN copy kitty file"
 
 #copy tmux config
-cp -R ~/.config/tmux $repoPath/dotfiles/.config
+cp -R ~/.config/tmux $repoPath/dotfiles/config
 echo "$FGRN copy tmux file"
 echo "$FGRN COPY DONE"
