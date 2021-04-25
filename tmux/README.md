@@ -94,6 +94,12 @@ tmux attach -t session-name
 
 tmux reattach to a session
 
+change between tmux sessions
+
+```
+ctrl + b - s
+```
+
 ## other resources
 
 [tmux cheatsheet](https://gist.github.com/MohamedAlaa/2961058)
