@@ -24,13 +24,13 @@ Start a server with a prefix name
 tmux new -s name
 ```
 
-to detach from a tmux session you show run
+to detach from a tmux session you show run\
 
-> ctrl + b - d
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>d</kbd>
 
-detach from a list of sessions
+detach from a list of sessions\
 
-> ctrl + b - D
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>D</kbd>
 
 when you want to goes back to a tmux session you run
 
@@ -40,44 +40,48 @@ tmux attach -t session-name
 
 ### commands inside a session
 
-> ctrl + b - <command>
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>command</kbd>
 
 tmux do this command
 
-> ctrl + b - c
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>c</kbd>
 
 create a new window
 
-> ctrl + b - ,
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>,</kbd>
 
 rename the current window
 
-> ctrl + b - p
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>p</kbd>
 
 previous virtual
 
-> ctrl + b - n
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>n</kbd>
 
 next virtual
 
-> ctrl + b - w
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>w</kbd>
 
 list windows
 
-> ctrl + b - %
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>%</kbd>
 
 split vertical new window
 
-> ctrl + b - s
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>s</kbd>
 
-split horizontal new window
+<!-- split horizontal new window -->
 
-> ctrl + b - :<command>
+<!-- <kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>:</kbd> -->
 
 let you introduce a command for more information goes to the docs
 
-> ctrl + b - :resize-pane -x number%
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>:</kbd>
 
+you will be able to type the command you want to execute
+```
+:resize-panel -x number%
+```
 resize the panel in a %
 
 ### other commands
@@ -93,6 +97,10 @@ tmux attach -t session-name
 ```
 
 tmux reattach to a session
+
+change between tmux sessions\
+<kbd>ctrl</kbd> + <kbd>b</kbd> - <kbd>s</kbd>
+
 
 ## other resources
 
