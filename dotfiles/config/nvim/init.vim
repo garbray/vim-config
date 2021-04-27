@@ -62,6 +62,11 @@ Plug 'vim-utils/vim-man'
 Plug 'vuciv/vim-bujo'
 " last loaded
 Plug 'ryanoasis/vim-devicons'
+" worktree
+Plug 'ThePrimeagen/git-worktree.nvim'
+" Debugger Plugins
+Plug 'puremourning/vimspector'
+Plug 'szw/vim-maximizer'
 call plug#end()
 " require lua config
 lua require("garbray")
