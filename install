@@ -9,4 +9,8 @@ repoPath="$PWD"
 #     ln -s $repoPath/dotfiles/.config/nvim/$f ~/.config/nvim/$f
 # done
 rm -rf ~/.config/nvim
-cp -rf $repoPath/dotfiles/.config/nvim ~/.config/nvim
+cp -rf $repoPath/dotfiles/config/nvim ~/.config/nvim
+
+# TODO create flag conditions to install or a wizard
+rm -rf ~/.config/kitty
+cp -rf $repoPath/dotfiles/config/kitty ~/.config/kitty
