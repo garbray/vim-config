@@ -7,4 +7,5 @@ require("garbray.statusline")
 require("garbray.completion")
 require("garbray.telescope")
 require("garbray.git-worktree")
+require("garbray.harpoon")
 

@@ -56,17 +56,19 @@ Plug 'hoob3rt/lualine.nvim'
 " possible deprecations in future
 " float search
 Plug 'voldikss/vim-floaterm'
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
 Plug 'mhinz/vim-signify'
 Plug 'vim-utils/vim-man'
 Plug 'vuciv/vim-bujo'
 " last loaded
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
 " worktree
 Plug 'ThePrimeagen/git-worktree.nvim'
 " Debugger Plugins
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
+
+Plug 'ThePrimeagen/harpoon'
 call plug#end()
 " require lua config
 lua require("garbray")
@@ -89,7 +91,7 @@ nnoremap <Leader>+ :vertical resize +5<CR>
 nnoremap <Leader>- :vertical resize -5<CR>
 nnoremap <Leader>rp :resize 100<CR>
 nnoremap <Leader>ee oif err != nil {<CR>log.Fatalf("%+v\n", err)<CR>}<CR><esc>kkI<esc>
-nnoremap <Leader>cpu a%" PRIu64 "<esc>
+" nnoremap <Leader>cpu a%" PRIu64 "<esc>
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
@@ -101,6 +103,9 @@ nnoremap <leader>tn :tabnext<CR>
 " buffers
 nnoremap <Leader>bl :buffers<CR>:buffer<Space>
 
+" c jumps
+nnoremap <leader>vn :cn<CR>
+nnoremap <leader>vp :cp<CR>
 " greatest remap ever
 vnoremap <leader>p "_dP
 
@@ -109,10 +114,9 @@ nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
 
-" spell checker\
+" spell checker
 set spelllang=en_us
 nnoremap <leader>sc :set spell!<cr>
-" inoremap <leader>sc <C-O>:set spell!<cr>
 
 fun! TrimWhitespace()
     let l:save = winsaveview()
