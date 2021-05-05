@@ -67,6 +67,8 @@ Plug 'ThePrimeagen/git-worktree.nvim'
 " Debugger Plugins
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
+
+Plug 'ThePrimeagen/harpoon'
 call plug#end()
 " require lua config
 lua require("garbray")
