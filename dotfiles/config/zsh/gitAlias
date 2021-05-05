@@ -15,6 +15,7 @@ alias gca="git commit --amend"
 alias glg="git log --oneline --graph"
 alias grh="git reset head --hard"
 alias grs="git reset head --soft"
+alias gst="git status"
 # alias npm
 alias yt="yarn test"
 alias ytw="yarn test --watch"
@@ -47,6 +48,10 @@ function gsoft() {
 
 function gsoftMain() {
   git reset --soft $(git merge-base origin/main Head)
+}
+
+function gpushUpstream() {
+  git push -u origin $(git branch --show-current)
 }
 
 function gsoftRebase() {
