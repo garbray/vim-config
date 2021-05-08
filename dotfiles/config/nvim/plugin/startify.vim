@@ -10,6 +10,7 @@ let g:startify_lists = [
 let g:startify_bookmarks = [
             \ {'i': '~/.config/nvim'},
             \ {'z': '~/.zshrc'},
+            \ {'k': '~/.config/kitty'},
             \]
 
 let g:startify_custom_header = [

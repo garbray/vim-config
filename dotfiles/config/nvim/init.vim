@@ -20,6 +20,9 @@ Plug 'tweekmonster/gofmt.vim'
 Plug 'jparise/vim-graphql'
 " colorschema
 Plug 'gruvbox-community/gruvbox'
+Plug 'ayu-theme/ayu-vim'
+" errors for lsp
+Plug 'folke/lsp-colors.nvim'
 " utility
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
