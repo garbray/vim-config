@@ -63,13 +63,13 @@ Plug 'voldikss/vim-floaterm'
 Plug 'mhinz/vim-signify'
 Plug 'vim-utils/vim-man'
 Plug 'vuciv/vim-bujo'
-" last loaded
-" Plug 'ryanoasis/vim-devicons'
 " worktree
 Plug 'ThePrimeagen/git-worktree.nvim'
 " Debugger Plugins
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
+" last loaded
+" Plug 'ryanoasis/vim-devicons'
 
 Plug 'ThePrimeagen/harpoon'
 call plug#end()
@@ -107,8 +107,8 @@ nnoremap <leader>tn :tabnext<CR>
 nnoremap <Leader>bl :buffers<CR>:buffer<Space>
 
 " c jumps
-nnoremap <leader>vn :cn<CR>
-nnoremap <leader>vp :cp<CR>
+nnoremap <C-j> :cn<CR>
+nnoremap <C-k> :cp<CR>
 " greatest remap ever
 vnoremap <leader>p "_dP
 
@@ -120,6 +120,12 @@ nnoremap <leader>Y gg"+yG
 " spell checker
 set spelllang=en_us
 nnoremap <leader>sc :set spell!<cr>
+
+" vim TODO
+nnoremap <Leader>tt :Todo<CR>
+nmap <Leader>tc <Plug>BujoChecknormal
+nmap <Leader>ta <Plug>BujoAddnormal
+let g:bujo#todo_file_path = $HOME . "/.cache/bujo"
 
 fun! TrimWhitespace()
     let l:save = winsaveview()
