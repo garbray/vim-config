@@ -1,8 +1,3 @@
-" highlight ColorColumn ctermbg=0 guibg=grey
-highlight Normal guibg=none
-highlight LineNr guifg=#5eacd3
-highlight netrwDir guifg=#5eacd3
-highlight qfFileName guifg=#aed75f
 
 fun! SetTermGuiColors()
     if exists('+termguicolors')
@@ -18,6 +13,11 @@ fun! GruvboxTheme()
     set background=dark
     colorscheme gruvbox
     hi! Normal ctermbg=NONE guibg=NONE
+    " highlight ColorColumn ctermbg=0 guibg=grey
+    highlight Normal guibg=none
+    highlight LineNr guifg=#5eacd3
+    highlight netrwDir guifg=#5eacd3
+    highlight qfFileName guifg=#aed75f
     call SetTermGuiColors()
 endfun
 
@@ -27,10 +27,11 @@ fun! AyuTheme()
     let g:indentLine_setColors = 0
     colorscheme ayu
     let ayucolor="dark"
-    highlight ColorColumn ctermbg=0 guibg=#21262d
+    highlight ColorColumn ctermbg=none guibg=#21262d
     hi! Normal ctermbg=NONE guibg=NONE
     hi netrwDir guifg=#5eacd3
-    highlight lineNr guifg=#d35e5e
+    " highlight lineNr guifg=#d35e5e
+    highlight lineNr guifg=#888888
     " remove underline on ayutheme
     hi! MatchParen gui=NONE cterm=NONE term=NONE
 endfun

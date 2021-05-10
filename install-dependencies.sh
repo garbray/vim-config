@@ -82,6 +82,7 @@ npm i -g pyright
 npm i -g typescript typescript-language-server
 npm i -g vim-language-server
 npm i -g yaml-language-server
+npm i -g emmet-ls
 git config --global core.editor "nvim"
 
 # lua config

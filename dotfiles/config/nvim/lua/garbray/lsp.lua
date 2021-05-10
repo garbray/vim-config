@@ -12,4 +12,4 @@ require('garbray.lsp-servers.terraform')
 require('garbray.lsp-servers.ts')
 require('garbray.lsp-servers.vim')
 require('garbray.lsp-servers.yaml')
-
+require('garbray.lsp-servers.emmet')

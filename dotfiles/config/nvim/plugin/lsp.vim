@@ -10,8 +10,8 @@ nnoremap <leader><c-k> :Lspsaga signature_help<CR>
 nnoremap <silent> K :lua vim.lsp.buf.hover()<CR>
 " nnoremap <leader><c-K> :Lspsaga vim.lsp.buf.signature_help()<CR>
 " nnoremap <leader>ca :lua vim.lsp.buf.code_action()<CR>
-" nnoremap <leader>ca :Lspsaga code_action<CR>
-nnoremap <leader>ca :lua require('telescope.builtin').lsp_code_actions()<CR>
+nnoremap <leader>ca :Lspsaga code_action<CR>
+" nnoremap <leader>ca :lua require('telescope.builtin').lsp_code_actions()<CR>
 nnoremap <leader>gr :lua vim.lsp.buf.references()<CR>
 nnoremap <leader>rn :Lspsaga rename<CR>
 " nnoremap <leader>rn :lua vim.lsp.buf.rename()<CR>

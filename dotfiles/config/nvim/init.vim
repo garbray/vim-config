@@ -18,6 +18,8 @@ Plug 'p00f/nvim-ts-rainbow'
 Plug 'rust-lang/rust.vim'
 Plug 'tweekmonster/gofmt.vim'
 Plug 'jparise/vim-graphql'
+Plug 'mattn/emmet-vim'
+Plug 'alvan/vim-closetag'
 " colorschema
 Plug 'gruvbox-community/gruvbox'
 Plug 'ayu-theme/ayu-vim'
@@ -144,3 +146,15 @@ augroup THE_P
     " autocmd VimEnter * :VimApm
     autocmd BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{}
 augroup END
+
+" open url under cursor in your browser
+function! OpenURLUnderCursor()
+  let s:uri = expand('<cWORD>')
+  let s:uri = substitute(s:uri, '?', '\\?', '')
+  let s:uri = shellescape(s:uri, 1)
+  if s:uri != ''
+    silent exec "!open '".s:uri."'"
+    :redraw!
+  endif
+endfunction
+nnoremap gx :call OpenURLUnderCursor()<CR>
