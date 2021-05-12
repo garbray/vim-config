@@ -15,7 +15,8 @@ fun! GruvboxTheme()
     hi! Normal ctermbg=NONE guibg=NONE
     " highlight ColorColumn ctermbg=0 guibg=grey
     highlight Normal guibg=none
-    highlight LineNr guifg=#5eacd3
+    " highlight LineNr guifg=#5eacd3
+    highlight lineNr guifg=#d35e5e
     highlight netrwDir guifg=#5eacd3
     highlight qfFileName guifg=#aed75f
     call SetTermGuiColors()
@@ -30,8 +31,8 @@ fun! AyuTheme()
     highlight ColorColumn ctermbg=none guibg=#21262d
     hi! Normal ctermbg=NONE guibg=NONE
     hi netrwDir guifg=#5eacd3
-    " highlight lineNr guifg=#d35e5e
-    highlight lineNr guifg=#888888
+    highlight lineNr guifg=#d35e5e
+    " highlight lineNr guifg=#888888
     " remove underline on ayutheme
     hi! MatchParen gui=NONE cterm=NONE term=NONE
 endfun
