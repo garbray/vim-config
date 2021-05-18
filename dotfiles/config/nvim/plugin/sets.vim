@@ -1,4 +1,4 @@
-" set guicursor=
+set guicursor=n-v-c:block-Cursor
 set relativenumber
 set nohlsearch
 set hidden
@@ -20,7 +20,7 @@ set signcolumn=yes
 set termguicolors
 
 " Give more space for displaying messages.
-set cmdheight=2
+set cmdheight=1
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
