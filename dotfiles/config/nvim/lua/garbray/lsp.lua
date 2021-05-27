@@ -1,5 +1,6 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
 require('garbray.lsp-servers.bash')
+require('garbray.lsp-servers.css')
 require("garbray.lsp-servers.efm")
 require('garbray.lsp-servers.emmet')
 require('garbray.lsp-servers.go')

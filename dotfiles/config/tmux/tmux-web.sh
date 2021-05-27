@@ -10,7 +10,7 @@ tmux new-session -d -s $session
 # name window as code
 tmux rename-window code
 # Split pane 1 horizontal by 75%,
-tmux splitw -v -p 8
+tmux splitw -v -p 10
 # start server
 # tmux send-keys $2 C-m
 
@@ -31,6 +31,7 @@ tmux selectp -U
 tmux new-window
 tmux rename-window TDD
 tmux next-window
+
 
 # enable mouse controls
 # tmux set -g mouse on

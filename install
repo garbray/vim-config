@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 mkdir -p ~/.config/nvim/plugin
-mkdir -p ~/.config/nvim/lua
+mkdir -p ~/.config/nvim/lua/garbray/lsp-servers
+mkdir -p ~/.config/nvim/spell
 repoPath="$PWD"
 
 # review link wholesale
 # for f in `find . -regex ".*\.vim$\|.*\.lua$"`; do
 #     rm -rf ~/.config/nvim/$f
-#     ln -s $repoPath/dotfiles/.config/nvim/$f ~/.config/nvim/$f
+#     ln -s $repoPath/dotfiles/config/nvim/$f ~/.config/nvim/$f
+#     echo $f
 # done
+
 rm -rf ~/.config/nvim
 cp -rf $repoPath/dotfiles/config/nvim ~/.config/nvim
 
