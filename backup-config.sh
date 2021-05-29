@@ -28,3 +28,13 @@ echo "$FGRN copy kitty file"
 cp -R ~/.config/tmux $repoPath/dotfiles/config
 echo "$FGRN copy tmux file"
 echo "$FGRN COPY DONE"
+
+#copy skhd config
+cp -R ~/.config/skhd $repoPath/dotfiles/config
+echo "$FGRN copy skhd file"
+echo "$FGRN COPY DONE"
+
+#copy yabai config
+cp -R ~/.config/yabai $repoPath/dotfiles/config
+echo "$FGRN copy yabai file"
+echo "$FGRN COPY DONE"
