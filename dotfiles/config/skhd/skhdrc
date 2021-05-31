@@ -61,4 +61,6 @@ alt + shift - x : yabai -m space --destroy
 # reset spaces
 alt + shift - r : yabai -m space --balance
 
+# brew install somdoron/formulae/spacebar
+# brew services start spacebar
 

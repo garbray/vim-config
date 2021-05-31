@@ -38,3 +38,8 @@ echo "$FGRN COPY DONE"
 cp -R ~/.config/yabai $repoPath/dotfiles/config
 echo "$FGRN copy yabai file"
 echo "$FGRN COPY DONE"
+
+#copy spacebar config
+cp -R ~/.config/spacebar $repoPath/dotfiles/config
+echo "$FGRN copy spacebar file"
+echo "$FGRN COPY DONE"
