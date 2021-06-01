@@ -1,6 +1,6 @@
 ## Close active application
 # hyper - backspace : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
-alt - return: kitty --single-instance
+alt - return: kitty --directory ~
 
 # # restart yabai
 # hyper - z : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
@@ -60,6 +60,16 @@ alt + shift - x : yabai -m space --destroy
 
 # reset spaces
 alt + shift - r : yabai -m space --balance
+
+# float / unfloat window and center on screen
+alt - u : yabai -m window --toggle float;\
+            yabai -m window --grid 4:4:1:1:2:2
+
+# rotate tree
+alt - r : yabai -m space --rotate 90
+
+# mirror tree y-axis
+alt - y : yabai -m space --mirror y-axis
 
 # brew install somdoron/formulae/spacebar
 # brew services start spacebar
