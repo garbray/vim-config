@@ -6,7 +6,7 @@ autoload -U colors && colors
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/bryan.garzon/.oh-my-zsh"
+export ZSH="/Users/bryangarzonbahamon/.oh-my-zsh"
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
@@ -75,9 +75,9 @@ export BAT_THEME="gruvbox"
 # bindkey '^o' "lfcd\n"
 
 #highlighting
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 #autosuggestions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 alias python=/usr/local/bin/python3.9
@@ -91,16 +91,16 @@ export PATH=$PATH:$(go env GOPATH)/bin
 
 # JAVA config
 # /usr/libexec/java_home --verbose // provide information of JAVA version current installed
-# export JAVA_HOME=$(/usr/libexec/java_home)
-export JDK_8=`/usr/libexec/java_home -v 1.8.0_282`
-export JDK_11=`/usr/libexec/java_home -v 11.0.10`
+export JAVA_HOME=$(/usr/libexec/java_home)
+# export JDK_8=`/usr/libexec/java_home -v 1.8.0_282`
+# export JDK_11=`/usr/libexec/java_home -v 11.0.10`
 # export JAVA_HOME=$JDK_8
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_282`
+# export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_282`
 # set other java enviroment
-alias java8='export JAVA_HOME=$JDK_8'
-alias java11='export JAVA_HOME=$JDK_11'
+# alias java8='export JAVA_HOME=$JDK_8'
+# alias java11='export JAVA_HOME=$JDK_11'
 
 # Load localenv variables
 [ -f "$HOME/.localenv" ] && source "$HOME/.localenv"
 
-alias luamake=/Users/bryan.garzon/workspace/lua/lua-language-server/3rd/luamake/compile/luamake
+# alias luamake=/Users/bryan.garzon/workspace/lua/lua-language-server/3rd/luamake/compile/luamake

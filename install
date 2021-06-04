@@ -17,3 +17,26 @@ cp -rf $repoPath/dotfiles/config/nvim ~/.config/nvim
 # TODO create flag conditions to install or a wizard
 rm -rf ~/.config/kitty
 cp -rf $repoPath/dotfiles/config/kitty ~/.config/kitty
+
+
+rm -rf ~/.config/yabai
+cp -rf $repoPath/dotfiles/config/yabai ~/.config/yabai
+
+
+rm -rf ~/.config/spacebar
+cp -rf $repoPath/dotfiles/config/spacebar ~/.config/spacebar
+
+rm -rf ~/.config/skhd
+cp -rf $repoPath/dotfiles/config/skhd ~/.config/skhd
+
+rm -rf ~/.config/tmux
+cp -rf $repoPath/dotfiles/config/tmux ~/.config/tmux
+
+rm -rf ~/.config/zsh
+cp -rf $repoPath/dotfiles/config/zsh ~/.config/zsh
+
+rm ~/.zshrc
+ln -s $repoPath/dotfiles/.zshrc ~/.zshrc
+
+rm ~/.tmux.conf
+ln -s $repoPath/dotfiles/.tmux.conf ~/.tmux.conf

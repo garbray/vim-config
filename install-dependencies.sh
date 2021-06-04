@@ -90,5 +90,7 @@ brew install ninja
 
 brew install zsh-autosuggestions
 
+brew install zsh-syntax-highlighting
+
 # local env
 touch ~/.localenv
