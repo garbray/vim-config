@@ -1,6 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# deactivate magic functions
+export DISABLE_MAGIC_FUNCTIONS=true
+
 # Enable colors and change prompt:
 autoload -U colors && colors
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
@@ -32,6 +35,16 @@ source $ZSH/oh-my-zsh.sh
 
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
+
+#another alias we need to move to another file
+alias v="nvim"
+alias r="ranger"
+alias mkd="mkdir -pv"
+# alias ccat="highlight --out-format=ansi" # Color cat - print file with syntax highlight
+
+alias yt="youtube-dl --add-metadata -ic" # Download video link
+alias yta="youtube-dl --add-metadata -xic" # download only audio
+# alias YT="youtube-viewer"
 
 export EDITOR='nvim'
 # Load aliases and shortcuts if existent.
@@ -78,6 +91,8 @@ export BAT_THEME="gruvbox"
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 #autosuggestions
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#Z config
+source /opt/homebrew/etc/profile.d/z.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 alias python=/usr/local/bin/python3.9
@@ -91,7 +106,7 @@ export PATH=$PATH:$(go env GOPATH)/bin
 
 # JAVA config
 # /usr/libexec/java_home --verbose // provide information of JAVA version current installed
-export JAVA_HOME=$(/usr/libexec/java_home)
+# export JAVA_HOME=$(/usr/libexec/java_home)
 # export JDK_8=`/usr/libexec/java_home -v 1.8.0_282`
 # export JDK_11=`/usr/libexec/java_home -v 11.0.10`
 # export JAVA_HOME=$JDK_8

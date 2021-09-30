@@ -1,7 +1,14 @@
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 
+#alias
+alias ls="ls -p -G"
+alias la="ls -A"
+alias ll="ls -l"
+alias lla="ll -A"
+
 # git alias
+alias g="git"
 alias gp="git pull"
 alias gps="git push"
 alias gpd="git pull develop"
@@ -22,6 +29,7 @@ alias ytw="yarn test --watch"
 alias ytwc="yarn test --watch --coverage"
 alias ys="yarn start"
 alias yb="yarn build"
+alias ytdd="yarn test --watch --verbose"
 
 # others
 alias ms="mvn spring-boot:run"

@@ -2,18 +2,27 @@ set path+=**
 set encoding=utf8
 
 call plug#begin('~/.vim/plugged')
-" lsp neovim
-Plug 'neovim/nvim-lspconfig'
-Plug 'tjdevries/nlua.nvim'
-Plug 'tjdevries/lsp_extensions.nvim'
-Plug 'glepnir/lspsaga.nvim'
-Plug 'hrsh7th/nvim-compe'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'kabouzeid/nvim-lspinstall'
-" Neovim Tree shitter
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/playground'
-Plug 'p00f/nvim-ts-rainbow'
+if has("nvim")
+  " lsp neovim
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'tjdevries/nlua.nvim'
+  Plug 'tjdevries/lsp_extensions.nvim'
+  Plug 'glepnir/lspsaga.nvim'
+  Plug 'hrsh7th/nvim-compe'
+  Plug 'hrsh7th/vim-vsnip'
+  Plug 'kabouzeid/nvim-lspinstall'
+  " Neovim Tree shitter
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/playground'
+  Plug 'p00f/nvim-ts-rainbow'
+  " errors for lsp
+  Plug 'folke/lsp-colors.nvim'
+  " telescope
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-lua/popup.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'nvim-telescope/telescope-fzy-native.nvim'
+endif
 " language
 Plug 'rust-lang/rust.vim'
 Plug 'tweekmonster/gofmt.vim'
@@ -23,8 +32,6 @@ Plug 'alvan/vim-closetag'
 " colorschema
 Plug 'gruvbox-community/gruvbox'
 Plug 'ayu-theme/ayu-vim'
-" errors for lsp
-Plug 'folke/lsp-colors.nvim'
 " utility
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
@@ -44,11 +51,6 @@ Plug 'kevinoid/vim-jsonc'
 Plug 'mhinz/vim-startify'
 " dash
 Plug 'rizzatti/dash.vim'
-" telescope
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim'
 " align items and markdown
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
@@ -61,7 +63,7 @@ Plug 'hoob3rt/lualine.nvim'
 " possible deprecations in future
 " float search
 Plug 'voldikss/vim-floaterm'
-" Plug 'preservim/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 'mhinz/vim-signify'
 Plug 'vim-utils/vim-man'
 Plug 'vuciv/vim-bujo'
@@ -72,7 +74,7 @@ Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 " last loaded
 " Plug 'ryanoasis/vim-devicons'
-
+Plug 'ap/vim-css-color'
 Plug 'ThePrimeagen/harpoon'
 call plug#end()
 " require lua config
@@ -109,8 +111,8 @@ nnoremap <leader>tn :tabnext<CR>
 nnoremap <Leader>bl :buffers<CR>:buffer<Space>
 
 " c jumps
-nnoremap <C-j> :cn<CR>
-nnoremap <C-k> :cp<CR>
+nnoremap <leader>cn :cn<CR>
+nnoremap <leader>cp :cp<CR>
 " greatest remap ever
 vnoremap <leader>p "_dP
 
@@ -125,8 +127,8 @@ nnoremap <leader>sc :set spell!<cr>
 
 " vim TODO
 nnoremap <Leader>tt :Todo<CR>
-nmap <Leader>tc <Plug>BujoChecknormal
-nmap <Leader>ta <Plug>BujoAddnormal
+nmap <Leader>ct <Plug>BujoChecknormal
+nmap <Leader>at <Plug>BujoAddnormal
 let g:bujo#todo_file_path = $HOME . "/.cache/bujo"
 
 " compe

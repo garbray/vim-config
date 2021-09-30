@@ -40,3 +40,6 @@ ln -s $repoPath/dotfiles/.zshrc ~/.zshrc
 
 rm ~/.tmux.conf
 ln -s $repoPath/dotfiles/.tmux.conf ~/.tmux.conf
+
+rm ~/tmuxSelector
+ln -s $repoPath/tmuxSelector ~/tmuxSelector

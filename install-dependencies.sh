@@ -63,6 +63,13 @@ brew install fzf
 brew tap homebrew/cask-fonts
 brew install font-fira-code-nerd-font
 
+# fuzzi finder list
+brew install peco
+# ls with bateries -> just for fun
+brew install exa
+
+brew install z
+
 # brew install bat maybe not require to hightlight preview TBD
 echo "review if the font is updated https://github.com/tonsky/FiraCode/wiki/Installing"
 
@@ -76,6 +83,8 @@ pip install flake8
 
 # node servers dependencies
 npm i -g bash-language-server
+npm i -g vscode-css-languageserver-bin
+npm i -g prettier
 npm i -g graphql-language-service-cli
 npm i -g vscode-html-languageserver-bin
 npm i -g pyright
@@ -83,6 +92,7 @@ npm i -g typescript typescript-language-server
 npm i -g vim-language-server
 npm i -g yaml-language-server
 npm i -g emmet-ls
+npm install -g vscode-html-languageserver-bin
 git config --global core.editor "nvim"
 
 # lua config
@@ -94,3 +104,11 @@ brew install zsh-syntax-highlighting
 
 # local env
 touch ~/.localenv
+
+# spotify
+brew install spotify-tui
+brew install spotifyd
+# start spotify process
+brew install neofetch
+
+# spotifyd --no-daemon

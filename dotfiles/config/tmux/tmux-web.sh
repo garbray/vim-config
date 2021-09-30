@@ -32,9 +32,9 @@ tmux new-window
 tmux rename-window TDD
 tmux next-window
 
-
 # enable mouse controls
 # tmux set -g mouse on
 
 # Finished setup, attach to the tmux session!
+tmux send-keys -t $session 'nvim .' C-m
 tmux attach-session -t $session
