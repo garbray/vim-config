@@ -1,5 +1,5 @@
-local sumneko_root_path = '/Users/bryan.garzon/workspace/lua/lua-language-server'
-local sumneko_binary = sumneko_root_path .. "/bin/macOS/lua-language-server"
+local sumneko_root_path = '/Users/bryangarzonbahamon/tools/lua-language-server'
+local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
 
 require'lspconfig'.sumneko_lua.setup {
     on_attach = require'garbray.config'.common_on_attach,

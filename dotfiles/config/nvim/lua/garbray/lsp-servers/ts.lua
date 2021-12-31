@@ -1,5 +1,6 @@
 -- npm install -g typescript typescript-language-server
 require'lspconfig'.tsserver.setup{
+    root_dir = require'lspconfig'.util.root_pattern('package.json', 'tsconfig.json', '.git/'),
     capabilities = require'garbray.config'.capabilities,
     filetypes = {
       "javascript",

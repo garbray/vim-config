@@ -7,8 +7,11 @@ if has("nvim")
   Plug 'neovim/nvim-lspconfig'
   Plug 'tjdevries/nlua.nvim'
   Plug 'tjdevries/lsp_extensions.nvim'
-  Plug 'glepnir/lspsaga.nvim'
+" until the probem for code action on lspsaga been resolve
+  " Plug 'glepnir/lspsaga.nvim'
+  Plug 'rinx/lspsaga.nvim'
   Plug 'hrsh7th/nvim-compe'
+
   Plug 'hrsh7th/vim-vsnip'
   Plug 'kabouzeid/nvim-lspinstall'
   " Neovim Tree shitter
@@ -22,7 +25,10 @@ if has("nvim")
   Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-telescope/telescope-fzy-native.nvim'
+  " try IA code
+  " Plug 'github/copilot.vim'
 endif
+
 " language
 Plug 'rust-lang/rust.vim'
 Plug 'tweekmonster/gofmt.vim'

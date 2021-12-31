@@ -58,7 +58,7 @@ capabilities.textDocument.codeAction = {
 -- npm install -g eslint_d
 nvim_lsp.efm.setup({
   on_attach = on_attach,
-  root_dir = nvim_lsp.util.root_pattern('package.json', 'tsconfig.json', '.git'),
+  root_dir = nvim_lsp.util.root_pattern('package.json', 'tsconfig.json', '.git/'),
   cmd = {'efm-langserver', '-logfile', '/tmp/efm.log', '-loglevel', '5'},
   init_options = {
     documentFormatting = true,
@@ -78,7 +78,7 @@ nvim_lsp.efm.setup({
     "python",
   },
   settings = {
-    rootMarkers = {'.git/'},
+    rootMarkers = {".git/", "package.json", "tsconfig.json"},
     languages = {
       typescript = {efm_formatters.prettier},
       javascript = {efm_formatters.prettier, efm_formatters.eslint},

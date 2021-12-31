@@ -119,3 +119,5 @@ export PATH=$PATH:$(go env GOPATH)/bin
 [ -f "$HOME/.localenv" ] && source "$HOME/.localenv"
 
 # alias luamake=/Users/bryan.garzon/workspace/lua/lua-language-server/3rd/luamake/compile/luamake
+export PATH="$HOME/tools/lua-language-server/bin/macOS:$PATH"
+
