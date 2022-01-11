@@ -1,0 +1,5 @@
+- host: localenv
+  become: true
+  tasks:
+    - name: install zsh
+      apt: name=zsh

@@ -5,28 +5,44 @@ call plug#begin('~/.vim/plugged')
 if has("nvim")
   " lsp neovim
   Plug 'neovim/nvim-lspconfig'
-  Plug 'tjdevries/nlua.nvim'
-  Plug 'tjdevries/lsp_extensions.nvim'
+  " Plug 'tjdevries/nlua.nvim'
+  " no super sure if this is necessary we will see
+  " Plug 'tjdevries/lsp_extensions.nvim'
+  Plug 'williamboman/nvim-lsp-installer' " simple to use language server installer
 " until the probem for code action on lspsaga been resolve
   " Plug 'glepnir/lspsaga.nvim'
   Plug 'rinx/lspsaga.nvim'
-  Plug 'hrsh7th/nvim-compe'
 
+  " autocomplete
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'tamago324/nlsp-settings.nvim' " language server settings defined in json for
+  Plug 'jose-elias-alvarez/null-ls.nvim' " for formatters and linters
+
+  Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+
+  " For vsnip users.
+  Plug 'hrsh7th/cmp-vsnip'
   Plug 'hrsh7th/vim-vsnip'
-  Plug 'kabouzeid/nvim-lspinstall'
+
+  " For luasnip users.
+  Plug 'L3MON4D3/LuaSnip'
+  Plug 'saadparwaiz1/cmp_luasnip'
+  Plug 'rafamadriz/friendly-snippets'
+
   " Neovim Tree shitter
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/playground'
   Plug 'p00f/nvim-ts-rainbow'
-  " errors for lsp
-  Plug 'folke/lsp-colors.nvim'
   " telescope
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-telescope/telescope-fzy-native.nvim'
   " try IA code
-  " Plug 'github/copilot.vim'
 endif
 
 " language
@@ -136,10 +152,6 @@ nnoremap <Leader>tt :Todo<CR>
 nmap <Leader>ct <Plug>BujoChecknormal
 nmap <Leader>at <Plug>BujoAddnormal
 let g:bujo#todo_file_path = $HOME . "/.cache/bujo"
-
-" compe
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
 
 fun! TrimWhitespace()
     let l:save = winsaveview()

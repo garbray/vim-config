@@ -30,6 +30,7 @@ alias ytwc="yarn test --watch --coverage"
 alias ys="yarn start"
 alias yb="yarn build"
 alias ytdd="yarn test --watch --verbose"
+alias yd="yarn dev"
 
 # others
 alias ms="mvn spring-boot:run"

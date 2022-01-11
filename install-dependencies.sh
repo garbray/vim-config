@@ -36,6 +36,9 @@ brew cask install amethyst
 
 mkdir ~/.go
 
+# isntall stow
+brew install stow
+
 # install python3
 brew install python
 brew install go
