@@ -47,6 +47,7 @@ brew install luarocks
 brew install yarn node deno
 brew install rust
 brew install volta
+brew install ansible
 
 # install python dependencies
 python3 -m pip install --user --upgrade pynvim

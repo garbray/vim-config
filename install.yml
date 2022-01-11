@@ -1,5 +1,11 @@
 - host: localenv
-  become: true
+  vars:
+    source_key: "./.ssh/id_rsa"
+    dest_key: "{{ lookup('env': 'HOME') }}/.ssh/id_rsa"
+    personal: "{{ lookup('env': 'HOME') }}./personal"
+  pre_task:
+    name: update brew
+
   tasks:
     - name: install zsh
       apt: name=zsh
