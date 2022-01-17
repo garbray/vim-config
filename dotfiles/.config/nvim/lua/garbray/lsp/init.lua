@@ -6,7 +6,7 @@ end
 
 require('garbray.lsp.lsp-installer')
 require('garbray.lsp.handlers').setup()
-require "garbray.lsp.null-ls"
+-- require "garbray.lsp.null-ls"
 
 require('garbray.lsp.settings.bash')
 require('garbray.lsp.settings.css')

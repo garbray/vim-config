@@ -12,9 +12,6 @@ fi
 # create symlinnks for dot files
 stow -t $HOME/.config dotfiles/.config
 
-rm -rf ~/.config/nvim
-cp -rf $repoPath/dotfiles/config/nvim ~/.config/nvim
-
 rm ~/.tmux.conf
 ln -s $repoPath/dotfiles/.tmux.conf ~/.tmux.conf
 
