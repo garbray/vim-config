@@ -73,6 +73,8 @@ nvim_lsp.efm.setup({
     "typescript",
     "html",
     "css",
+    "scss",
+    "sass",
     "json",
     "yaml",
     "python",
@@ -87,6 +89,8 @@ nvim_lsp.efm.setup({
       typescriptreact = {efm_formatters.prettier},
       html = {efm_formatters.prettier},
       css = {efm_formatters.prettier},
+      scss = {efm_formatters.prettier},
+      sass = {efm_formatters.prettier},
       json = {efm_formatters.prettier},
       yaml = {efm_formatters.prettier},
       python = {efm_formatters.flake8, efm_formatters.black}

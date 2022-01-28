@@ -48,6 +48,9 @@ brew install yarn node deno
 brew install rust
 brew install volta
 brew install ansible
+brew install karabiner-elements --cask
+# TODO review if generate any aditional benefits
+# brew install alfred --cask
 
 # install python dependencies
 python3 -m pip install --user --upgrade pynvim
@@ -99,6 +102,8 @@ npm i -g vim-language-server
 npm i -g yaml-language-server
 npm i -g emmet-ls
 npm install -g vscode-html-languageserver-bin
+npm i -g vscode-langservers-extracted
+npm install -g @tailwindcss/language-server
 # omit until figure out how to handle the redirect on dev tools
 # git config --global core.editor "nvim"
 
