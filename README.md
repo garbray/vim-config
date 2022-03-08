@@ -10,11 +10,9 @@ Lately I have decided to use vim as my main IDE some of the points for it are:
 
 ## TODO list
 
-- [ ] Update readme
-- [x] LSP build in
-- [x] efm server
-- [x] remove old dependencies
 - [ ] create installation script
+- [ ] use ansible
+- [ ] move to use lua
 
 ## Vim configuration and commands
 

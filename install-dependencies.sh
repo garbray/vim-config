@@ -36,6 +36,9 @@ brew cask install amethyst
 
 mkdir ~/.go
 
+# isntall stow
+brew install stow
+
 # install python3
 brew install python
 brew install go
@@ -44,6 +47,10 @@ brew install luarocks
 brew install yarn node deno
 brew install rust
 brew install volta
+brew install ansible
+brew install karabiner-elements --cask
+# TODO review if generate any aditional benefits
+# brew install alfred --cask
 
 # install python dependencies
 python3 -m pip install --user --upgrade pynvim
@@ -86,14 +93,19 @@ npm i -g bash-language-server
 npm i -g vscode-css-languageserver-bin
 npm i -g prettier
 npm i -g graphql-language-service-cli
-npm i -g vscode-html-languageserver-bin
+# npm i -g vscode-html-languageserver-bin
+# looks like is reemplazed by this one
+npm i -g vscode-langservers-extracted
 npm i -g pyright
 npm i -g typescript typescript-language-server
 npm i -g vim-language-server
 npm i -g yaml-language-server
 npm i -g emmet-ls
 npm install -g vscode-html-languageserver-bin
-git config --global core.editor "nvim"
+npm i -g vscode-langservers-extracted
+npm install -g @tailwindcss/language-server
+# omit until figure out how to handle the redirect on dev tools
+# git config --global core.editor "nvim"
 
 # lua config
 brew install ninja
@@ -110,5 +122,9 @@ brew install spotify-tui
 brew install spotifyd
 # start spotify process
 brew install neofetch
+
+brew install --cask keycastr
+
+brew install numi
 
 # spotifyd --no-daemon
