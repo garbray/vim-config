@@ -131,6 +131,8 @@ Host alias
 
 ```
 
+ssh-add path-to-ssh-key
+
 test your ssh
 
 ```
