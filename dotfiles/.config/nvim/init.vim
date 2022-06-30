@@ -98,9 +98,19 @@ Plug 'szw/vim-maximizer'
 " Plug 'ryanoasis/vim-devicons'
 Plug 'ap/vim-css-color'
 Plug 'ThePrimeagen/harpoon'
+
+" sidebar nav
+Plug 'preservim/tagbar'
+" github
+Plug 'tyru/open-browser.vim'
+Plug 'tyru/open-browser-github.vim'
 call plug#end()
 " require lua config
 lua require("garbray")
+
+" tet tagbar
+nmap<leader>bb :TagbarToggle<CR>
+" require install ctags brew install ctags
 
 " Replace all is aliases to S
 nnoremap S :%s//g<left><left>
@@ -182,3 +192,6 @@ function! OpenURLUnderCursor()
   endif
 endfunction
 nnoremap gx :call OpenURLUnderCursor()<CR>
+
+" dash
+nnoremap <leader>dd :Dash<cr>

@@ -10,10 +10,18 @@ else
 fi
 
 # create symlinnks for dot files
-stow -t $HOME/.config dotfiles/.config
+stow -t $HOME/.config -d dotfiles .config
 
 rm ~/.tmux.conf
 ln -s $repoPath/dotfiles/.tmux.conf ~/.tmux.conf
 
+rm ~/.zshrc
+ln -s $repoPath/dotfiles/.zshrc ~/.zshrc
+
 rm ~/tmuxSelector
 ln -s $repoPath/tmuxSelector ~/tmuxSelector
+rm /usr/local/bin/projectSelector
+sudo ln -s $repoPath/tmuxSelector /usr/local/bin/projectSelector
+
+
+nvim -c ':PlugInstall' -c ':UpdateRemotePlugins' -c ':qall'

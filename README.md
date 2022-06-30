@@ -103,3 +103,36 @@ Nice talk about the usage of vim as a IDE
 ```
 chmod +x backup
 ```
+
+# multiple gh accounts
+
+add a new ssh
+
+```
+ssh-keygen -t rsa -b 4096 -C "youremail"
+
+```
+
+in the ssh folder create a config file with the following
+
+```
+# Defauilt Github
+Host work
+    HostName github.com
+    AddKeysToAgent yes
+    User git
+    IdentityFile ~/.ssh/id_rsa
+
+Host alias
+    HostName github.com
+    AddKeysToAgent yes
+    User git
+    IdentityFile ~/.ssh/id_rsa_another
+
+```
+
+test your ssh
+
+```
+ssh -T youralias
+```

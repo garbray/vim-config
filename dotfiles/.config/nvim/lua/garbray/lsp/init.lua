@@ -6,11 +6,11 @@ end
 
 require('garbray.lsp.lsp-installer')
 require('garbray.lsp.handlers').setup()
--- require "garbray.lsp.null-ls"
+require('garbray.lsp.null-ls')
 
 require('garbray.lsp.settings.bash')
 require('garbray.lsp.settings.css')
-require("garbray.lsp.settings.efm")
+-- require("garbray.lsp.settings.efm")
 require('garbray.lsp.settings.emmet')
 require('garbray.lsp.settings.go')
 require('garbray.lsp.settings.graphql')

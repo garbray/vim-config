@@ -9,7 +9,7 @@ echo "$FGRN copying dependencies"
 brew update
 
 # install kitty
-brew cask install kitty
+brew install kitty --cask
 
 brew install zsh
 
@@ -66,9 +66,12 @@ brew install efm-langserver
 brew install speedtest-cli
 brew install htop
 brew install fzf
+
+/opt/homebrew/opt/fzf/install
 # install fonts
 brew tap homebrew/cask-fonts
 brew install font-fira-code-nerd-font
+
 
 # fuzzi finder list
 brew install peco
@@ -126,5 +129,14 @@ brew install neofetch
 brew install --cask keycastr
 
 brew install numi
+
+brew install gh
+# create alias commands to handle multiple github credentials accounts
+# TODO create a way to store those in a safe fashion
+# based on https://gist.github.com/yermulnik/017837c01879ed3c7489cc7cf749ae47
+touch ~/.config/sh/hosts.yml.personal
+touch ~/.config/sh/hosts.yml.work
+gh alias set personal '!cp ~/.config/gh/hosts.yml.personal ~/.config/gh/hosts.yml && gh auth status'
+gh alias set work '!cp ~/.config/gh/hosts.yml.work ~/.config/gh/hosts.yml && gh auth status'
 
 # spotifyd --no-daemon

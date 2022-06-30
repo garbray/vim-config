@@ -13,7 +13,7 @@ require('telescope').setup {
             i = {
                 ["<C-x>"] = false,
                 ["<C-q>"] = actions.send_to_qflist,
-                ["q"] = actions.close,
+                ["Q"] = actions.close,
             },
         },
         file_ignore_patterns = { "node_modules" }
