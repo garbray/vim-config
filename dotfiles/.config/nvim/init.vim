@@ -153,6 +153,8 @@ nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
 
+nnoremap <leader>pc :let @" = expand("%")
+
 " spell checker
 set spelllang=en_us
 nnoremap <leader>sc :set spell!<cr>
