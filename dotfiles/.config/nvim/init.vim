@@ -37,6 +37,8 @@ if has("nvim")
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/playground'
   Plug 'p00f/nvim-ts-rainbow'
+  " thiss is a spealed
+  Plug 'lewis6991/spellsitter.nvim'
   " telescope
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-lua/popup.nvim'
@@ -64,7 +66,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'jiangmiao/auto-pairs'
 Plug 'andymass/vim-matchup'
 " indentation
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim'
 " adjust tabsize
 Plug 'tpope/vim-sleuth'
 " json with comments

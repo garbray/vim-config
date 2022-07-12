@@ -38,4 +38,3 @@ set encoding=utf8
 set guifont=Hack_Nerd_Font:h11
 
 set completeopt=menuone,noselect
-set conceallevel=0

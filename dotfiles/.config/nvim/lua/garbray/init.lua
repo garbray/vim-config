@@ -7,5 +7,5 @@ require("garbray.plugins.statusline")
 require("garbray.plugins.telescope")
 require("garbray.plugins.treesitter")
 require("garbray.plugins.tabnine")
-
-
+require("garbray.plugins.indent-blankline")
+require("garbray.plugins.spellsitter")
