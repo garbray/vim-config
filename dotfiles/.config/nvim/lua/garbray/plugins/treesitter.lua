@@ -19,5 +19,24 @@ require'nvim-treesitter.configs'.setup {
     indent = {
         enable = false,
         disable = {},
+    },
+    context_commentstring = {
+        enable = true,
+        config = {
+      javascript = {
+        __default = '// %s',
+        jsx_element = '{/* %s */}',
+        jsx_fragment = '{/* %s */}',
+        jsx_attribute = '// %s',
+        comment = '// %s'
+      },
+      typescript = {
+        __default = '// %s',
+        tsx_element = '{/* %s */}',
+        tsx_fragment = '{/* %s */}',
+        tsx_attribute = '// %s',
+        comment = '// %s'
+      },
+    }
     }
 }

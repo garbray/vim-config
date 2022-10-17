@@ -32,9 +32,11 @@ set shortmess+=c
 set colorcolumn=80
 
 " language support
-" set spelllang=en_us,fr_ch,es_mx
+" set spelllang=en_us ",fr_ch,es_mx
 " set spell
 set encoding=utf8
 set guifont=Hack_Nerd_Font:h11
 
 set completeopt=menuone,noselect
+set ignorecase
+" set smartcase

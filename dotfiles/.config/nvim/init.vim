@@ -68,8 +68,6 @@ Plug 'andymass/vim-matchup'
 " indentation
 "Plug 'Yggdroot/indentLine'
 Plug 'lukas-reineke/indent-blankline.nvim'
-" adjust tabsize
-Plug 'tpope/vim-sleuth'
 " json with comments
 Plug 'kevinoid/vim-jsonc'
 " project management
@@ -104,15 +102,18 @@ Plug 'ThePrimeagen/harpoon'
 
 " sidebar nav
 Plug 'preservim/tagbar'
+" Plug 'simrat39/symbols-outline.nvim'
 " github
 Plug 'tyru/open-browser.vim'
 Plug 'tyru/open-browser-github.vim'
+" comments on jsx
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 call plug#end()
 " require lua config
 lua require("garbray")
 
-" tet tagbar
-nmap<leader>bb :TagbarToggle<CR>
+" tagbar
+nnoremap<leader>bb :TagbarToggle<CR>
 " require install ctags brew install ctags
 
 " Replace all is aliases to S

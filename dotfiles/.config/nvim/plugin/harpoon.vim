@@ -25,3 +25,8 @@ nnoremap <leader>tw :lua require("harpoon.term").gotoTerminal(3)<CR>
 nnoremap <leader>cu :lua require("harpoon.term").sendCommand(1, 1)<CR>
 nnoremap <leader>ce :lua require("harpoon.term").sendCommand(1, 2)<CR>
 
+
+nnoremap <leader>ash :lua require("harpoon.mark").rm_file(1)<CR>
+nnoremap <leader>asj :lua require("harpoon.mark").rm_file(2)<CR>
+nnoremap <leader>ask :lua require("harpoon.mark").rm_file(3)<CR>
+nnoremap <leader>asl :lua require("harpoon.mark").rm_file(4)<CR>

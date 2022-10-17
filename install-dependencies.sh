@@ -142,3 +142,10 @@ gh alias set work '!cp ~/.config/gh/hosts.yml.work ~/.config/gh/hosts.yml && gh 
 # spotifyd --no-daemon
 
 brew install java11
+
+if [[ $PLATFORM == 'macos' ]]; then
+    brew install yabai
+    brew install koekeishiya/formulae/skhd
+    brew install skhd
+    brew install trash-cli
+    brew install --cask raycast
