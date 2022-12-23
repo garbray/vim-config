@@ -12,8 +12,9 @@ PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magent
 export ZSH="$HOME/.oh-my-zsh"
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-# ZSH_THEME="af-magic"
+# ZSH_THEME="robbyrussell"
+# ZSH_THEME="half-life"
+ZSH_THEME="af-magic"
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
@@ -51,6 +52,18 @@ export EDITOR='nvim'
 [ -f "$HOME/.config/zsh/gitAlias" ] && source "$HOME/.config/zsh/gitAlias"
 # load vim terminal configuration
 [ -f "$HOME/.config/zsh/vimconfig" ] && source "$HOME/.config/zsh/vimconfig"
+
+# move to another file
+# get wifi pass from the terminal pass the name in double quotes
+alias wifiPass="security find-generic-password -wa"
+alias listDownloadDB="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select * from LSQuarantineEvent'"
+alias clearDownloadDB="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+alias networkEn0="ifconfig en0 | grep inet | awk '{ print $2 }'"
+# dig => dns info
+# get process number by name
+alias processName="ps -ax | grep"
+alias flushCache="sudo dscacheutil -flushcache"
+alias server="python3 -m http.server 2000"
 
 # basic auto/tab complete
 # autoload -U componit
@@ -124,4 +137,6 @@ export PATH="$HOME/tools/lua-language-server/bin/macOS:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-# export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"

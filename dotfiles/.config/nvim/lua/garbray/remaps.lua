@@ -20,8 +20,7 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- move current line but maintain current focus
 vim.keymap.set("n", "J", "mzJ`z")
 
--- keep cursor in the middle when use Ctrl d / u
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
+-- keep cursor in the middle when use Ctrl d / u vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 -- when search for a word keep the cursor in the middle

@@ -39,6 +39,7 @@ alias yd="yarn dev"
 # others
 alias ms="mvn spring-boot:run"
 alias copyPath="pwd | pbcopy"
+alias cgb="git branch --show-current | pbcopy"
 
 alias init_nvim="nvim ~/.config/nvim/init.vim"
 

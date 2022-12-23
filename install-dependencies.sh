@@ -125,8 +125,12 @@ brew install spotify-tui
 brew install spotifyd
 # start spotify process
 brew install neofetch
+brew install firefox
 
 brew install --cask keycastr
+# install packer
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 brew install numi
 
@@ -142,6 +146,13 @@ gh alias set work '!cp ~/.config/gh/hosts.yml.work ~/.config/gh/hosts.yml && gh 
 # spotifyd --no-daemon
 
 brew install java11
+# not sure if go is already installed
+cargo install stylua
+
+mkdir -p ~/.config/dap/
+python -m venv ~/.config/dap/debugpy
+~/.config/dap/debugpy -m pip install debugpy
+
 
 if [[ $PLATFORM == 'macos' ]]; then
     brew install yabai

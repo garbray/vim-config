@@ -32,10 +32,6 @@ vim.keymap.set("n", "<leader>arl", function()
 	ui.rm_file(4)
 end)
 
--- nnoremap <leader>tu :lua require("harpoon.term").gotoTerminal(1)<CR>
--- nnoremap <leader>te :lua require("harpoon.term").gotoTerminal(2)<CR>
--- nnoremap <leader>tw :lua require("harpoon.term").gotoTerminal(3)<CR>
-
 vim.keymap.set("n", "<leader>tu", function()
 	term.gotoTerminal(1)
 end)

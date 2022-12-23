@@ -1,18 +1,18 @@
 # Vim as IDE
 
-Lately I have decided to use vim as my main IDE some of the points for it are:
+Lately, I have decided to use vim as my main IDE some of the points for it are:
 
 - vim is lightweight
-- persistent session management with tmux just works
+- persistent session management with Tmux just works
 - efficient workflow navigation using hotkeys
 - use less your mouse
-- intellisense with LSP (build in on neovim)
+- Intellisense with LSP (build in on Neovim)
 
 ## TODO list
 
 - [ ] create installation script
 - [ ] use ansible
-- [ ] move to use lua
+- [x] move to use Lua
 
 ## Vim configuration and commands
 
@@ -20,7 +20,7 @@ Here is my vim setup and the configurations I found best suite for me.
 
 ## Dependencies
 
-To make vim works really great in macOSX you can use the following thirdparties to improve his performance
+To make vim works great in macOSX you can use the following third parties to improve his performance
 
 - brew
 - cask
@@ -76,7 +76,7 @@ brew install ripgrep
 
 ### Python3
 
-In the case you decide to use `nvim` and use Coc as your intellisense plugin you should install
+In the case, you decide to use `nvim` and use Coc as your intellisense plugin you should install
 
 ```
 python3 -m pip install --user --upgrade pynvim
