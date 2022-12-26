@@ -96,4 +96,10 @@ return require("packer").startup(function(use)
 	-- github
 	use("tyru/open-browser.vim")
 	use("tyru/open-browser-github.vim")
+
+	-- Dap
+	use("mfussenegger/nvim-dap")
+	use("jayp0521/mason-nvim-dap.nvim")
+	use("rcarriga/nvim-dap-ui")
+	-- Plug 'theHamsta/nvim-dap-virtual-text'
 end)
