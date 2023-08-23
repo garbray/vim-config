@@ -13,19 +13,20 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
     debug = false,
     sources = {
-	formatting.prettier,
-          -- .with({
-            -- condition = function(utils)
-            --     return utils.root_has_file({'package.json', 'tsconfig.json', '.git/'})
-            -- end,
-            -- extra_args = {},
+        formatting.prettier,
+        -- diagnostics.eslint_d,
+        -- .with({
+        -- condition = function(utils)
+        --     return utils.root_has_file({'package.json', 'tsconfig.json', '.git/'})
+        -- end,
+        -- extra_args = {},
         -- }),
         -- formatting.prettierd,
-	formatting.isort,
-	formatting.black.with({ extra_args = { "--fast" } }),
+        formatting.isort,
+        formatting.black.with({ extra_args = { "--fast" } }),
         -- require("null-ls").builtins.formatting.stylua,
-	formatting.stylua,
-	diagnostics.flake8,
+        formatting.stylua,
+        diagnostics.flake8,
         completion.spell,
     },
     on_attach = function(client, bufnr)

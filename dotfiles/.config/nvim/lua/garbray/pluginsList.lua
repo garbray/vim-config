@@ -39,32 +39,70 @@ return require("packer").startup(function(use)
 
 	use({
 		"VonHeikemen/lsp-zero.nvim",
+		branch = "v2.x",
 		requires = {
 			-- LSP Support
-			{ "neovim/nvim-lspconfig" },
-			{ "williamboman/mason.nvim" },
-			{ "williamboman/mason-lspconfig.nvim" },
+			{ "neovim/nvim-lspconfig" }, -- Required
+			{
+				-- Optional
+				"williamboman/mason.nvim",
+				run = function()
+					pcall(vim.cmd, "MasonUpdate")
+				end,
+			},
+			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
+
 			-- Autocompletion
-			{ "hrsh7th/nvim-cmp" },
+			{ "hrsh7th/nvim-cmp" }, -- Required
 			{ "hrsh7th/cmp-buffer" },
 			{ "hrsh7th/cmp-path" },
-			{ "saadparwaiz1/cmp_luasnip" },
-			{ "hrsh7th/cmp-nvim-lsp" },
-			{ "hrsh7th/cmp-nvim-lua" },
-			-- Snippets
-			{ "L3MON4D3/LuaSnip" },
+			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
+			{ "L3MON4D3/LuaSnip" }, -- Required
 			{ "rafamadriz/friendly-snippets" },
 		},
 	})
 	use("folke/neodev.nvim")
 	use("jose-elias-alvarez/null-ls.nvim")
+	use({
+		"linux-cultist/venv-selector.nvim",
+		reqires = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim" },
+		-- config = true,
+		-- event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
+		-- keys = {
+		-- 	{
+		-- 		"<leader>vs",
+		-- 		"<cmd>:VenvSelect<cr>",
+		-- 		-- key mapping for directly retrieve from cache. You may set autocmd if you prefer the no hand approach
+		-- 		"<leader>vc",
+		-- 		"<cmd>:VenvSelectCached<cr>",
+		-- 	},
+		-- },
+	})
 
 	use("tpope/vim-commentary")
 	use("tpope/vim-surround")
 	use("tpope/vim-sleuth")
 	use("lewis6991/gitsigns.nvim")
+	-- use("preservim/nerdtree")
 
+	-- IA tab nine
 	use({ "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" })
+	use({
+		"jcdickinson/http.nvim",
+		run = "cargo build --workspace --release",
+	})
+
+	use({
+		"jcdickinson/codeium.nvim",
+		requires = {
+			"jcdickinson/http.nvim",
+			"nvim-lua/plenary.nvim",
+			"hrsh7th/nvim-cmp",
+		},
+		config = function()
+			require("codeium").setup({})
+		end,
+	})
 
 	use("windwp/nvim-autopairs")
 	use("windwp/nvim-ts-autotag")
@@ -79,11 +117,10 @@ return require("packer").startup(function(use)
 	use("preservim/tagbar")
 	use("mhinz/vim-startify")
 	use({
-		"glepnir/lspsaga.nvim",
-		branch = "main",
+		"nvimdev/lspsaga.nvim",
+		after = "nvim-lspconfig",
 		config = function()
-			local saga = require("lspsaga")
-			saga.init_lsp_saga()
+			require("lspsaga").setup({})
 		end,
 	})
 	use({
@@ -102,4 +139,11 @@ return require("packer").startup(function(use)
 	use("jayp0521/mason-nvim-dap.nvim")
 	use("rcarriga/nvim-dap-ui")
 	-- Plug 'theHamsta/nvim-dap-virtual-text'
+	--
+	use({
+		"samodostal/image.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+		},
+	})
 end)

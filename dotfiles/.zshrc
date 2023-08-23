@@ -108,7 +108,7 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/etc/profile.d/z.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-alias python=/usr/local/bin/python3.9
+# alias python=/usr/local/bin/python3.9
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
@@ -140,3 +140,5 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+
+source /Users/bryangarzonbahamon/.docker/init-zsh.sh || true # Added by Docker Desktop

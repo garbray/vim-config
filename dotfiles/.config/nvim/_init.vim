@@ -11,7 +11,7 @@ if has("nvim")
   Plug 'williamboman/nvim-lsp-installer' " simple to use language server installer
 " until the probem for code action on lspsaga been resolve
   " Plug 'glepnir/lspsaga.nvim'
-  Plug 'rinx/lspsaga.nvim'
+  " Plug 'rinx/lspsaga.nvim'
 
   " autocomplete
   Plug 'hrsh7th/nvim-cmp'

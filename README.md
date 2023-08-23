@@ -1,6 +1,6 @@
 # Vim as IDE
 
-Lately, I have decided to use vim as my main IDE some of the points for it are:
+Lately, I have decided to use vim as my main IDE some points for it are:
 
 - vim is lightweight
 - persistent session management with Tmux just works
@@ -45,7 +45,7 @@ here are all the cask [formulas](https://github.com/neoclide/coc.nvim)
 brew cask install kitty
 ```
 
-if you are a `ohmyzsh` user to fix the autocomplete feature in kitty you should run
+if you are an `ohmyzsh` user to fix the autocomplete feature in kitty you should run
 
 > export LANG="en_US.UTF-8"
 
@@ -60,7 +60,7 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 
 ### Highlight
 
-Display the previsualizer with the color syntaxis
+Display the pre visualizer with the color syntaxis
 
 ```
 brew install highlight
@@ -138,3 +138,5 @@ test your ssh
 ```
 ssh -T youralias
 ```
+
+testing word adding
