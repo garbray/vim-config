@@ -36,6 +36,22 @@ return require("packer").startup(function(use)
 	use("theprimeagen/harpoon")
 	use("mbbill/undotree")
 	use("tpope/vim-fugitive")
+	use({
+		"jcdickinson/http.nvim",
+		run = "cargo build --workspace --release",
+	})
+
+	use({
+		"jcdickinson/codeium.nvim",
+		requires = {
+			"jcdickinson/http.nvim",
+			"nvim-lua/plenary.nvim",
+			"hrsh7th/nvim-cmp",
+		},
+		config = function()
+			require("codeium").setup({})
+		end,
+	})
 
 	use({
 		"VonHeikemen/lsp-zero.nvim",
@@ -86,26 +102,12 @@ return require("packer").startup(function(use)
 	-- use("preservim/nerdtree")
 
 	-- IA tab nine
-	use({ "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" })
-	use({
-		"jcdickinson/http.nvim",
-		run = "cargo build --workspace --release",
-	})
-
-	use({
-		"jcdickinson/codeium.nvim",
-		requires = {
-			"jcdickinson/http.nvim",
-			"nvim-lua/plenary.nvim",
-			"hrsh7th/nvim-cmp",
-		},
-		config = function()
-			require("codeium").setup({})
-		end,
-	})
+	-- use({ "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" })
+	-- use({ "codota/tabnine-nvim", run = "./dl_binaries.sh" })
 
 	use("windwp/nvim-autopairs")
 	use("windwp/nvim-ts-autotag")
+	use("prisma/vim-prisma")
 
 	use("plasticboy/vim-markdown")
 	use("nvim-lualine/lualine.nvim")

@@ -20,7 +20,12 @@ ln -s $repoPath/dotfiles/.zshrc ~/.zshrc
 
 rm ~/tmuxSelector
 ln -s $repoPath/tmuxSelector ~/tmuxSelector
-rm /usr/local/bin/projectSelector
+
+if [ ! -d /usr/local/bin/ ]; then
+    mkdir /usr/local/bin
+else
+    rm /usr/local/bin/projectSelector
+fi
 sudo ln -s $repoPath/tmuxSelector /usr/local/bin/projectSelector
 
 

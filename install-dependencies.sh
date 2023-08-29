@@ -32,7 +32,7 @@ brew install highlight
 brew install tmux
 
 # install window manager
-brew cask install amethyst
+# brew install --cask amethyst
 
 mkdir ~/.go
 
@@ -85,8 +85,7 @@ echo "review if the font is updated https://github.com/tonsky/FiraCode/wiki/Inst
 
 echo "$FGRN finish installing basic dependencies"
 echo "$FGRN copying config files"
-cp -r dotfiles/ ~/
-cp dotfiles/.zshrc ~/
+
 npm install -g neovim
 pip install black
 pip install flake8
@@ -156,8 +155,10 @@ python -m venv ~/.config/dap/debugpy
 
 
 if [[ $PLATFORM == 'macos' ]]; then
-    brew install yabai
+    brew install koekeishiya/formulae/yabai
     brew install koekeishiya/formulae/skhd
     brew install skhd
     brew install trash-cli
     brew install --cask raycast
+
+# TODO execute install script

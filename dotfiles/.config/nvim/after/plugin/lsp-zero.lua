@@ -22,9 +22,13 @@ cmp.setup({
 		["<C-y>"] = cmp.mapping.confirm({ select = true }),
 		["<C-Space>"] = cmp.mapping.complete(),
 	},
-	-- sources = {
-	-- 	{ name = "codeium" },
-	-- },
+	sources = {
+		{ name = "codeium" },
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+		{ name = "buffer" },
+		{ name = "path" },
+	},
 })
 
 lsp.set_preferences({
