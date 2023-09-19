@@ -15,4 +15,3 @@ compile/install.sh
 cd ../..
 ./3rd/luamake/luamake rebuild
 ```
-

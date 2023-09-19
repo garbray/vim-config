@@ -1,92 +1,156 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
--- Only required if you have packer configured as `opt`
-vim.cmd([[packadd packer.nvim]])
-
-local install_path = vim.fn.stdpath("data") .. "/.local/share/nvim/site/pack/packer/start/packer.nvim"
-local is_bootstrap = false
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-	is_bootstrap = true
-	vim.fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-	vim.cmd([[packadd packer.nvim]])
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
 end
+vim.opt.rtp:prepend(lazypath)
 
-return require("packer").startup(function(use)
-	-- Packer can manage itself
-	use("wbthomason/packer.nvim")
-
-	use({
+require("lazy").setup({
+	{
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.0",
 		-- or
-		requires = { { "nvim-lua/plenary.nvim" } },
-	})
-	-- color schemas
-	use({
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			-- Fuzzy Finder Algorithm which requires local dependencies to be built.
+			-- Only load if `make` is available. Make sure you have the system
+			-- requirements installed.
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				-- NOTE: If you are having trouble with this installation,
+				--       refer to the README for telescope-fzf-native for more instructions.
+				build = "make",
+				cond = function()
+					return vim.fn.executable("make") == 1
+				end,
+			},
+		},
+	},
+	{
+		-- Highlight, edit, and navigate code
+		"nvim-treesitter/nvim-treesitter",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter-textobjects",
+		},
+		build = ":TSUpdate",
+	},
+	"nvim-treesitter/playground",
+	"theprimeagen/harpoon",
+	"mbbill/undotree",
+	"tpope/vim-fugitive",
+	"tpope/vim-commentary",
+	"tpope/vim-surround",
+	"tpope/vim-sleuth",
+	"lewis6991/gitsigns.nvim",
+	-- colorschema
+	{
 		"rose-pine/neovim",
-		as = "rose-pine",
+		name = "rose-pine",
 		config = function()
 			vim.cmd("colorscheme rose-pine")
 		end,
-	})
-	use("gruvbox-community/gruvbox")
+	},
+	"gruvbox-community/gruvbox",
+	{
+		-- Optional
+		"williamboman/mason.nvim",
+		run = function()
+			pcall(vim.cmd, "MasonUpdate")
+		end,
+	},
 
-	use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
-	use("nvim-treesitter/playground")
-	use("theprimeagen/harpoon")
-	use("mbbill/undotree")
-	use("tpope/vim-fugitive")
-	-- use({
-	-- 	"jcdickinson/http.nvim",
-	-- 	run = "cargo build --workspace --release",
-	-- })
-	use({
-		"L3MON4D3/LuaSnip",
-		-- follow latest release.
-		tag = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-		-- install jsregexp (optional!:).
-		run = "make install_jsregexp",
-	})
+	{
+		"VonHeikemen/lsp-zero.nvim",
+		branch = "v3.x",
+		lazy = true,
+		config = false,
+		init = function()
+			-- Disable automatic setup, we are doing it manually
+			vim.g.lsp_zero_extend_cmp = 0
+			vim.g.lsp_zero_extend_lspconfig = 0
+		end,
+	},
+	-- Autocompletion
+	{
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		dependencies = {
+			{
+				"L3MON4D3/LuaSnip",
+				run = "make install_jsregexp",
+			},
+		},
+		config = function()
+			-- Here is where you configure the autocompletion settings.
+			local lsp_zero = require("lsp-zero")
+			lsp_zero.extend_cmp()
 
-	use({
+			-- And you can configure cmp even more, if you want to.
+			local cmp = require("cmp")
+			local cmp_action = lsp_zero.cmp_action()
+
+			cmp.setup({
+				formatting = lsp_zero.cmp_format(),
+				mapping = cmp.mapping.preset.insert({
+					["<C-Space>"] = cmp.mapping.complete(),
+					["<C-u>"] = cmp.mapping.scroll_docs(-4),
+					["<C-d>"] = cmp.mapping.scroll_docs(4),
+					["<C-f>"] = cmp_action.luasnip_jump_forward(),
+					["<C-b>"] = cmp_action.luasnip_jump_backward(),
+				}),
+			})
+		end,
+	},
+	-- LSP
+	{
+		"neovim/nvim-lspconfig",
+		cmd = "LspInfo",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			{ "hrsh7th/cmp-nvim-lsp" },
+		},
+		config = function()
+			-- This is where all the LSP shenanigans will live
+			local lsp_zero = require("lsp-zero")
+			lsp_zero.extend_lspconfig()
+
+			lsp_zero.on_attach(function(client, bufnr)
+				-- see :help lsp-zero-keybindings
+				-- to learn the available actions
+				lsp_zero.default_keymaps({ buffer = bufnr })
+			end)
+
+			-- (Optional) Configure lua language server for neovim
+			local lua_opts = lsp_zero.nvim_lua_ls()
+			require("lspconfig").lua_ls.setup(lua_opts)
+		end,
+	},
+	{
 		"jcdickinson/codeium.nvim",
-		requires = {
+		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"hrsh7th/nvim-cmp",
 		},
 		config = function()
 			require("codeium").setup({})
 		end,
-	})
-	use({
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v2.x",
-		requires = {
-			-- LSP Support
-			{ "neovim/nvim-lspconfig" }, -- Required
-			{
-				-- Optional
-				"williamboman/mason.nvim",
-				run = function()
-					pcall(vim.cmd, "MasonUpdate")
-				end,
-			},
-			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
+	},
 
-			-- Autocompletion
-			{ "hrsh7th/nvim-cmp" }, -- Required
-			{ "hrsh7th/cmp-buffer" },
-			{ "hrsh7th/cmp-path" },
-			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
-			{ "L3MON4D3/LuaSnip" }, -- Required
-			{ "rafamadriz/friendly-snippets" },
-		},
-	})
-	use("folke/neodev.nvim")
-	use("jose-elias-alvarez/null-ls.nvim")
-	use({
+	"folke/neodev.nvim",
+	"jose-elias-alvarez/null-ls.nvim",
+
+	-- python
+	{
 		"linux-cultist/venv-selector.nvim",
-		reqires = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim" },
+		dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim" },
 		-- config = true,
 		-- event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
 		-- keys = {
@@ -98,64 +162,58 @@ return require("packer").startup(function(use)
 		-- 		"<cmd>:VenvSelectCached<cr>",
 		-- 	},
 		-- },
-	})
+	},
 
-	use("tpope/vim-commentary")
-	use("tpope/vim-surround")
-	use("tpope/vim-sleuth")
-	use("lewis6991/gitsigns.nvim")
-	-- use("preservim/nerdtree")
+	"windwp/nvim-autopairs",
+	"windwp/nvim-ts-autotag",
+	"prisma/vim-prisma",
 
-	-- IA tab nine
-	-- use({ "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" })
-	-- use({ "codota/tabnine-nvim", run = "./dl_binaries.sh" })
+	"plasticboy/vim-markdown",
+	"nvim-lualine/lualine.nvim",
+	"vuciv/vim-bujo",
+	"lukas-reineke/indent-blankline.nvim",
+	"andymass/vim-matchup",
 
-	use("windwp/nvim-autopairs")
-	use("windwp/nvim-ts-autotag")
-	use("prisma/vim-prisma")
-
-	use("plasticboy/vim-markdown")
-	use("nvim-lualine/lualine.nvim")
-	use("vuciv/vim-bujo")
-	use("lukas-reineke/indent-blankline.nvim")
-	use("andymass/vim-matchup")
-
-	-- maybe not necessary
-	use("preservim/tagbar")
-	use("mhinz/vim-startify")
-	use({
+	"preservim/tagbar",
+	"mhinz/vim-startify",
+	{
 		"nvimdev/lspsaga.nvim",
 		after = "nvim-lspconfig",
 		config = function()
 			require("lspsaga").setup({})
 		end,
-	})
-	use({
+	},
+	{
 		"iamcco/markdown-preview.nvim",
-		run = function()
+		config = function()
 			vim.fn["mkdp#util#install"]()
 		end,
-	})
+	},
 
+	"windwp/nvim-autopairs",
 	-- github
-	use("tyru/open-browser.vim")
-	use("tyru/open-browser-github.vim")
+	"tyru/open-browser.vim",
+	{
+
+		"tyru/open-browser-github.vim",
+		dependencies = {
+			"tyru/open-browser.vim",
+		},
+	},
 
 	-- Dap
-	use("mfussenegger/nvim-dap")
-	use("jayp0521/mason-nvim-dap.nvim")
-	use("rcarriga/nvim-dap-ui")
-	-- Plug 'theHamsta/nvim-dap-virtual-text'
-	--
-	use({
+	"mfussenegger/nvim-dap",
+	"jayp0521/mason-nvim-dap.nvim",
+	"rcarriga/nvim-dap-ui",
+	{
 		"samodostal/image.nvim",
-		requires = {
+		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
-	})
-	use({
+	},
+	{
 		"rest-nvim/rest.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
+		dependencies = { "nvim-lua/plenary.nvim" },
 		ensure_installed = { "http", "json" },
 		config = function()
 			require("rest-nvim").setup({
@@ -196,5 +254,5 @@ return require("packer").startup(function(use)
 				yank_dry_run = true,
 			})
 		end,
-	})
-end)
+	},
+}, {})
