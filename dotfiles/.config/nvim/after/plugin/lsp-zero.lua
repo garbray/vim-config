@@ -1,10 +1,11 @@
-local lsp = require("lsp-zero")
+local lsp_zero = require("lsp-zero")
 local buf = vim.lsp.buf
 local diagnostic = vim.diagnostic
 local keymap = vim.keymap.set
+local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-lsp.preset("recommended")
-lsp.setup({
+lsp_zero.preset("recommended")
+lsp_zero.setup({
 	"tsserver",
 	"eslint",
 	"sumneko_lua",
@@ -15,13 +16,6 @@ local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
 cmp.setup({
-	mapping = {
-		["<CR>"] = cmp.mapping.confirm({ select = false }),
-		["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-		["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-		["<C-y>"] = cmp.mapping.confirm({ select = true }),
-		["<C-Space>"] = cmp.mapping.complete(),
-	},
 	sources = {
 		{ name = "codeium" },
 		{ name = "nvim_lsp" },
@@ -29,13 +23,25 @@ cmp.setup({
 		{ name = "buffer" },
 		{ name = "path" },
 	},
+	mapping = {
+		["<CR>"] = cmp.mapping.confirm({ select = false }),
+		["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+		["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+		["<C-y>"] = cmp.mapping.confirm({ select = true }),
+		["<C-Space>"] = cmp.mapping.complete(),
+	},
+	snippet = {
+		expand = function(args)
+			require("luasnip").lsp_expand(args.body)
+		end,
+	},
 })
 
-lsp.set_preferences({
+lsp_zero.set_preferences({
 	sign_icons = {},
 })
 
-lsp.on_attach(function(client, bufnr)
+lsp_zero.on_attach(function(client, bufnr)
 	local opts = { buffer = bufnr, remap = false }
 
 	keymap("n", "gd", function()
@@ -71,4 +77,10 @@ lsp.on_attach(function(client, bufnr)
 	end, opts)
 end)
 
-lsp.setup()
+-- lsp.setup()
+require("lspconfig").tsserver.setup({
+	capabilities = lsp_capabilities,
+	on_attach = function(client, bufnr)
+		lsp_zero.default_keymaps({ buffer = bufnr })
+	end,
+})

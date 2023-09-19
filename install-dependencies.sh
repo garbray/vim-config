@@ -15,7 +15,6 @@ brew install zsh
 
 # install ohmyzsh
 $ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 brew install zsh-syntax-highlighting
 
 # install plug
@@ -46,7 +45,10 @@ brew install lua
 brew install luarocks
 brew install yarn node deno
 brew install rust
+# node version manager 
 brew install volta
+# another package management for node modules
+brew install pnpm
 brew install ansible
 brew install karabiner-elements --cask
 # TODO review if generate any aditional benefits
@@ -162,3 +164,7 @@ if [[ $PLATFORM == 'macos' ]]; then
     brew install --cask raycast
 
 # TODO execute install script
+brew install youtube-dl
+brew install ffmpeg
+brew install --cask docker
+

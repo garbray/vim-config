@@ -141,4 +141,12 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 
-source /Users/bryangarzonbahamon/.docker/init-zsh.sh || true # Added by Docker Desktop
+#source /Users/bryangarzonbahamon/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+# pnpm
+export PNPM_HOME="/Users/bryangarzonbahamon/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
