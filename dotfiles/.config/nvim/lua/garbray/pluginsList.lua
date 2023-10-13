@@ -16,7 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.0",
+		tag = "0.1.3",
 		-- or
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -42,6 +42,7 @@ require("lazy").setup({
 		},
 		build = ":TSUpdate",
 	},
+	-- plugins
 	"nvim-treesitter/playground",
 	"theprimeagen/harpoon",
 	"mbbill/undotree",
@@ -59,14 +60,13 @@ require("lazy").setup({
 		end,
 	},
 	"gruvbox-community/gruvbox",
-	{
-		-- Optional
-		"williamboman/mason.nvim",
-		run = function()
-			pcall(vim.cmd, "MasonUpdate")
-		end,
-	},
-
+	-- package manager
+	"williamboman/mason.nvim",
+	{ "williamboman/mason-lspconfig.nvim" },
+	-- LSP
+	{ "neovim/nvim-lspconfig" },
+	{ "hrsh7th/cmp-nvim-lsp" },
+	{ "L3MON4D3/LuaSnip" },
 	{
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v3.x",
@@ -78,15 +78,13 @@ require("lazy").setup({
 			vim.g.lsp_zero_extend_lspconfig = 0
 		end,
 	},
-	-- Autocompletion
 	{
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
 		dependencies = {
-			{
-				"L3MON4D3/LuaSnip",
-				run = "make install_jsregexp",
-			},
+			"L3MON4D3/LuaSnip",
+			"hrsh7th/nvim-cmp",
+			"VonHeikemen/lsp-zero.nvim",
 		},
 		config = function()
 			-- Here is where you configure the autocompletion settings.
@@ -95,42 +93,33 @@ require("lazy").setup({
 
 			-- And you can configure cmp even more, if you want to.
 			local cmp = require("cmp")
+			local cmp_select = { behavior = cmp.SelectBehavior.Select }
 			local cmp_action = lsp_zero.cmp_action()
-
 			cmp.setup({
+				sources = {
+					{ name = "codeium" },
+					{ name = "nvim_lsp" },
+					{ name = "luasnip" },
+					{ name = "buffer" },
+					{ name = "path" },
+				},
 				formatting = lsp_zero.cmp_format(),
 				mapping = cmp.mapping.preset.insert({
 					["<C-Space>"] = cmp.mapping.complete(),
+					["<CR>"] = cmp.mapping.confirm({ select = false }),
 					["<C-u>"] = cmp.mapping.scroll_docs(-4),
 					["<C-d>"] = cmp.mapping.scroll_docs(4),
 					["<C-f>"] = cmp_action.luasnip_jump_forward(),
 					["<C-b>"] = cmp_action.luasnip_jump_backward(),
+					["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = "select" }),
+					["<Tab>"] = cmp.mapping.select_next_item({ behavior = "select" }),
 				}),
+				snippet = {
+					expand = function(args)
+						require("luasnip").lsp_expand(args.body)
+					end,
+				},
 			})
-		end,
-	},
-	-- LSP
-	{
-		"neovim/nvim-lspconfig",
-		cmd = "LspInfo",
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			{ "hrsh7th/cmp-nvim-lsp" },
-		},
-		config = function()
-			-- This is where all the LSP shenanigans will live
-			local lsp_zero = require("lsp-zero")
-			lsp_zero.extend_lspconfig()
-
-			lsp_zero.on_attach(function(client, bufnr)
-				-- see :help lsp-zero-keybindings
-				-- to learn the available actions
-				lsp_zero.default_keymaps({ buffer = bufnr })
-			end)
-
-			-- (Optional) Configure lua language server for neovim
-			local lua_opts = lsp_zero.nvim_lua_ls()
-			require("lspconfig").lua_ls.setup(lua_opts)
 		end,
 	},
 	{
@@ -163,9 +152,8 @@ require("lazy").setup({
 		-- 	},
 		-- },
 	},
+	"interdependence/tree-sitter-htmldjango",
 
-	"windwp/nvim-autopairs",
-	"windwp/nvim-ts-autotag",
 	"prisma/vim-prisma",
 
 	"plasticboy/vim-markdown",
@@ -176,6 +164,8 @@ require("lazy").setup({
 
 	"preservim/tagbar",
 	"mhinz/vim-startify",
+	"windwp/nvim-autopairs",
+	"windwp/nvim-ts-autotag",
 	{
 		"nvimdev/lspsaga.nvim",
 		after = "nvim-lspconfig",
@@ -190,7 +180,6 @@ require("lazy").setup({
 		end,
 	},
 
-	"windwp/nvim-autopairs",
 	-- github
 	"tyru/open-browser.vim",
 	{
@@ -203,7 +192,7 @@ require("lazy").setup({
 
 	-- Dap
 	"mfussenegger/nvim-dap",
-	"jayp0521/mason-nvim-dap.nvim",
+	"jayp0521/Mason-nvim-dap.nvim",
 	"rcarriga/nvim-dap-ui",
 	{
 		"samodostal/image.nvim",
@@ -213,46 +202,8 @@ require("lazy").setup({
 	},
 	{
 		"rest-nvim/rest.nvim",
+		-- "NTBBloodbath/rest.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		ensure_installed = { "http", "json" },
-		config = function()
-			require("rest-nvim").setup({
-				-- Open request results in a horizontal split
-				result_split_horizontal = false,
-				-- Keep the http file buffer above|left when split horizontal|vertical
-				result_split_in_place = false,
-				-- Skip SSL verification, useful for unknown certificates
-				skip_ssl_verification = false,
-				-- Encode URL before making request
-				encode_url = true,
-				-- Highlight request on run
-				highlight = {
-					enabled = true,
-					timeout = 150,
-				},
-				result = {
-					-- toggle showing URL, HTTP info, headers at top the of result window
-					show_url = true,
-					-- show the generated curl command in case you want to launch
-					-- the same request via the terminal (can be verbose)
-					show_curl_command = false,
-					show_http_info = true,
-					show_headers = true,
-					-- executables or functions for formatting response body [optional]
-					-- set them to false if you want to disable them
-					-- formatters = {
-					-- 	json = "jq",
-					-- 	html = function(body)
-					-- 		return vim.fn.system({ "tidy", "-i", "-q", "-" }, body)
-					-- 	end,
-					-- },
-				},
-				-- Jump to request line on run
-				jump_to_request = false,
-				env_file = ".env",
-				custom_dynamic_variables = {},
-				yank_dry_run = true,
-			})
-		end,
 	},
 }, {})

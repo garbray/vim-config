@@ -12,31 +12,6 @@ lsp_zero.setup({
 	"rust_analyzer",
 })
 
-local cmp = require("cmp")
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-cmp.setup({
-	sources = {
-		{ name = "codeium" },
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-		{ name = "buffer" },
-		{ name = "path" },
-	},
-	mapping = {
-		["<CR>"] = cmp.mapping.confirm({ select = false }),
-		["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-		["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-		["<C-y>"] = cmp.mapping.confirm({ select = true }),
-		["<C-Space>"] = cmp.mapping.complete(),
-	},
-	snippet = {
-		expand = function(args)
-			require("luasnip").lsp_expand(args.body)
-		end,
-	},
-})
-
 lsp_zero.set_preferences({
 	sign_icons = {},
 })
@@ -83,4 +58,15 @@ require("lspconfig").tsserver.setup({
 	on_attach = function(client, bufnr)
 		lsp_zero.default_keymaps({ buffer = bufnr })
 	end,
+})
+
+require("mason-lspconfig").setup({
+	ensure_installed = { "tsserver", "rust_analyzer" },
+	handlers = {
+		lsp_zero.default_setup,
+		lua_ls = function()
+			local lua_opts = lsp_zero.nvim_lua_ls()
+			require("lspconfig").lua_ls.setup(lua_opts)
+		end,
+	},
 })

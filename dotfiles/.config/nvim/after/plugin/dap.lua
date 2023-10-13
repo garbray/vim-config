@@ -1,19 +1,19 @@
--- local dap_status_ok, dap = pcall(require, "dap")
--- if not dap_status_ok then
--- 	return
--- end
--- local mason_nvim_dap_ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
--- if not mason_nvim_dap_ok then
--- 	return
--- end
+local dap_status_ok, dap = pcall(require, "dap")
+if not dap_status_ok then
+	return
+end
+local mason_nvim_dap_ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
+if not mason_nvim_dap_ok then
+	return
+end
 
--- local keymap = vim.keymap.set
+local keymap = vim.keymap.set
 
--- require("mason").setup()
--- mason_nvim_dap.setup({
--- 	ensure_installed = { "python", "delve", "node2", "chrome", "firefox" },
--- 	automatic_setup = true,
--- })
+require("mason").setup()
+mason_nvim_dap.setup({
+	ensure_installed = { "python", "delve", "node2", "chrome", "firefox" },
+	automatic_setup = true,
+})
 
 -- mason_nvim_dap.setup_handlers({
 -- 	function(source_name)
