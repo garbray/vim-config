@@ -168,4 +168,4 @@ brew install youtube-dl
 brew install ffmpeg
 brew install --cask docker
 brew install jq tidy-html5
-
+brew install act # run github actions locally
