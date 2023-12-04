@@ -66,7 +66,6 @@ require("lazy").setup({
 	-- LSP
 	{ "neovim/nvim-lspconfig" },
 	{ "hrsh7th/cmp-nvim-lsp" },
-	{ "L3MON4D3/LuaSnip" },
 	{
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v3.x",
@@ -82,7 +81,30 @@ require("lazy").setup({
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
 		dependencies = {
-			"L3MON4D3/LuaSnip",
+			{
+				"L3MON4D3/LuaSnip",
+				dependencies = {
+					"rafamadriz/friendly-snippets",
+				},
+				opts = { history = true, updateevents = "TextChanged,TextChangedI" },
+				config = function(_, opts)
+					-- TODO move into a module
+					require("luasnip").config.set_config(opts)
+					-- vscode format
+					require("luasnip.loaders.from_vscode").lazy_load()
+					require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.g.vscode_snippets_path or "" })
+
+					-- snipmate format
+					require("luasnip.loaders.from_snipmate").load()
+					require("luasnip.loaders.from_snipmate").lazy_load({
+						paths = vim.g.snipmate_snippets_path or "",
+					})
+
+					-- lua format
+					require("luasnip.loaders.from_lua").load()
+					require("luasnip.loaders.from_lua").lazy_load({ paths = vim.g.lua_snippets_path or "" })
+				end,
+			},
 			"hrsh7th/nvim-cmp",
 			"VonHeikemen/lsp-zero.nvim",
 		},
@@ -125,7 +147,6 @@ require("lazy").setup({
 	"nvim-lualine/lualine.nvim",
 	"vuciv/vim-bujo",
 	"lukas-reineke/indent-blankline.nvim",
-	"andymass/vim-matchup",
 
 	"preservim/tagbar",
 	"mhinz/vim-startify",
@@ -157,8 +178,27 @@ require("lazy").setup({
 
 	-- Dap
 	"mfussenegger/nvim-dap",
-	"jayp0521/Mason-nvim-dap.nvim",
-	"rcarriga/nvim-dap-ui",
+	"jayp0521/mason-nvim-dap.nvim",
+	{
+		"rcarriga/nvim-dap-ui",
+		dependencies = "mfussenegger/nvim-dap",
+		config = function()
+			local dap = require("dap")
+			local dapui = require("dapui")
+			require("dapui").setup()
+
+			dap.listeners.after.event_initialized["dapui_config"] = function()
+				dapui.open()
+			end
+			dap.listeners.before.event_terminated["dapui_config"] = function()
+				dapui.close()
+			end
+			dap.listeners.before.event_exited["dapui_config"] = function()
+				dapui.close()
+			end
+		end,
+	},
+	"theHamsta/nvim-dap-virtual-text",
 	{
 		"samodostal/image.nvim",
 		dependencies = {
@@ -170,5 +210,10 @@ require("lazy").setup({
 		-- "NTBBloodbath/rest.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		ensure_installed = { "http", "json" },
+	},
+
+	{
+		"folke/zen-mode.nvim",
+		opts = {},
 	},
 }, {})

@@ -169,3 +169,4 @@ brew install ffmpeg
 brew install --cask docker
 brew install jq tidy-html5
 brew install act # run github actions locally
+brew install tursodatabase/tap/turso # db cli turso
