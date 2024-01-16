@@ -75,3 +75,17 @@ vim.keymap.set("n", "<leader>bl", vim.cmd.buffers)
 
 -- source vim config
 vim.keymap.set("n", "<leader><CR>", ":so ~/.config/nvim/init.lua<CR>")
+
+-- copilot
+-- vim.g.copilot_assume_mapped = true
+-- vim.g.copilot_no_tab_map = true
+-- vim.keymap.set("i", "<C-Space>", "copilot#Accept(“<CR>”)", { silent = true })
+-- vim.api.nvim_set_keymap("i", "<C-/>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
+-- vim.keymap.set("n", "<C-Right>", "copilot#Accept(“<CR>”)", { silent = true })
+-- vim.keymap.set("v", "<C-Right>", "copilot#Accept(“<CR>”)", { silent = true })
+-- vim.keymap.set("i", "<C-S-e>", "<Plug>(copilot-cancel)", { silent = true })
+-- vim.keymap.set("n", "<C-S-e>", "<Plug>(copilot-cancel)", { silent = true })
+-- vim.keymap.set("v", "<C-S-e>", "<Plug>(copilot-cancel)", { silent = true })
+-- vim.keymap.set("i", "<C-Space>", "<Plug>(copilot-complete)", { silent = true })
+-- vim.keymap.set("n", "<C-Space>", "<Plug>(copilot-complete)", { silent = true })
+-- vim.keymap.set("v", "<C-Space>", "<Plug>(copilot-complete)", { silent = true })

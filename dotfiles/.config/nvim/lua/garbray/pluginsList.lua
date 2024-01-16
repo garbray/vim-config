@@ -61,7 +61,24 @@ require("lazy").setup({
 	},
 	"gruvbox-community/gruvbox",
 	-- package manager
-	"williamboman/mason.nvim",
+	{
+		"williamboman/mason.nvim",
+		opts = {
+			ensure_installed = {
+				"stylua",
+				-- formaters
+				"eslint_d",
+				"prettier",
+				"prettierd",
+				-- code spell
+				"codespell",
+				"misspell",
+				"cspell",
+				-- markdown
+				"markdownlint",
+			},
+		},
+	},
 	{ "williamboman/mason-lspconfig.nvim" },
 	-- LSP
 	{ "neovim/nvim-lspconfig" },
@@ -109,19 +126,51 @@ require("lazy").setup({
 			"VonHeikemen/lsp-zero.nvim",
 		},
 	},
+	-- IA
+	-- {
+	-- 	"jcdickinson/codeium.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"hrsh7th/nvim-cmp",
+	-- 	},
+	-- 	config = function()
+	-- 		require("codeium").setup({})
+	-- 	end,
+	-- },
+	{ "zbirenbaum/copilot.lua" },
+	"github/copilot.vim",
 	{
-		"jcdickinson/codeium.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"hrsh7th/nvim-cmp",
+		"zbirenbaum/copilot-cmp",
+		after = {
+			"github/copilot.vim",
+			"nvim-cmp",
 		},
 		config = function()
-			require("codeium").setup({})
+			local status, copilot_cmp = pcall(require, "copilot_cmp")
+			if not status then
+				return
+			end
+
+			copilot_cmp.setup({})
+			-- require("copilot_cmp").setup()
 		end,
 	},
+	-- {'gptlang/CopilotChat.nvim'} // review if this makes sense
 
 	"folke/neodev.nvim",
-	"jose-elias-alvarez/null-ls.nvim",
+	{
+		"jose-elias-alvarez/null-ls.nvim",
+		dependencies = {
+
+			"davidmh/cspell.nvim",
+		},
+	},
+	{
+		"nvimtools/none-ls.nvim",
+		dependencies = {
+			"davidmh/cspell.nvim",
+		},
+	},
 
 	-- python
 	{

@@ -90,7 +90,7 @@ Tmux basic usage
 
 CheatSheet
 
-[cheatsheet vim](./cheatsheet-vim.md)
+[cheat-sheet vim](./cheatsheet-vim.md)
 
 Search inside vim project
 
@@ -109,14 +109,14 @@ chmod +x backup
 add a new ssh
 
 ```
-ssh-keygen -t rsa -b 4096 -C "youremail"
+ssh-keygen -t rsa -b 4096 -C "your-email"
 
 ```
 
 in the ssh folder create a config file with the following
 
 ```
-# Defauilt Github
+# Default Github
 Host work
     HostName github.com
     AddKeysToAgent yes
@@ -136,7 +136,7 @@ ssh-add path-to-ssh-key
 test your ssh
 
 ```
-ssh -T youralias
+ssh -T your-alias
 ```
 
 testing word adding

@@ -140,8 +140,9 @@ brew install gh
 # create alias commands to handle multiple github credentials accounts
 # TODO create a way to store those in a safe fashion
 # based on https://gist.github.com/yermulnik/017837c01879ed3c7489cc7cf749ae47
-touch ~/.config/sh/hosts.yml.personal
-touch ~/.config/sh/hosts.yml.work
+mkdir ~/.config/gh
+touch ~/.config/gh/hosts.yml.personal
+touch ~/.config/gh/hosts.yml.work
 gh alias set personal '!cp ~/.config/gh/hosts.yml.personal ~/.config/gh/hosts.yml && gh auth status'
 gh alias set work '!cp ~/.config/gh/hosts.yml.work ~/.config/gh/hosts.yml && gh auth status'
 

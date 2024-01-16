@@ -40,6 +40,7 @@ require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
 	sources = {
+		{ name = "copilot" },
 		{ name = "codeium" },
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
@@ -52,10 +53,10 @@ cmp.setup({
 		["<CR>"] = cmp.mapping.confirm({ select = false }),
 		["<C-u>"] = cmp.mapping.scroll_docs(-4),
 		["<C-d>"] = cmp.mapping.scroll_docs(4),
-		["<C-f>"] = cmp_action.luasnip_jump_forward(),
+		-- ["<C-f>"] = cmp_action.luasnip_jump_forward(),
 		["<C-b>"] = cmp_action.luasnip_jump_backward(),
 		["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = "select" }),
-		["<Tab>"] = cmp.mapping.select_next_item({ behavior = "select" }),
+		-- ["<Tab>"] = cmp.mapping.select_next_item({ behavior = "select" }),
 	}),
 	snippet = {
 		expand = function(args)
