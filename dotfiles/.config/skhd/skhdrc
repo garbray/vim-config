@@ -44,20 +44,20 @@ alt + cmd - l : yabai -m window --resize right:40:0 || yabai -m window --resize 
 # alt - 6 : yabai -m space --focus 6
 # alt - 7 : yabai -m space --focus 7
 
-# trow current app to specific space
-alt + shift - 1 : yabai -m window --space 1
-alt + shift - 2 : yabai -m window --space 2
-alt + shift - 3 : yabai -m window --space 3
-alt + shift - 4 : yabai -m window --space 4
-alt + shift - 5 : yabai -m window --space 5
-alt + shift - 6 : yabai -m window --space 6
-alt + shift - 7 : yabai -m window --space 7
+# trow current app to specific space and focus that space
+alt + shift - 1 : yabai -m window --space 1 --focus
+alt + shift - 2 : yabai -m window --space 2 --focus
+alt + shift - 3 : yabai -m window --space 3 --focus
+alt + shift - 4 : yabai -m window --space 4 --focus 
+alt + shift - 5 : yabai -m window --space 5 --focus
+alt + shift - 6 : yabai -m window --space 6 --focus
+alt + shift - 7 : yabai -m window --space 7 --focus
 
 # change focus between external displays (left and right)
 alt - s: yabai -m display --focus west 
 alt - g: yabai -m display --focus east 
 
-# move winodw to display left and right
+# move window to display left and right
 alt + shift - s : yabai -m window --display west; yabay -m display --focus west;
 alt + shift - g : yabai -m window --display east; yabay -m display --focus west;
 

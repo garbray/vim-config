@@ -29,6 +29,7 @@ null_ls.setup({
 		formatting.stylua,
 		diagnostics.flake8,
 		completion.spell,
+		-- diagnostics.eslint,
 		diagnostics.codespell,
 		diagnostics.misspell,
 		-- diagnostics.cspell,

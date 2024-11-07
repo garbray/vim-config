@@ -35,6 +35,13 @@ alias ys="yarn start"
 alias yb="yarn build"
 alias ytdd="yarn test --watch --verbose"
 alias yd="yarn dev"
+# alias pnpm 
+alias pr="pnpm run"
+alias ps="pnpm run start"
+alias pd="pnpm run dev"
+alias pt="pnpm run test"
+alias ptw="pnpm run test --watch"
+alias pb="pnpm run build"
 
 # others
 alias ms="mvn spring-boot:run"
@@ -60,9 +67,9 @@ function gsoft() {
   git reset --soft $(git merge-base origin/${1-master} Head)
 }
 
-# function gsoftMain() {
-#   git reset --soft $(git merge-base origin/main Head)
-# }
+function gsoftMain() {
+  git reset --soft $(git merge-base origin/main Head)
+}
 
 function gpushUpstream() {
   git push -u origin $(git branch --show-current)

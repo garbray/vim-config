@@ -66,7 +66,7 @@ require("lazy").setup({
 		opts = {
 			ensure_installed = {
 				"stylua",
-				-- formaters
+				-- formatters
 				"eslint_d",
 				"prettier",
 				"prettierd",
@@ -81,19 +81,12 @@ require("lazy").setup({
 	},
 	{ "williamboman/mason-lspconfig.nvim" },
 	-- LSP
-	{ "neovim/nvim-lspconfig" },
-	{ "hrsh7th/cmp-nvim-lsp" },
 	{
 		"VonHeikemen/lsp-zero.nvim",
-		branch = "v3.x",
-		lazy = true,
-		config = false,
-		init = function()
-			-- Disable automatic setup, we are doing it manually
-			vim.g.lsp_zero_extend_cmp = 0
-			vim.g.lsp_zero_extend_lspconfig = 0
-		end,
+		branch = "v4.x",
 	},
+	{ "neovim/nvim-lspconfig" },
+	{ "hrsh7th/cmp-nvim-lsp" },
 	{
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
@@ -156,7 +149,6 @@ require("lazy").setup({
 		end,
 	},
 	-- {'gptlang/CopilotChat.nvim'} // review if this makes sense
-
 	"folke/neodev.nvim",
 	{
 		"jose-elias-alvarez/null-ls.nvim",
@@ -226,40 +218,40 @@ require("lazy").setup({
 	},
 
 	-- Dap
-	"mfussenegger/nvim-dap",
-	"jayp0521/mason-nvim-dap.nvim",
-	{
-		"rcarriga/nvim-dap-ui",
-		dependencies = "mfussenegger/nvim-dap",
-		config = function()
-			local dap = require("dap")
-			local dapui = require("dapui")
-			require("dapui").setup()
+	-- "mfussenegger/nvim-dap",
+	-- "jayp0521/mason-nvim-dap.nvim",
+	-- {
+	-- 	"rcarriga/nvim-dap-ui",
+	-- 	dependencies = "mfussenegger/nvim-dap",
+	-- 	config = function()
+	-- 		local dap = require("dap")
+	-- 		local dapui = require("dapui")
+	-- 		require("dapui").setup()
 
-			dap.listeners.after.event_initialized["dapui_config"] = function()
-				dapui.open()
-			end
-			dap.listeners.before.event_terminated["dapui_config"] = function()
-				dapui.close()
-			end
-			dap.listeners.before.event_exited["dapui_config"] = function()
-				dapui.close()
-			end
-		end,
-	},
-	"theHamsta/nvim-dap-virtual-text",
-	{
-		"samodostal/image.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-	},
-	{
-		"rest-nvim/rest.nvim",
-		-- "NTBBloodbath/rest.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		ensure_installed = { "http", "json" },
-	},
+	-- 		dap.listeners.after.event_initialized["dapui_config"] = function()
+	-- 			dapui.open()
+	-- 		end
+	-- 		dap.listeners.before.event_terminated["dapui_config"] = function()
+	-- 			dapui.close()
+	-- 		end
+	-- 		dap.listeners.before.event_exited["dapui_config"] = function()
+	-- 			dapui.close()
+	-- 		end
+	-- 	end,
+	-- },
+	-- "theHamsta/nvim-dap-virtual-text",
+	-- {
+	-- 	"samodostal/image.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
+	-- },
+	-- {
+	-- 	"rest-nvim/rest.nvim",
+	-- 	-- "NTBBloodbath/rest.nvim",
+	-- 	dependencies = { "nvim-lua/plenary.nvim" },
+	-- 	ensure_installed = { "http", "json" },
+	-- },
 
 	{
 		"folke/zen-mode.nvim",

@@ -1,5 +1,5 @@
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "javascript", "typescript", "c", "lua", "rust" },
+	ensure_installed = { "javascript", "typescript", "c", "lua", "rust", "html", "vim", "markdown"  },
 	-- 	parser_install_dir = "~/.treesitter/parsers",
 	sync_install = false,
 	auto_install = true,
@@ -10,9 +10,9 @@ require("nvim-treesitter.configs").setup({
 		additional_vim_regex_highlighting = false,
 	},
 	-- nvim-ts-autotag
-	autotag = {
-		enable = true,
-	},
+	-- autotag = {
+	-- 	enable = true,
+	-- },
 })
 
 -- auto pairs complete
