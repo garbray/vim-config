@@ -121,9 +121,9 @@ brew install zsh-syntax-highlighting
 # local env
 touch ~/.localenv
 
-# spotify
-brew install spotify-tui
-brew install spotifyd
+# spotify, not necessary
+# brew install spotify-tui
+# brew install spotifyd
 # start spotify process
 brew install neofetch
 brew install firefox
@@ -136,6 +136,7 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 brew install numi
 brew install TheZoraiz/ascii-image-converter/ascii-image-converter
 brew install commitizen
+brew install lazygit
 
 brew install gh
 # create alias commands to handle multiple github credentials accounts

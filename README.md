@@ -14,6 +14,11 @@ Lately, I have decided to use vim as my main IDE some points for it are:
 - [ ] use ansible
 - [x] move to use Lua
 
+## Config keyboard speed on macOS
+
+Go to the system preferences and change the keyboard speed to the fastest, setup
+settings -> accessibility --> keyboard
+
 ## Vim configuration and commands
 
 Here is my vim setup and the configurations I found best suite for me.
