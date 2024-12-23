@@ -100,3 +100,6 @@ function gsoftRebase() {
   fi
 }
 
+function gsShow() {
+  git stash show -p stash@{$1}
+}
