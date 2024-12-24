@@ -1,15 +1,18 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out,                            "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -111,7 +114,8 @@ require("lazy").setup({
 					require("luasnip").config.set_config(opts)
 					-- vscode format
 					require("luasnip.loaders.from_vscode").lazy_load()
-					require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.g.vscode_snippets_path or "" })
+					require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.g
+					.vscode_snippets_path or "" })
 
 					-- snipmate format
 					require("luasnip.loaders.from_snipmate").load()
@@ -121,7 +125,8 @@ require("lazy").setup({
 
 					-- lua format
 					require("luasnip.loaders.from_lua").load()
-					require("luasnip.loaders.from_lua").lazy_load({ paths = vim.g.lua_snippets_path or "" })
+					require("luasnip.loaders.from_lua").lazy_load({ paths = vim.g.lua_snippets_path or
+					"" })
 				end,
 			},
 			"hrsh7th/nvim-cmp",
