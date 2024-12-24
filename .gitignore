@@ -122,3 +122,6 @@ session
 /dotfiles/.config/nvim/.netrwhist
 .netrwhist
 dotfiles/.config/Karabiner/automatic_backups
+
+# karabiner
+dotfiles/.config/Karabiner/karabiner.json
