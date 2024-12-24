@@ -2,6 +2,7 @@
 
 ```
 lazygit // open lazygit
+```
 
 # Multiple gh accounts
 
