@@ -1,0 +1,4 @@
+-- vim.keymap.set("n", "<leader>ft", ":FloatermNew --height=0.85 --width=0.85 --title=Terminal <CR>")
+-- vim.api.nvim_command(":FloatermNew --height=0.85 --width=0.85 --title=Terminal --silent")
+-- vim.keymap.set("n", "<leader>fh", ":FloatermHide <CR>")
+-- vim.keymap.set("n", "<leader>fo", ":FloatermNext <CR>")

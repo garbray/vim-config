@@ -40,6 +40,7 @@
   "venv-selector.nvim": { "branch": "main", "commit": "f16c25bf16ac6e8bbdbcc9e9b3a1a00729d00c99" },
   "vim-bujo": { "branch": "master", "commit": "ee3fecb5b3206b8073ac3fe4153391f320c99197" },
   "vim-commentary": { "branch": "master", "commit": "64a654ef4a20db1727938338310209b6a63f60c9" },
+  "vim-floaterm": { "branch": "master", "commit": "4e28c8dd0271e10a5f55142fb6fe9b1599ee6160" },
   "vim-fugitive": { "branch": "master", "commit": "d4877e54cef67f5af4f950935b1ade19ed6b7370" },
   "vim-markdown": { "branch": "master", "commit": "8f6cb3a6ca4e3b6bcda0730145a0b700f3481b51" },
   "vim-prisma": { "branch": "main", "commit": "95c5b25066efb34c75bce78698baa371fe0ee7c2" },
