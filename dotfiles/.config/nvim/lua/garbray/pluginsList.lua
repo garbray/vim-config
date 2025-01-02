@@ -7,7 +7,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out,                            "WarningMsg" },
+			{ out, "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -275,4 +275,34 @@ require("lazy").setup({
 		"folke/zen-mode.nvim",
 		opts = {},
 	},
+	-- newest
+	{ "echasnovski/mini.nvim", version = false },
+	{
+		"mistricky/codesnap.nvim",
+		build = "make",
+		keys = {
+			{ "<leader>cc", "<cmd>CodeSnap<cr>", mode = "x", desc = "Save selected code snapshot into clipboard" },
+			{ "<leader>cs", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Pictures" },
+		},
+		opts = {
+			save_path = "~/Pictures",
+			has_breadcrumbs = true,
+			-- bg_theme = "bamboo",
+			bg_color = "#535c68",
+			has_line_number = true,
+			watermark = "",
+		},
+	},
+	{
+		"epwalsh/obsidian.nvim",
+		version = "*", -- recommended, use latest release instead of latest commit
+		lazy = true,
+		ft = "markdown",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+	},
+	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make", cond = vim.fn.executable("make") == 1 },
+	-- maybe the next theme
+	-- { "catppuccin/nvim", as = "catppuccin" },
 }, {})
