@@ -118,6 +118,12 @@ ssh-keygen -t rsa -b 4096 -C "your-email"
 
 ```
 
+for mac use:
+
+```
+ssh-add --apple-use-keychain ~/.ssh/id_rsa_another
+```
+
 in the ssh folder create a config file with the following
 
 ```
@@ -143,5 +149,3 @@ test your ssh
 ```
 ssh -T your-alias
 ```
-
-testing word adding

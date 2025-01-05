@@ -110,6 +110,9 @@ npm i -g vscode-langservers-extracted
 npm install -g @tailwindcss/language-server
 # omit until figure out how to handle the redirect on dev tools
 # git config --global core.editor "nvim"
+#
+# modern replacement for ls
+brew install eza
 
 # lua config
 brew install ninja
