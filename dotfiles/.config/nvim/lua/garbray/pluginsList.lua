@@ -7,7 +7,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out,                            "WarningMsg" },
+			{ out, "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -49,31 +49,18 @@ require("lazy").setup({
 	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
 	},
-	"nvim-treesitter/playground",
-	"theprimeagen/harpoon",
+	{
+		"theprimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
 	"mbbill/undotree",
 	"tpope/vim-fugitive",
 	"tpope/vim-commentary",
 	"tpope/vim-surround",
 	"tpope/vim-sleuth",
 	"lewis6991/gitsigns.nvim",
-	-- terminal
-	-- "voldikss/vim-floaterm",
-	-- colorschema
-	{
-		"rose-pine/neovim",
-		name = "rose-pine",
-		config = function()
-			vim.cmd("colorscheme rose-pine")
-		end,
-	},
-	"gruvbox-community/gruvbox",
 	-- package manager
 	{
 		"williamboman/mason.nvim",
@@ -167,7 +154,6 @@ require("lazy").setup({
 		end,
 	},
 	-- {'gptlang/CopilotChat.nvim'} // review if this makes sense
-	"folke/neodev.nvim",
 	{
 		"jose-elias-alvarez/null-ls.nvim",
 		dependencies = {
@@ -205,7 +191,7 @@ require("lazy").setup({
 	"plasticboy/vim-markdown",
 	"nvim-lualine/lualine.nvim",
 	"vuciv/vim-bujo",
-	"lukas-reineke/indent-blankline.nvim",
+	-- "lukas-reineke/indent-blankline.nvim",
 
 	"preservim/tagbar",
 	"mhinz/vim-startify",
@@ -218,21 +204,12 @@ require("lazy").setup({
 			require("lspsaga").setup({})
 		end,
 	},
+
 	{
 		"iamcco/markdown-preview.nvim",
 		config = function()
 			vim.fn["mkdp#util#install"]()
 		end,
-	},
-
-	-- github
-	"tyru/open-browser.vim",
-	{
-
-		"tyru/open-browser-github.vim",
-		dependencies = {
-			"tyru/open-browser.vim",
-		},
 	},
 
 	-- Dap
@@ -271,19 +248,176 @@ require("lazy").setup({
 	-- 	ensure_installed = { "http", "json" },
 	-- },
 
+	-- newest version reviewed and updated plugins
+	"folke/lazydev.nvim", -- lua language server
+	"folke/twilight.nvim", -- this could be removed in favor of snack dim
+	-- colorschema
 	{
-		"folke/zen-mode.nvim",
-		opts = {},
+		"rose-pine/neovim",
+		name = "rose-pine",
+		config = function()
+			vim.cmd("colorscheme rose-pine")
+		end,
 	},
-	-- newest
-	{ "echasnovski/mini.nvim", version = false },
+	{
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		---@type snacks.Config
+		opts = {
+			bigfile = { enabled = true },
+			dashboard = { enabled = true },
+			indent = {
+				enabled = true,
+				indent = {
+					char = "┊",
+				},
+			},
+			input = { enabled = true },
+			notifier = {
+				enabled = true,
+				timeout = 3000,
+			},
+			quickfile = { enabled = true },
+			terminal = {
+				win = {
+					position = "float",
+				},
+			},
+			words = { enabled = true },
+			styles = {
+				notification = {
+					-- wo = { wrap = true } -- Wrap notifications
+				},
+			},
+		},
+		keys = {
+			{
+				"<leader>z",
+				function()
+					Snacks.zen()
+				end,
+				desc = "Toggle Zen Mode",
+			},
+			{
+				"<leader>bd",
+				function()
+					Snacks.bufdelete()
+				end,
+				desc = "Delete Buffer",
+			},
+			{
+				"<leader>cR",
+				function()
+					Snacks.rename.rename_file()
+				end,
+				desc = "Rename File",
+			},
+			{
+				"<leader>gB", -- opens the current file in the browser
+				function()
+					Snacks.gitbrowse()
+				end,
+				desc = "Git Browse",
+				mode = { "n", "v" },
+			},
+			{
+				"<leader>lg",
+				function()
+					Snacks.lazygit()
+				end,
+				desc = "Lazygit",
+			},
+			{
+				"<leader>gl",
+				function()
+					Snacks.lazygit.log()
+				end,
+				desc = "Lazygit Log (cwd)",
+			},
+			{
+				"<leader>un",
+				function()
+					Snacks.notifier.hide()
+				end,
+				desc = "Dismiss All Notifications",
+			},
+			{
+				"<c-k>",
+				function()
+					Snacks.terminal()
+				end,
+				desc = "Toggle terminal",
+			},
+			{
+				"]]",
+				function()
+					Snacks.words.jump(vim.v.count1)
+				end,
+				desc = "Next Reference",
+				mode = { "n", "t" },
+			},
+			{
+				"[[",
+				function()
+					Snacks.words.jump(-vim.v.count1)
+				end,
+				desc = "Prev Reference",
+				mode = { "n", "t" },
+			},
+			{
+				"<leader>N",
+				desc = "Neovim News",
+				function()
+					Snacks.win({
+						file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
+						width = 0.8,
+						height = 0.8,
+						wo = {
+							spell = false,
+							wrap = false,
+							signcolumn = "yes",
+							statuscolumn = " ",
+							conceallevel = 3,
+						},
+					})
+				end,
+			},
+		},
+		init = function()
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "VeryLazy",
+				callback = function()
+					-- Setup some globals for debugging (lazy-loaded)
+					_G.dd = function(...)
+						Snacks.debug.inspect(...)
+					end
+					_G.bt = function()
+						Snacks.debug.backtrace()
+					end
+					vim.print = _G.dd -- Override print to use snacks for `:=` command
+
+					-- Create some toggle mappings
+					Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+					Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+					Snacks.toggle.line_number():map("<leader>ul")
+					Snacks.toggle
+						.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+						:map("<leader>uc")
+					Snacks.toggle.indent():map("<leader>ug")
+					Snacks.toggle.dim():map("<leader>uD")
+				end,
+			})
+		end,
+	},
+	-- { "echasnovski/mini.nvim", version = false },
 	{
 		"mistricky/codesnap.nvim",
 		build = "make",
-		keys = {
-			{ "<leader>cc", "<cmd>CodeSnap<cr>",     mode = "x", desc = "Save selected code snapshot into clipboard" },
-			{ "<leader>cs", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Pictures" },
-		},
+		-- keys = {
+		-- 	{ "<leader>cc", "<cmd>CodeSnap<cr>", mode = "x", desc = "Save selected code snapshot into clipboard" },
+		-- 	{ "<leader>cs", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Pictures" },
+		-- },
 		opts = {
 			save_path = "~/Pictures",
 			has_breadcrumbs = true,
@@ -303,14 +437,6 @@ require("lazy").setup({
 		},
 	},
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make", cond = vim.fn.executable("make") == 1 },
-	{
-		"folke/twilight.nvim",
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
-	},
 	-- maybe the next theme
 	-- { "catppuccin/nvim", as = "catppuccin" },
 }, {})

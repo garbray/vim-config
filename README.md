@@ -149,3 +149,9 @@ test your ssh
 ```
 ssh -T your-alias
 ```
+
+## speed move in macosx:
+
+if you want to speed the movement of your cursor on macosx you need to go:
+
+settings -> accessibility -> keyboard -> key repeat -> fast

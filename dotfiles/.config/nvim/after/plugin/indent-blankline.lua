@@ -1,9 +1,9 @@
-vim.opt.termguicolors = true
-vim.cmd([[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]])
+-- vim.opt.termguicolors = true
+-- vim.cmd([[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]])
+-- vim.cmd([[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]])
 
-require("ibl").setup({
-	indent = {
-		char = "┊",
-	},
-})
+-- require("ibl").setup({
+-- 	indent = {
+-- 		char = "┊",
+-- 	},
+-- })
