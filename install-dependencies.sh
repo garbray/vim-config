@@ -186,3 +186,9 @@ npm i -g vscode-langservers-extracted
 
 # htmlx
 cargo install htmx-lsp
+
+# config git
+git config --global user.email "bryangarzonb@gmail.com"
+git config --global user.name "Bryan Garzon"
+git config --global core.editor "nvim"
+git config --global rebase.updateRefs true
