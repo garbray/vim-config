@@ -10,6 +10,7 @@ brew update
 
 # install kitty
 brew install kitty --cask
+brew install ghostty # possible will replace kitty
 
 brew install zsh
 
@@ -35,7 +36,7 @@ brew install tmux
 
 mkdir ~/.go
 
-# isntall stow
+# install stow
 brew install stow
 
 # install python3
@@ -51,7 +52,7 @@ brew install volta
 brew install pnpm
 brew install ansible
 brew install karabiner-elements --cask
-# TODO review if generate any aditional benefits
+# TODO: review if generate any additional benefits
 # brew install alfred --cask
 
 # install python dependencies
@@ -77,12 +78,12 @@ brew install font-fira-code-nerd-font
 
 # fuzzi finder list
 brew install peco
-# ls with bateries -> just for fun
+# ls with batteries -> just for fun
 brew install exa
 
 brew install z
 
-# brew install bat maybe not require to hightlight preview TBD
+# brew install bat maybe not require to highlight preview TBD
 echo "review if the font is updated https://github.com/tonsky/FiraCode/wiki/Installing"
 
 echo "$FGRN finish installing basic dependencies"
@@ -169,10 +170,19 @@ if [[ $PLATFORM == 'macos' ]]; then
     brew install trash-cli
     brew install --cask raycast
 
-# TODO execute install script
+# TODO: execute install script
 brew install youtube-dl
 brew install ffmpeg
 brew install --cask docker
 brew install jq tidy-html5
 brew install act # run github actions locally
 brew install tursodatabase/tap/turso # db cli turso
+
+
+# node dependencies
+npm install -g graphql-language-service-cli
+npm install -g typescript typescript-language-server
+npm i -g vscode-langservers-extracted
+
+# htmlx
+cargo install htmx-lsp

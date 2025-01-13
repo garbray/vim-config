@@ -29,4 +29,3 @@ fi
 sudo ln -s $repoPath/tmuxSelector /usr/local/bin/projectSelector
 
 
-nvim -c ':PlugInstall' -c ':UpdateRemotePlugins' -c ':qall'

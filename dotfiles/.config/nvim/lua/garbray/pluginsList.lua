@@ -47,10 +47,6 @@ require("lazy").setup({
 	},
 	-- plugins
 	{
-		"folke/todo-comments.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
-	{
 		"theprimeagen/harpoon",
 		branch = "harpoon2",
 		dependencies = { "nvim-lua/plenary.nvim" },
@@ -343,7 +339,7 @@ require("lazy").setup({
 				desc = "Dismiss All Notifications",
 			},
 			{
-				"<c-k>",
+				"<leader>t",
 				function()
 					Snacks.terminal()
 				end,
@@ -437,6 +433,11 @@ require("lazy").setup({
 		},
 	},
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make", cond = vim.fn.executable("make") == 1 },
+	-- currently is not working properly
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
 	-- maybe the next theme
 	-- { "catppuccin/nvim", as = "catppuccin" },
 }, {})
