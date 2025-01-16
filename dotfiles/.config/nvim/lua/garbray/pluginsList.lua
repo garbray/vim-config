@@ -7,7 +7,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
+			{ out,                            "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -338,13 +338,13 @@ require("lazy").setup({
 				end,
 				desc = "Dismiss All Notifications",
 			},
-			{
-				"<leader>t",
-				function()
-					Snacks.terminal()
-				end,
-				desc = "Toggle terminal",
-			},
+			-- {
+			-- 	"<leader>t",
+			-- 	function()
+			-- 		Snacks.terminal()
+			-- 	end,
+			-- 	desc = "Toggle terminal",
+			-- },
 			{
 				"]]",
 				function()
@@ -438,6 +438,13 @@ require("lazy").setup({
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
+
+	-- personal stuff
+	"garbray/simple-term",
+	-- {
+	-- 	dir = "~/workspace/personal/simple-term",
+	-- 	name = "simple-term",
+	-- },
 	-- maybe the next theme
 	-- { "catppuccin/nvim", as = "catppuccin" },
 }, {})

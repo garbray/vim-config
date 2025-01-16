@@ -105,6 +105,12 @@ require("lspconfig").html.setup({
 	capabilities = capabilities,
 })
 
+lspconfig.lua_ls.setup({
+	capabilities = capabilities,
+	on_attach = function(client, bufnr)
+		lsp_zero.default_keymaps({ buffer = bufnr })
+	end,
+})
 lspconfig.ts_ls.setup({
 	-- capabilities = lsp_capabilities,
 	-- on_attach = function(client, bufnr)
