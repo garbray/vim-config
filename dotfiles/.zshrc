@@ -34,36 +34,14 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-alias zshconfig="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
-
-#another alias we need to move to another file
-alias v="nvim"
-alias r="ranger"
-alias mkd="mkdir -pv"
-# alias ccat="highlight --out-format=ansi" # Color cat - print file with syntax highlight
-
-alias yt="youtube-dl --add-metadata -ic" # Download video link
-alias yta="youtube-dl --add-metadata -xic" # download only audio
-# alias YT="youtube-viewer"
-
-export EDITOR='nvim'
 # Load aliases and shortcuts if existent.
 [ -f "$HOME/.config/zsh/gitAlias" ] && source "$HOME/.config/zsh/gitAlias"
 # load vim terminal configuration
 [ -f "$HOME/.config/zsh/vimconfig" ] && source "$HOME/.config/zsh/vimconfig"
+# load personal aliases
+[ -f "$HOME/.config/zsh/personalAlias" ] && source "$HOME/.config/zsh/personalAlias"
 
-# move to another file
-# get wifi pass from the terminal pass the name in double quotes
-alias wifiPass="security find-generic-password -wa"
-alias listDownloadDB="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select * from LSQuarantineEvent'"
-alias clearDownloadDB="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
-alias networkEn0="ifconfig en0 | grep inet | awk '{ print $2 }'"
-# dig => dns info
-# get process number by name
-alias processName="ps -ax | grep"
-alias flushCache="sudo dscacheutil -flushcache"
-alias server="python3 -m http.server 2000"
+export EDITOR='nvim'
 
 # basic auto/tab complete
 # autoload -U componit
@@ -163,12 +141,12 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # cargo
 # source "$HOME/.cargo/env"
 #
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# export PATH="$HOME/.jenv/bin:$PATH"
+# eval "$(jenv init -)"
+# export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+# export NVM_DIR="$HOME/.nvm"
+#   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+#   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"

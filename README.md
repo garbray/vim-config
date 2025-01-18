@@ -156,4 +156,9 @@ if you want to speed the movement of your cursor on macosx you need to go:
 
 settings -> accessibility -> keyboard -> key repeat -> fast
 
-<!-- TODO: testing -->
+<!-- TODO: -->
+
+-[] add a script to install all the dependencies.
+-[] update readme with the new changes.
+-[] review the multiple github accounts
+-[]

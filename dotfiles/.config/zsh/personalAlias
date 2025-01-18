@@ -1,0 +1,24 @@
+alias zshconfig="v ~/.zshrc"
+alias ohmyzsh="v ~/.oh-my-zsh"
+
+#another alias we need to move to another file
+alias v="nvim"
+alias r="ranger"
+alias mkd="mkdir -pv"
+
+# alias ccat="highlight --out-format=ansi" # Color cat - print file with syntax highlight
+
+alias yt="youtube-dl --add-metadata -ic" # Download video link
+alias yta="youtube-dl --add-metadata -xic" # download only audio
+# alias YT="youtube-viewer"
+
+# get wifi pass from the terminal pass the name in double quotes
+alias wifiPass="security find-generic-password -wa"
+alias listDownloadDB="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select * from LSQuarantineEvent'"
+alias clearDownloadDB="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+alias networkEn0="ifconfig en0 | grep inet | awk '{ print $2 }'"
+# dig => dns info
+# get process number by name
+alias processName="ps -ax | grep"
+alias flushCache="sudo dscacheutil -flushcache"
+alias server="python3 -m http.server 2000"
