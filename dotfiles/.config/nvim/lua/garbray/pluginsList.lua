@@ -248,6 +248,7 @@ require("lazy").setup({
 	"folke/lazydev.nvim", -- lua language server
 	"folke/twilight.nvim", -- this could be removed in favor of snack dim
 	-- colorschema
+	{ "catppuccin/nvim",       as = "catppuccin" },
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
@@ -255,6 +256,7 @@ require("lazy").setup({
 			vim.cmd("colorscheme rose-pine")
 		end,
 	},
+	-- multiple plugin
 	{
 		"folke/snacks.nvim",
 		priority = 1000,
@@ -446,5 +448,4 @@ require("lazy").setup({
 	-- 	name = "simple-term",
 	-- },
 	-- maybe the next theme
-	-- { "catppuccin/nvim", as = "catppuccin" },
 }, {})
