@@ -47,3 +47,6 @@ end)
 vim.keymap.set("n", "<leader>co", function()
 	ColorMyPencils("catppuccin")
 end)
+
+-- default catppuccin
+ColorMyPencils("rose-pine")
