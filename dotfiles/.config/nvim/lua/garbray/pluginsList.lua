@@ -7,7 +7,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out,                            "WarningMsg" },
+			{ out, "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -71,6 +71,9 @@ require("lazy").setup({
 				"codespell",
 				"misspell",
 				"cspell",
+				"jsonls",
+				"tsserver",
+				"html",
 				-- markdown
 				"markdownlint",
 			},
@@ -157,12 +160,12 @@ require("lazy").setup({
 			"davidmh/cspell.nvim",
 		},
 	},
-	{
-		"nvimtools/none-ls.nvim",
-		dependencies = {
-			"davidmh/cspell.nvim",
-		},
-	},
+	-- {
+	-- 	"nvimtools/none-ls.nvim",
+	-- 	dependencies = {
+	-- 		"davidmh/cspell.nvim",
+	-- 	},
+	-- },
 
 	-- python
 	{
@@ -209,8 +212,14 @@ require("lazy").setup({
 	},
 
 	-- Dap
+	{
+		"rcarriga/nvim-dap-ui",
+		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+	},
+	"theHamsta/nvim-dap-virtual-text",
+	"leoluz/nvim-dap-go",
 	-- "mfussenegger/nvim-dap",
-	-- "jayp0521/mason-nvim-dap.nvim",
+	"jayp0521/mason-nvim-dap.nvim",
 	-- {
 	-- 	"rcarriga/nvim-dap-ui",
 	-- 	dependencies = "mfussenegger/nvim-dap",
@@ -248,7 +257,7 @@ require("lazy").setup({
 	"folke/lazydev.nvim", -- lua language server
 	"folke/twilight.nvim", -- this could be removed in favor of snack dim
 	-- colorschema
-	{ "catppuccin/nvim",       as = "catppuccin" },
+	{ "catppuccin/nvim", as = "catppuccin" },
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
@@ -435,11 +444,71 @@ require("lazy").setup({
 		},
 	},
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make", cond = vim.fn.executable("make") == 1 },
+	-- this one looks unnecessary
+	-- commands gpd - gpr -gP
+	{
+		"rmagatti/goto-preview",
+		config = function()
+			require("goto-preview").setup({
+				width = 120, -- Width of the floating window
+				height = 15, -- Height of the floating window
+				border = { "↖", "─", "┐", "│", "┘", "─", "└", "│" }, -- Border characters of the floating window
+				default_mappings = true,
+				debug = false, -- Print debug information
+				opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
+				resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
+				post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+				references = { -- Configure the telescope UI for slowing the references cycling window.
+					telescope = require("telescope.themes").get_dropdown({ hide_preview = false }),
+				},
+				-- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
+				focus_on_open = true, -- Focus the floating window when opening it.
+				dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
+				force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
+				bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
+				stack_floating_preview_windows = true, -- Whether to nest floating windows
+				preview_window_title = { enable = true, position = "left" }, -- Whether
+			})
+		end,
+	},
+	{
+		"folke/noice.nvim",
+		config = function()
+			require("noice").setup({
+				-- add any options here
+				routes = {
+					{
+						filter = {
+							event = "msg_show",
+							any = {
+								{ find = "%d+L, %d+B" },
+								{ find = "; after #%d+" },
+								{ find = "; before #%d+" },
+								{ find = "%d fewer lines" },
+								{ find = "%d more lines" },
+							},
+						},
+						opts = { skip = true },
+					},
+				},
+			})
+		end,
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+	},
+
 	-- currently is not working properly
 	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
+
+	-- language specific stuff
+	"ray-x/go.nvim",
+	"ray-x/guihua.lua",
 
 	-- personal stuff
 	"garbray/simple-term",
@@ -447,5 +516,4 @@ require("lazy").setup({
 	-- 	dir = "~/workspace/personal/simple-term",
 	-- 	name = "simple-term",
 	-- },
-	-- maybe the next theme
 }, {})

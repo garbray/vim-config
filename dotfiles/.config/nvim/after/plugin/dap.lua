@@ -44,6 +44,21 @@ require("mason-nvim-dap").setup({
 		}
 	end,
 })
+
+require("dapui").setup()
+require("dap-go").setup()
+require("nvim-dap-virtual-text").setup()
+vim.fn.sign_define(
+	"DapBreakpoint",
+	{ text = "🔴", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
+)
+
+-- Debugger
+vim.api.nvim_set_keymap("n", "<leader>dt", ":DapUiToggle<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>db", ":DapToggleBreakpoint<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>dc", ":DapContinue<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>dr", ":lua require('dapui').open({reset = true})<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>ht", ":lua require('harpoon.ui').toggle_quick_menu()<CR>", { noremap = true })
 -- mason_nvim_dap.setup({
 -- 	ensure_installed = { "python", "delve", "node2", "chrome", "firefox" },
 -- 	-- automatic_setup = true,
@@ -89,15 +104,15 @@ require("mason-nvim-dap").setup({
 -- })
 
 -- -- keymaping
-keymap("n", "<leader>dc", ":lua require'dap'.continue()<CR>")
-keymap("n", "<leader>di", ":lua require'dap'.step_into()<CR>")
-keymap("n", "<leader>do", ":lua require'dap'.step_out()<CR>")
-keymap("n", "<leader>ds", ":lua require'dap'.step_over()<CR>")
-keymap("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>")
-keymap("n", "<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
-keymap("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nill, nill, vim.fn.input('Log point message: '))<CR>")
-keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>")
-keymap("n", "<leader>da", ":lua require'garbray.plugins.debugHelper'.attach()<CR>")
+-- keymap("n", "<leader>dc", ":lua require'dap'.continue()<CR>")
+-- keymap("n", "<leader>di", ":lua require'dap'.step_into()<CR>")
+-- keymap("n", "<leader>do", ":lua require'dap'.step_out()<CR>")
+-- keymap("n", "<leader>ds", ":lua require'dap'.step_over()<CR>")
+-- keymap("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>")
+-- keymap("n", "<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
+-- keymap("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nill, nill, vim.fn.input('Log point message: '))<CR>")
+-- keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>")
+-- keymap("n", "<leader>da", ":lua require'garbray.plugins.debugHelper'.attach()<CR>")
 
 -- config
 -- language

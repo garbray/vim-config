@@ -15,23 +15,17 @@ null_ls.setup({
 	debug = true,
 	sources = {
 		formatting.prettier,
-		-- diagnostics.eslint_d,
-		-- .with({
-		-- condition = function(utils)
-		--     return utils.root_has_file({'package.json', 'tsconfig.json', '.git/'})
-		-- end,
-		-- extra_args = {},
-		-- }),
-		-- formatting.prettierd,
 		formatting.isort,
 		formatting.black.with({ extra_args = { "--fast" } }),
 		-- require("null-ls").builtins.formatting.stylua,
 		formatting.stylua,
 		diagnostics.flake8,
 		completion.spell,
-		-- diagnostics.eslint,
+		diagnostics.eslint_d,
 		diagnostics.codespell,
 		diagnostics.misspell,
+		-- diagnostics.gofmt,
+		diagnostics.golangci_lint,
 		-- diagnostics.cspell,
 		-- diagnostics.with({
 		-- 	diagnostics_postprocess = function(diagnostic)
