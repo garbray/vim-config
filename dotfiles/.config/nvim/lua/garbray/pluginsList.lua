@@ -336,7 +336,7 @@ require("lazy").setup({
 				desc = "Lazygit",
 			},
 			{
-				"<leader>gl",
+				"<leader>gi",
 				function()
 					Snacks.lazygit.log()
 				end,
