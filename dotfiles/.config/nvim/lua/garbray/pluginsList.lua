@@ -499,6 +499,7 @@ require("lazy").setup({
 			"rcarriga/nvim-notify",
 		},
 	},
+	{ "mistweaverco/kulala.nvim", opts = {} },
 
 	-- currently is not working properly
 	{
