@@ -112,10 +112,10 @@ lspconfig.lua_ls.setup({
 	end,
 })
 lspconfig.ts_ls.setup({
-	-- capabilities = lsp_capabilities,
-	-- on_attach = function(client, bufnr)
-	-- 	lsp_zero.default_keymaps({ buffer = bufnr })
-	-- end,
+	capabilities = lsp_capabilities,
+	on_attach = function(client, bufnr)
+		lsp_zero.default_keymaps({ buffer = bufnr })
+	end,
 })
 lspconfig.pyright.setup({})
 -- lspconfig.html.setup({})
@@ -123,9 +123,9 @@ lspconfig.tailwindcss.setup({})
 lspconfig.rust_analyzer.setup({})
 -- lspconfig.prettier.setup({})
 
--- lspconfig.eslint.setup({
--- Additional settings
--- settings = {
--- 	-- ...
--- },
--- })
+lspconfig.eslint.setup({
+	-- Additional settings
+	-- settings = {
+	-- 	-- ...
+	-- },
+})
