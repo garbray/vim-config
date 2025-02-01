@@ -111,12 +111,19 @@ lspconfig.lua_ls.setup({
 		lsp_zero.default_keymaps({ buffer = bufnr })
 	end,
 })
+
 lspconfig.ts_ls.setup({
 	capabilities = lsp_capabilities,
 	on_attach = function(client, bufnr)
 		lsp_zero.default_keymaps({ buffer = bufnr })
 	end,
+	filetypes = {
+		"javascript",
+		"typescript",
+		"vue",
+	},
 })
+
 lspconfig.pyright.setup({})
 -- lspconfig.html.setup({})
 lspconfig.tailwindcss.setup({})

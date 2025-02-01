@@ -14,14 +14,14 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
 	debug = true,
 	sources = {
-		formatting.prettier,
+		-- formatting.prettier,
 		formatting.isort,
 		formatting.black.with({ extra_args = { "--fast" } }),
 		-- require("null-ls").builtins.formatting.stylua,
 		formatting.stylua,
 		diagnostics.flake8,
 		completion.spell,
-		diagnostics.eslint_d,
+		-- diagnostics.eslint_d,
 		diagnostics.codespell,
 		diagnostics.misspell,
 		-- diagnostics.gofmt,
