@@ -27,7 +27,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
--- highlight a text and past over without loosing your current register
+-- highlight a text and past over without losing your current register
 -- using the void register
 vim.keymap.set("x", "<leader>p", '"_dP')
 

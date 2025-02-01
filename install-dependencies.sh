@@ -179,6 +179,10 @@ brew install jq tidy-html5
 brew install act # run github actions locally
 brew install tursodatabase/tap/turso # db cli turso
 
+brew install xh # replacement for curl 
+brew install curlie 
+brew install posting
+
 
 # node dependencies
 npm install -g graphql-language-service-cli
