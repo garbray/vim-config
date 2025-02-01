@@ -19,23 +19,9 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.3",
-		-- or
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			-- Fuzzy Finder Algorithm which requires local dependencies to be built.
-			-- Only load if `make` is available. Make sure you have the system
-			-- requirements installed.
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				-- NOTE: If you are having trouble with this installation,
-				--       refer to the README for telescope-fzf-native for more instructions.
-				build = "make",
-				cond = function()
-					return vim.fn.executable("make") == 1
-				end,
-			},
-		},
+		tag = "0.1.8",
+		-- or                              , branch = '0.1.x',
+		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 	{
 		-- Highlight, edit, and navigate code
@@ -120,21 +106,12 @@ require("lazy").setup({
 				end,
 			},
 			"hrsh7th/nvim-cmp",
-			"VonHeikemen/lsp-zero.nvim",
+			"onsails/lspkind.nvim",
 		},
 	},
 	-- IA
-	-- {
-	-- 	"jcdickinson/codeium.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"hrsh7th/nvim-cmp",
-	-- 	},
-	-- 	config = function()
-	-- 		require("codeium").setup({})
-	-- 	end,
-	-- },
-	{ "zbirenbaum/copilot.lua" },
+
+	-- { "zbirenbaum/copilot.lua" },
 	"github/copilot.vim",
 	{
 		"zbirenbaum/copilot-cmp",
@@ -160,29 +137,8 @@ require("lazy").setup({
 			"davidmh/cspell.nvim",
 		},
 	},
-	-- {
-	-- 	"nvimtools/none-ls.nvim",
-	-- 	dependencies = {
-	-- 		"davidmh/cspell.nvim",
-	-- 	},
-	-- },
 
 	-- python
-	{
-		"linux-cultist/venv-selector.nvim",
-		dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim" },
-		-- config = true,
-		-- event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
-		-- keys = {
-		-- 	{
-		-- 		"<leader>vs",
-		-- 		"<cmd>:VenvSelect<cr>",
-		-- 		-- key mapping for directly retrieve from cache. You may set autocmd if you prefer the no hand approach
-		-- 		"<leader>vc",
-		-- 		"<cmd>:VenvSelectCached<cr>",
-		-- 	},
-		-- },
-	},
 	"interdependence/tree-sitter-htmldjango",
 
 	"prisma/vim-prisma",
@@ -349,13 +305,6 @@ require("lazy").setup({
 				end,
 				desc = "Dismiss All Notifications",
 			},
-			-- {
-			-- 	"<leader>t",
-			-- 	function()
-			-- 		Snacks.terminal()
-			-- 	end,
-			-- 	desc = "Toggle terminal",
-			-- },
 			{
 				"]]",
 				function()
@@ -443,7 +392,7 @@ require("lazy").setup({
 			"nvim-lua/plenary.nvim",
 		},
 	},
-	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make", cond = vim.fn.executable("make") == 1 },
+	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	-- this one looks unnecessary
 	-- commands gpd - gpr -gP
 	{

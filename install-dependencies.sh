@@ -30,6 +30,7 @@ brew install highlight
 
 # install tmux
 brew install tmux
+# brew install zellij # alternative to tmux 
 
 # install window manager
 # brew install --cask amethyst
