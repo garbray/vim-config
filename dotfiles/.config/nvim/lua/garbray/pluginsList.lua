@@ -383,15 +383,15 @@ require("lazy").setup({
 			watermark = "",
 		},
 	},
-	{
-		"epwalsh/obsidian.nvim",
-		version = "*", -- recommended, use latest release instead of latest commit
-		lazy = true,
-		ft = "markdown",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-	},
+	-- {
+	-- 	"epwalsh/obsidian.nvim",
+	-- 	version = "*", -- recommended, use latest release instead of latest commit
+	-- 	lazy = true,
+	-- 	ft = "markdown",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
+	-- },
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	-- this one looks unnecessary
 	-- commands gpd - gpr -gP
@@ -448,7 +448,7 @@ require("lazy").setup({
 			"rcarriga/nvim-notify",
 		},
 	},
-	{ "mistweaverco/kulala.nvim", opts = {} },
+	-- { "mistweaverco/kulala.nvim", opts = {} },
 
 	-- currently is not working properly
 	{
