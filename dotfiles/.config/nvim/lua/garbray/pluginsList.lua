@@ -7,7 +7,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
+			{ out,                            "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -213,7 +213,7 @@ require("lazy").setup({
 	"folke/lazydev.nvim", -- lua language server
 	"folke/twilight.nvim", -- this could be removed in favor of snack dim
 	-- colorschema
-	{ "catppuccin/nvim", as = "catppuccin" },
+	{ "catppuccin/nvim",                          as = "catppuccin" },
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
@@ -356,7 +356,6 @@ require("lazy").setup({
 					-- Create some toggle mappings
 					Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
 					Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-					Snacks.toggle.line_number():map("<leader>ul")
 					Snacks.toggle
 						.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
 						:map("<leader>uc")
@@ -411,11 +410,11 @@ require("lazy").setup({
 					telescope = require("telescope.themes").get_dropdown({ hide_preview = false }),
 				},
 				-- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
-				focus_on_open = true, -- Focus the floating window when opening it.
-				dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
-				force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
-				bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
-				stack_floating_preview_windows = true, -- Whether to nest floating windows
+				focus_on_open = true,                            -- Focus the floating window when opening it.
+				dismiss_on_move = false,                         -- Dismiss the floating window when moving the cursor.
+				force_close = true,                              -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
+				bufhidden = "wipe",                              -- the bufhidden option to set on the floating window. See :h bufhidden
+				stack_floating_preview_windows = true,           -- Whether to nest floating windows
 				preview_window_title = { enable = true, position = "left" }, -- Whether
 			})
 		end,
@@ -424,8 +423,11 @@ require("lazy").setup({
 		"folke/noice.nvim",
 		config = function()
 			require("noice").setup({
-				-- add any options here
 				routes = {
+					{
+						view = "notify",
+						filter = { event = "msg_showmode" },
+					},
 					{
 						filter = {
 							event = "msg_show",
@@ -445,7 +447,7 @@ require("lazy").setup({
 		dependencies = {
 			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
+			"rcarriga/nvim-Notify",
 		},
 	},
 	-- { "mistweaverco/kulala.nvim", opts = {} },

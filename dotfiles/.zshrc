@@ -151,3 +151,5 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 # export XDG_CONFIG_HOME="$HOME/.config"
+#
+export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
