@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# this will be deprecated by the setup script
 export FGRN="\033[32m" # foreground green
 echo "$FGRN copying dependencies"
 # install brew
@@ -191,6 +192,10 @@ npm i -g vscode-langservers-extracted
 
 # htmlx
 cargo install htmx-lsp
+
+# install browsers 
+brew install --cask firefox
+brew install --cask zen-browser
 
 # config git
 git config --global user.email "bryangarzonb@gmail.com"

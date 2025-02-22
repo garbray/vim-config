@@ -1,0 +1,13 @@
+#!/bin/sh
+echo "Setting up environment..."
+
+mkdir -p ~/.go
+touch ~/.localenv
+
+if [[ $PLATFORM == 'macos' ]]; then
+    brew install koekeishiya/formulae/yabai
+    brew install koekeishiya/formulae/skhd
+    brew install skhd
+    brew install trash-cli
+    brew install --cask raycast
+fi
