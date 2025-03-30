@@ -76,6 +76,15 @@ vim.keymap.set("n", "<leader>bl", vim.cmd.buffers)
 -- source vim config
 vim.keymap.set("n", "<leader><CR>", ":so ~/.config/nvim/init.lua<CR>")
 
+-- copy current file path to clipboard
+vim.api.nvim_create_user_command("Cppath", function()
+	local path = vim.fn.expand("%:.")
+	vim.fn.setreg("+", path)
+	vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, {})
+
+vim.keymap.set("n", "<leader>pp", ":Cppath<CR>")
+
 -- copilot
 -- vim.g.copilot_assume_mapped = true
 -- vim.g.copilot_no_tab_map = true

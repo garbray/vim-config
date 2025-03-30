@@ -184,6 +184,10 @@ brew install xh # replacement for curl
 brew install curlie 
 brew install posting
 
+# new items
+brew install serie # git log visualization
+brew install AmmarAbouZor/homebrew-tui-journal/tui-journal # journal from terminal
+# brew install repgrep # grep replacement to select items an replace them
 
 # node dependencies
 npm install -g graphql-language-service-cli
