@@ -138,6 +138,9 @@ esac
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+ export TASKRC="$HOME/.config/task-warrior/.taskrc"
+ # export TASKDATA="$HOME/.config/task-warrior"
+
 # cargo
 # source "$HOME/.cargo/env"
 #
@@ -153,3 +156,5 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 # export XDG_CONFIG_HOME="$HOME/.config"
 #
 export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
+
+export PATH="$HOME/.orbit/bin:$PATH"

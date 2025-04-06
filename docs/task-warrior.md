@@ -62,3 +62,9 @@
     - **Regular Updates**: Keep Taskwarrior updated to benefit from new features and improvements.
 
 By following these examples and best practices, you can effectively manage your tasks with Taskwarrior, ensuring that you stay organized, prioritize effectively, and maintain productivity.
+
+s3 sync
+
+```
+man task-sync
+```

@@ -7,7 +7,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out,                            "WarningMsg" },
+			{ out, "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -209,15 +209,11 @@ require("lazy").setup({
 	},
 
 	-- python
-	"interdependence/tree-sitter-htmldjango",
-
 	"prisma/vim-prisma",
-
 	"plasticboy/vim-markdown",
 	"nvim-lualine/lualine.nvim",
 	"vuciv/vim-bujo",
 	-- "lukas-reineke/indent-blankline.nvim",
-
 	"preservim/tagbar",
 	"mhinz/vim-startify",
 	"windwp/nvim-autopairs",
@@ -236,54 +232,11 @@ require("lazy").setup({
 			vim.fn["mkdp#util#install"]()
 		end,
 	},
-
-	-- Dap
-	{
-		"rcarriga/nvim-dap-ui",
-		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
-	},
-	"theHamsta/nvim-dap-virtual-text",
-	"leoluz/nvim-dap-go",
-	-- "mfussenegger/nvim-dap",
-	"jayp0521/mason-nvim-dap.nvim",
-	-- {
-	-- 	"rcarriga/nvim-dap-ui",
-	-- 	dependencies = "mfussenegger/nvim-dap",
-	-- 	config = function()
-	-- 		local dap = require("dap")
-	-- 		local dapui = require("dapui")
-	-- 		require("dapui").setup()
-
-	-- 		dap.listeners.after.event_initialized["dapui_config"] = function()
-	-- 			dapui.open()
-	-- 		end
-	-- 		dap.listeners.before.event_terminated["dapui_config"] = function()
-	-- 			dapui.close()
-	-- 		end
-	-- 		dap.listeners.before.event_exited["dapui_config"] = function()
-	-- 			dapui.close()
-	-- 		end
-	-- 	end,
-	-- },
-	-- "theHamsta/nvim-dap-virtual-text",
-	-- {
-	-- 	"samodostal/image.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 	},
-	-- },
-	-- {
-	-- 	"rest-nvim/rest.nvim",
-	-- 	-- "NTBBloodbath/rest.nvim",
-	-- 	dependencies = { "nvim-lua/plenary.nvim" },
-	-- 	ensure_installed = { "http", "json" },
-	-- },
-
 	-- newest version reviewed and updated plugins
 	"folke/lazydev.nvim", -- lua language server
 	"folke/twilight.nvim", -- this could be removed in favor of snack dim
 	-- colorschema
-	{ "catppuccin/nvim",                          as = "catppuccin" },
+	{ "catppuccin/nvim", as = "catppuccin" },
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
@@ -480,11 +433,11 @@ require("lazy").setup({
 					telescope = require("telescope.themes").get_dropdown({ hide_preview = false }),
 				},
 				-- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
-				focus_on_open = true,                            -- Focus the floating window when opening it.
-				dismiss_on_move = false,                         -- Dismiss the floating window when moving the cursor.
-				force_close = true,                              -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
-				bufhidden = "wipe",                              -- the bufhidden option to set on the floating window. See :h bufhidden
-				stack_floating_preview_windows = true,           -- Whether to nest floating windows
+				focus_on_open = true, -- Focus the floating window when opening it.
+				dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
+				force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
+				bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
+				stack_floating_preview_windows = true, -- Whether to nest floating windows
 				preview_window_title = { enable = true, position = "left" }, -- Whether
 			})
 		end,
@@ -537,5 +490,47 @@ require("lazy").setup({
 	-- {
 	-- 	dir = "~/workspace/personal/simple-term",
 	-- 	name = "simple-term",
+	-- },
+
+	-- Dap
+	{
+		"rcarriga/nvim-dap-ui",
+		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+	},
+	"theHamsta/nvim-dap-virtual-text",
+	"leoluz/nvim-dap-go",
+	-- "mfussenegger/nvim-dap",
+	"jayp0521/mason-nvim-dap.nvim",
+	-- {
+	-- 	"rcarriga/nvim-dap-ui",
+	-- 	dependencies = "mfussenegger/nvim-dap",
+	-- 	config = function()
+	-- 		local dap = require("dap")
+	-- 		local dapui = require("dapui")
+	-- 		require("dapui").setup()
+
+	-- 		dap.listeners.after.event_initialized["dapui_config"] = function()
+	-- 			dapui.open()
+	-- 		end
+	-- 		dap.listeners.before.event_terminated["dapui_config"] = function()
+	-- 			dapui.close()
+	-- 		end
+	-- 		dap.listeners.before.event_exited["dapui_config"] = function()
+	-- 			dapui.close()
+	-- 		end
+	-- 	end,
+	-- },
+	-- "theHamsta/nvim-dap-virtual-text",
+	-- {
+	-- 	"samodostal/image.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
+	-- },
+	-- {
+	-- 	"rest-nvim/rest.nvim",
+	-- 	-- "NTBBloodbath/rest.nvim",
+	-- 	dependencies = { "nvim-lua/plenary.nvim" },
+	-- 	ensure_installed = { "http", "json" },
 	-- },
 }, {})
