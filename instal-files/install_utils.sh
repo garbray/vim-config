@@ -9,3 +9,4 @@ brew install xh
 brew install curlie
 brew install youtube-dl
 brew install ffmpeg
+brew install taskwarrior-tui
