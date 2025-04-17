@@ -203,12 +203,10 @@ require("lazy").setup({
 	},
 
 	-- {'gptlang/CopilotChat.nvim'} // review if this makes sense
+	-- formatting
 	{
-		"jose-elias-alvarez/null-ls.nvim",
-		dependencies = {
-
-			"davidmh/cspell.nvim",
-		},
+		"stevearc/conform.nvim",
+		opts = {},
 	},
 
 	-- python
