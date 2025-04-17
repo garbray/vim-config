@@ -36,10 +36,10 @@ local lsp_attach = function(client, bufnr)
 	keymap("n", "<leader>gp", function()
 		diagnostic.goto_prev()
 	end, opts)
-	-- keymap("n", "<leader>ca", function()
-	-- 	buf.code_action()
-	-- end, opts)
-	keymap("n", "<leader>ca", "<cmd>Lspsaga code_action end<CR>", {})
+	keymap("n", "<leader>ca", function()
+		buf.code_action()
+	end, opts)
+	-- keymap("n", "<leader>ca", "<cmd>Lspsaga code_action end<CR>", {})
 	keymap("n", "<leader>vrr", function()
 		buf.references()
 	end, opts)
@@ -58,7 +58,7 @@ lsp_zero.extend_lspconfig({
 -- install new servers
 mason.setup({})
 require("mason-lspconfig").setup({
-	ensure_installed = { "ts_ls", "rust_analyzer", "tailwindcss" },
+	ensure_installed = { "ts_ls", "rust_analyzer", "tailwindcss", "gopls", "pyright" },
 	handlers = {
 		-- this first function is the "default handler"
 		-- it applies to every language server without a "custom handler"
@@ -128,6 +128,8 @@ lspconfig.pyright.setup({})
 -- lspconfig.html.setup({})
 lspconfig.tailwindcss.setup({})
 lspconfig.rust_analyzer.setup({})
+
+lspconfig.gopls.setup({})
 -- lspconfig.prettier.setup({})
 
 lspconfig.eslint.setup({
