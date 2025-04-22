@@ -9,5 +9,7 @@ if [[ $PLATFORM == 'macos' ]]; then
     brew install koekeishiya/formulae/skhd
     brew install skhd
     brew install trash-cli
+    brew install --cask kitty
+    brew install --cask ghostty
     brew install --cask raycast
 fi
