@@ -4,6 +4,7 @@ if not conform_status_ok then
 end
 
 conform.setup({
+	debug = true,
 	formatters_by_ft = {
 		lua = { "stylua" },
 		-- Conform will run multiple formatters sequentially
@@ -11,10 +12,15 @@ conform.setup({
 		-- You can customize some of the format options for the filetype (:help conform.format)
 		rust = { "rustfmt", lsp_format = "fallback" },
 		-- Conform will run the first available formatter
-		javascript = { "prettierd", "eslint_d" },
-		typescript = { "prettierd", "eslint_d" },
-		javascriptreact = { "prettierd", "eslint_d" },
-		typescriptreact = { "prettierd", "eslint_d" },
+		-- javascript = { "eslint_d", "prettier", "prettierd" },
+		-- typescript = { "eslint_d", "prettier", "prettierd" },
+		-- javascriptreact = { "eslint_d", "prettier", "prettierd" },
+		-- typescriptreact = { "eslint_d", "prettier", "prettierd" },
+		-- using eslint and prettier over the default eslint_d and prettierd because of timeouts
+		javascript = { "eslint", "prettier" },
+		typescript = { "eslint", "prettier" },
+		javascriptreact = { "eslint", "prettier" },
+		typescriptreact = { "eslint", "prettier" },
 		go = { "goimports", "gofmt", "golines" },
 		-- You can also specify a formatter for a specific file
 		["*.json"] = { "jq" },
@@ -26,7 +32,7 @@ conform.setup({
 	format_on_save = {
 		-- I recommend these options. See :help conform.format for details.
 		lsp_format = "fallback",
-		timeout_ms = 500,
+		timeout_ms = 5000,
 	},
 	format_after_save = {
 		lsp_format = "fallback",
