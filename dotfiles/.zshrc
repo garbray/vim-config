@@ -158,3 +158,10 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
 
 export PATH="$HOME/.orbit/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/bryan_garzon/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/bryan_garzon/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/bryan_garzon/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/bryan_garzon/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
