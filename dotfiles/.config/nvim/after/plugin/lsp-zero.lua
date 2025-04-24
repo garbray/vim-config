@@ -7,10 +7,6 @@ local keymap = vim.keymap.set
 local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 local mason = require("mason")
 
--- local lsp_attach = function(client, bufnr)
---   lsp_zero.default_keymaps({buffer = bufnr})
--- end
-
 local lsp_attach = function(client, bufnr)
 	keymap("n", "gd", function()
 		buf.definition()

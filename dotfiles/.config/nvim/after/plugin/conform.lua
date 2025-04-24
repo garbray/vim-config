@@ -4,7 +4,7 @@ if not conform_status_ok then
 end
 
 conform.setup({
-	debug = true,
+	debug = false,
 	formatters_by_ft = {
 		lua = { "stylua" },
 		-- Conform will run multiple formatters sequentially
