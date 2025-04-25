@@ -32,7 +32,7 @@ vim.keymap.set("n", "<C-e>", function()
 	toggle_telescope(harpoon:list())
 end, { desc = "Open harpoon window" })
 
-vim.keymap.set("n", "<leader>a", function()
+vim.keymap.set("n", "<leader>ha", function()
 	harpoon:list():add()
 end)
 
@@ -59,7 +59,7 @@ end)
 
 -- vim.keymap.set("n", "<leader>aa", mark.add_file)
 -- vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
-vim.keymap.set("n", "<leader>ac", function()
+vim.keymap.set("n", "<leader>hc", function()
 	harpoon:list():remove_at(1)
 	harpoon:list():remove_at(2)
 	harpoon:list():remove_at(3)
