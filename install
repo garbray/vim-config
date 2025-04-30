@@ -27,5 +27,3 @@ else
     rm /usr/local/bin/projectSelector
 fi
 sudo ln -s $repoPath/tmuxSelector /usr/local/bin/projectSelector
-
-

@@ -124,3 +124,6 @@ session
 
 # karabiner
 dotfiles/.config/Karabiner
+
+# lazyvim
+dotfiles/.config/nvim/lazy-lock.json
