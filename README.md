@@ -10,9 +10,7 @@ Lately, I have decided to use vim as my main IDE some points for it are:
 
 ## TODO list
 
-- [ ] create installation script
 - [ ] use ansible
-- [x] move to use Lua
 
 ## Config keyboard speed on macOS
 
