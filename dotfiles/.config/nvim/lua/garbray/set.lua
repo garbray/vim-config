@@ -43,7 +43,8 @@ vim.conceallevel = 1
 -- 0 : Disable banner
 -- 1 : Enable banner
 vim.g.netrw_banner = 0
-vim.g.netrw_liststyle = 3
+-- didn't like the tree view :(
+-- vim.g.netrw_liststyle = 3
 -- Patterns for hiding files, e.g. node_modules
 -- NOTE: this works by reading '.gitignore' file
 -- vim.g.netrw_list_hide = vim.fn["netrw_gitignore#Hide"]()

@@ -8,6 +8,7 @@ to use the cursor keys in the terminal, you need to set the following keybinding
 
 ```json
 {
+    "editor.fontSize": 14,
     "window.commandCenter": 1,
     "workbench.settings.applyToAllProfiles": [
     ],
@@ -73,9 +74,31 @@ to use the cursor keys in the terminal, you need to set the following keybinding
           {
             "before": ["<leader>", "j"],
             "commands": ["workbench.action.focusBelowGroup"]
+          },
+          {
+            "before": ["<leader>", "/"],
+            "commands": ["editor.action.commentLine"]
+          },
+          {
+            "before": ["K"],
+            "commands": ["editor.action.showHover"]
           }
     ],
     "vim.commandLineModeKeyBindings": [
 
     ]
-}```
+}
+```
+
+### To be enable keyhold
+
+run in the terminal:
+```bash
+osascript -e 'id of app "Cursor"'
+```
+then with the resulting id, run:
+```bash
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+```
+
+where the `com.microsoft.VSCode` is the id of the app you want to enable keyhold for.

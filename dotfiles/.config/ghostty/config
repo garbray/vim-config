@@ -5,6 +5,7 @@ font-family-bold = "FiraCode"
 font-family-italic = "Maple Mono"
 font-family-bold-italic = "Maple Mono"
 font-size = 14
+# font-size = 15
 adjust-underline-position = 4
 
 # Mouse
