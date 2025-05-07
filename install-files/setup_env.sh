@@ -19,3 +19,5 @@ if [[ $PLATFORM == 'macos' ]]; then
 fi
 
 # xattr -d com.apple.quarantine /Applications/AeroSpace.app
+# defaults write com.apple.dock expose-group-apps -bool true && killall Dock
+# brew services start borders
