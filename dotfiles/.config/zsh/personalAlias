@@ -22,3 +22,8 @@ alias networkEn0="ifconfig en0 | grep inet | awk '{ print $2 }'"
 alias processName="ps -ax | grep"
 alias flushCache="sudo dscacheutil -flushcache"
 alias server="python3 -m http.server 2000"
+
+def ff () {
+    aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
+}
+

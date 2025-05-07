@@ -12,4 +12,10 @@ if [[ $PLATFORM == 'macos' ]]; then
     brew install --cask kitty
     brew install --cask ghostty
     brew install --cask raycast
+    # replace for yabai / skhd
+    brew install --cask nikitabobko/tap/aerospace
+    brew tap FelixKratz/formulae
+    brew install borders
 fi
+
+# xattr -d com.apple.quarantine /Applications/AeroSpace.app
