@@ -21,7 +21,7 @@ require("lazy").setup({
 	require("garbray.plugins.ui"),
 	require("garbray.plugins.lsp"),
 	require("garbray.plugins.ai"),
-	require("garbray.plugins.debugging"),
+	require("garbray.plugins.debug"),
 	require("garbray.plugins.utilities"),
 	require("garbray.plugins.personal"),
 	-- validation
