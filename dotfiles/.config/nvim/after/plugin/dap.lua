@@ -3,145 +3,103 @@ if not dap_status_ok then
 	return
 end
 
--- local mason_nvim_dap_ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
--- if not mason_nvim_dap_ok then
--- 	return
--- end
-
 local mason_ok, mason = pcall(require, "mason")
 if not mason_ok then
 	return
 end
 
-local keymap = vim.keymap.set
+local dapui_ok, dapui = pcall(require, "dapui")
+if not dapui_ok then
+	return
+end
 
 mason.setup({})
+
 require("mason-nvim-dap").setup({
+	automatic_setup = true,
+	automatic_installation = true,
 	handlers = {
 		function(config)
 			require("mason-nvim-dap").default_setup(config)
 		end,
 	},
-	javascript = function(config)
-		config.adapters = {
-			{
-				name = "Launch",
-				type = "node2",
-				request = "launch",
-				program = "${file}",
-				cwd = vim.fn.getcwd(),
-				sourceMaps = true,
-				protocol = "inspector",
-				console = "integratedTerminal",
-			},
-			{
-				-- For this to work you need to make sure the node process is started with the `--inspect` flag.
-				name = "Attach to process",
-				type = "node2",
-				request = "attach",
-				processId = require("dap.utils").pick_process,
-			},
-		}
-	end,
+	ensure_installed = {
+		"python",
+		"delve",
+		"node2",
+		"chrome",
+		"firefox",
+	},
 })
 
 require("dapui").setup()
 require("dap-go").setup()
+require("dap-python").setup()
 require("nvim-dap-virtual-text").setup()
 vim.fn.sign_define(
 	"DapBreakpoint",
-	{ text = "🔴", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
+	{ text = "🛑", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
 )
+vim.fn.sign_define("DapBreakpointCondition", { text = "⭕️" })
 
--- Debugger
-vim.api.nvim_set_keymap("n", "<leader>dt", ":DapUiToggle<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>db", ":DapToggleBreakpoint<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>dc", ":DapContinue<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>dr", ":lua require('dapui').open({reset = true})<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>ht", ":lua require('harpoon.ui').toggle_quick_menu()<CR>", { noremap = true })
--- mason_nvim_dap.setup({
--- 	ensure_installed = { "python", "delve", "node2", "chrome", "firefox" },
--- 	-- automatic_setup = true,
--- })
-
--- mason_nvim_dap.setup({
--- 	handlers = {
--- 		function(config)
--- 			-- all sources with no handler get passed here
-
--- 			-- Keep original functionality of `automatic_setup = true`
--- 			require("mason-nvim-dap").default_setup(config)
--- 		end,
--- 	},
--- 	node2 = function(config)
--- 		config.adapters = {
--- 			type = "executable",
--- 			command = "node",
--- 			args = { os.getenv("HOME") .. "/.config/adapters/vscode-node-debug2/out/src/nodeDebug.js" },
--- 		}
--- 		print(config)
--- 		require("mason-nvim-dap").default_setup(config)
--- 	end,
--- 	-- python = function(source_name)
--- 	-- 	dap.adapters.python = {
--- 	-- 		type = "executable",
--- 	-- 		command = "/usr/bin/python3",
--- 	-- 		args = {
--- 	-- 			"-m",
--- 	-- 			"debugpy.adapter",
--- 	-- 		},
--- 	-- 	}
-
--- 	-- 	dap.configurations.python = {
--- 	-- 		{
--- 	-- 			type = "python",
--- 	-- 			request = "launch",
--- 	-- 			name = "Launch file",
--- 	-- 			program = "${file}", -- This configuration will launch the current file if used.
--- 	-- 		},
--- 	-- 	}
--- 	-- end,
--- })
-
--- -- keymaping
--- keymap("n", "<leader>dc", ":lua require'dap'.continue()<CR>")
--- keymap("n", "<leader>di", ":lua require'dap'.step_into()<CR>")
--- keymap("n", "<leader>do", ":lua require'dap'.step_out()<CR>")
--- keymap("n", "<leader>ds", ":lua require'dap'.step_over()<CR>")
--- keymap("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>")
--- keymap("n", "<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
--- keymap("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nill, nill, vim.fn.input('Log point message: '))<CR>")
--- keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>")
--- keymap("n", "<leader>da", ":lua require'garbray.plugins.debugHelper'.attach()<CR>")
-
--- config
--- language
+-- follow the instructions here https://codeberg.org/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#javascript
 -- dap.adapters["pwa-node"] = {
 -- 	type = "server",
 -- 	host = "localhost",
--- 	port = "9229",
+-- 	port = "${port}",
 -- 	executable = {
--- 		command = "js-debug-adapter",
+-- 		command = "node",
+-- 		-- 💀 Make sure to update this path to point to your installation
+-- 		args = { "~/.debug/js-debug/src/dapDebugServer.js", "${port}" },
 -- 	},
 -- }
 
--- for _, language in ipairs({ "typescript", "javascript" }) do
--- 	dap.configurations[language] = {
--- 		{
--- 			type = "pwa-node",
--- 			request = "launch",
--- 			name = "Launch file",
--- 			program = "${file}",
--- 			cwd = "${workspaceFolder}",
--- 		},
--- 	}
--- end
-
--- dap.adapters.node2 = {
--- 	type = "executable",
--- 	command = "node",
--- 	args = { os.getenv("HOME") .. "/.config/adapters/vscode-node-debug2/out/src/nodeDebug.js" },
+-- dap.configurations.javascript = {
+-- 	{
+-- 		type = "pwa-node",
+-- 		request = "launch",
+-- 		name = "Launch file",
+-- 		program = "${file}",
+-- 		cwd = "${workspaceFolder}",
+-- 	},
 -- }
 
--- local opts = { noremap = false, silent = true }
--- -- require("nvim-dap-virtual-text").setup()
+-- Keymaps
+vim.keymap.set(
+	"n",
+	"<leader>dt",
+	dap.toggle_breakpoint,
+	{ noremap = true, silent = true, desc = "Dap toggle breakpoint" }
+)
+vim.keymap.set("n", "<leader>B", function()
+	dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+end, { desc = "Dap Set conditional Breakpoint" })
+vim.keymap.set("n", "<leader>dc", dap.continue, { noremap = true, silent = true, desc = "Dap toggle breakpoint" })
+vim.keymap.set("n", "<leader>dr", function()
+	-- dapui:open({ reset = true })
+	dap.continue()
+end, { noremap = true, silent = true, desc = "Dap Run" })
+vim.keymap.set("n", "<leader>dx", function()
+	dapui:close()
+end, { noremap = true, silent = true, desc = "Dap UI close" })
+vim.keymap.set("n", "<leader>di", dap.step_into, { noremap = true, silent = true, desc = "Dap step into" })
+vim.keymap.set("n", "<leader>do", dap.step_over, { noremap = true, silent = true, desc = "Dap step over" })
+vim.keymap.set("n", "<leader>du", dap.step_out, { noremap = true, silent = true, desc = "Dap step out" })
+vim.keymap.set(
+	"n",
+	"<leader>lp",
+	":lua require'dap'.set_breakpoint(nill, nill, vim.fn.input('Log point message: '))<CR>"
+)
+
+dap.listeners.before.attach.dapui_config = function()
+	dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+	dapui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+	dapui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+	dapui.close()
+end
