@@ -24,4 +24,6 @@ require("lazy").setup({
 	require("garbray.plugins.debugging"),
 	require("garbray.plugins.utilities"),
 	require("garbray.plugins.personal"),
+	-- validation
+	-- require("garbray.plugins.which-key"),
 }, {})

@@ -1,6 +1,13 @@
 return {
-	"github/copilot.vim",
-	"zbirenbaum/copilot.lua", -- for providers='copilot'
+	-- "github/copilot.vim",
+	{
+		"zbirenbaum/copilot.lua", -- for providers='copilot'
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({})
+		end,
+	},
 	{
 		"zbirenbaum/copilot-cmp",
 		after = {
@@ -58,6 +65,7 @@ return {
 			"ibhagwan/fzf-lua", -- for file_selector provider fzf
 			"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
 			"zbirenbaum/copilot.lua", -- for providers='copilot'
+			-- "github/copilot.vim",
 			{
 				-- support for image pasting
 				"HakonHarnes/img-clip.nvim",

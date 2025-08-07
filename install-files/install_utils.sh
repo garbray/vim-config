@@ -10,3 +10,5 @@ brew install curlie
 brew install youtube-dl
 brew install ffmpeg
 brew install taskwarrior-tui
+brew install webp
+brew install imagemagick

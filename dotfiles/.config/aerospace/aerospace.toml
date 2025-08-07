@@ -73,6 +73,10 @@ if.app-name-regex-substring = 'spotify'
 run = "move-node-to-workspace 2 --focus-follows-window"
 
 [[on-window-detected]]
+if.app-name-regex-substring = 'music'
+run = "move-node-to-workspace 2 --focus-follows-window"
+
+[[on-window-detected]]
 if.app-name-regex-substring = 'finder'
 run = "move-node-to-workspace 2 --focus-follows-window"
 

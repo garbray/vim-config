@@ -27,5 +27,11 @@ npm install -g bash-language-server vscode-langservers-extracted
 npm install -g graphql-language-service-cli yaml-language-server
 npm install -g vim-language-server emmet-ls @tailwindcss/language-server
 
+# AI
+npm install -g @anthropic-ai/claude-code
+
 # aws mock
 brew install act
+
+# python
+brew install uv

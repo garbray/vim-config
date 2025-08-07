@@ -16,9 +16,16 @@ return {
 				"codespell",
 				"misspell",
 				"cspell",
+				-- LSP servers
 				"jsonls",
 				"tsserver",
 				"html",
+				"bashls",
+				"dockerls",
+				"yamlls",
+				"marksman",
+				"sqlls",
+				"vimls",
 				-- markdown
 				"markdownlint",
 			},
@@ -30,6 +37,8 @@ return {
 		branch = "v4.x",
 	},
 	{ "neovim/nvim-lspconfig" },
+	-- Note: blink.cmp replaces nvim-cmp and is configured in blink-cmp.lua
+
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{
 		"hrsh7th/nvim-cmp",

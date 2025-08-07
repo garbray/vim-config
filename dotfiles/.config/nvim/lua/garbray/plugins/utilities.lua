@@ -2,6 +2,7 @@ return {
 	"prisma/vim-prisma",
 	-- markdown
 	"plasticboy/vim-markdown",
+
 	{
 		"iamcco/markdown-preview.nvim",
 		config = function()
@@ -9,6 +10,20 @@ return {
 		end,
 	},
 	-- notifications
+	{
+		"rcarriga/nvim-notify",
+		config = function()
+			require("notify").setup({
+				background_colour = "#000000",
+				stages = "fade_in_slide_out",
+				timeout = 3000,
+				top_down = false,
+				max_height = function()
+					return math.floor(vim.o.lines * 0.8)
+				end,
+			})
+		end,
+	},
 	{
 		"folke/noice.nvim",
 		config = function()
@@ -36,7 +51,7 @@ return {
 		end,
 		dependencies = {
 			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-Notify",
+			"rcarriga/nvim-notify",
 		},
 	},
 

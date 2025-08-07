@@ -102,7 +102,7 @@ export PATH=$PATH:$(go env GOPATH)/bin
 # export JDK_11=`/usr/libexec/java_home -v 11.0.10`
 # export JAVA_HOME=$JDK_8
 # export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_282`
-# set other java enviroment
+# set other java environment
 # alias java8='export JAVA_HOME=$JDK_8'
 # alias java11='export JAVA_HOME=$JDK_11'
 
@@ -111,7 +111,7 @@ export PATH=$PATH:$(go env GOPATH)/bin
 
 alias lg="lazygit"
 
-# alias luamake=/Users/bryan.garzon/workspace/lua/lua-language-server/3rd/luamake/compile/luamake
+# alias luamake=$HOME/workspace/lua/lua-language-server/3rd/luamake/compile/luamake
 export PATH="$HOME/tools/lua-language-server/bin/macOS:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
@@ -121,10 +121,10 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 # export PATH="$HOME/.cargo/bin:$PATH"
 
-#source /Users/bryangarzonbahamon/.docker/init-zsh.sh || true # Added by Docker Desktop
+#source $HOME/.docker/init-zsh.sh || true # Added by Docker Desktop
 
 # pnpm
-export PNPM_HOME="/Users/bryangarzonbahamon/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -132,7 +132,7 @@ esac
 # pnpm end
 
 # bun completions
-[ -s "/Users/bryangarzonbahamon/.bun/_bun" ] && source "/Users/bryangarzonbahamon/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -160,8 +160,8 @@ export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
 export PATH="$HOME/.orbit/bin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/bryan_garzon/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/bryan_garzon/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/bryan_garzon/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/bryan_garzon/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"; fi
 

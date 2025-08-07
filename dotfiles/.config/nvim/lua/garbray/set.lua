@@ -29,6 +29,10 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
+-- Performance optimizations
+-- vim.opt.lazyredraw = true
+-- vim.opt.ttyfast = true
+
 vim.opt.colorcolumn = "80"
 
 vim.opt.ignorecase = true
