@@ -59,6 +59,10 @@ if.app-name-regex-substring = 'finder'
 run = 'layout floating'
 
 [[on-window-detected]]
+if.app-name-regex-substring = 'loom'
+run = 'layout floating'
+
+[[on-window-detected]]
 if.app-name-regex-substring = 'microsoft'
 run = "move-node-to-workspace 1 --focus-follows-window"
 # run = 'layout floating'
