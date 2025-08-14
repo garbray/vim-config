@@ -35,7 +35,15 @@ require("mason-nvim-dap").setup({
 require("dapui").setup()
 require("dap-go").setup()
 require("dap-python").setup()
+
+-- it may require use virtual envs to work properly, follow these steps
+-- mkdir ~/.virtualenvs
+-- cd ~/.virtualenvs
+-- python -m venv debugpy
+-- debugpy/bin/python -m pip install debugpy
+
 require("nvim-dap-virtual-text").setup()
+
 -- 
 vim.fn.sign_define(
 	"DapBreakpoint",

@@ -27,3 +27,5 @@ def ff () {
     aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
 }
 
+alias virtualenv="/opt/homebrew/bin/python3.13 -m venv .venv"
+alias loadVirtualEnv="source .venv/bin/activate"
