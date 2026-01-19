@@ -9,49 +9,34 @@ return {
 			vim.fn["mkdp#util#install"]()
 		end,
 	},
-	-- notifications
-	{
-		"rcarriga/nvim-notify",
-		config = function()
-			require("notify").setup({
-				background_colour = "#000000",
-				stages = "fade_in_slide_out",
-				timeout = 3000,
-				top_down = false,
-				max_height = function()
-					return math.floor(vim.o.lines * 0.8)
-				end,
-			})
-		end,
-	},
+	-- nvim-notify removed - using snacks.notifier
 	{
 		"folke/noice.nvim",
-		config = function()
-			require("noice").setup({
-				routes = {
-					{
-						view = "notify",
-						filter = { event = "msg_showmode" },
-					},
-					{
-						filter = {
-							event = "msg_show",
-							any = {
-								{ find = "%d+L, %d+B" },
-								{ find = "; after #%d+" },
-								{ find = "; before #%d+" },
-								{ find = "%d fewer lines" },
-								{ find = "%d more lines" },
-							},
-						},
-						opts = { skip = true },
-					},
+		event = "VeryLazy",
+		dependencies = { "MunifTanjim/nui.nvim" },
+		opts = {
+			notify = {
+				enabled = false, -- use snacks.notifier instead
+			},
+			routes = {
+				{
+					view = "notify",
+					filter = { event = "msg_showmode" },
 				},
-			})
-		end,
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
+				{
+					filter = {
+						event = "msg_show",
+						any = {
+							{ find = "%d+L, %d+B" },
+							{ find = "; after #%d+" },
+							{ find = "; before #%d+" },
+							{ find = "%d fewer lines" },
+							{ find = "%d more lines" },
+						},
+					},
+					opts = { skip = true },
+				},
+			},
 		},
 	},
 
@@ -85,7 +70,38 @@ return {
 		---@type snacks.Config
 		opts = {
 			bigfile = { enabled = true },
-			dashboard = { enabled = true },
+			dashboard = {
+				enabled = true,
+				preset = {
+					header = [[
+ ________  ________  ________  ________  ________  ________      ___    ___
+|\   ____\|\   __  \|\   __  \|\   __  \|\   __  \|\   __  \    |\  \  /  /|
+\ \  \___|\ \  \|\  \ \  \|\  \ \  \|\ /\ \  \|\  \ \  \|\  \   \ \  \/  / /
+ \ \  \  __\ \   __  \ \   _  _\ \   __  \ \   _  _\ \   __  \   \ \    / /
+  \ \  \|\  \ \  \ \  \ \  \\  \\ \  \|\  \ \  \\  \\ \  \ \  \   \/  /  /
+   \ \_______\ \__\ \__\ \__\\ _\\ \_______\ \__\\ _\\ \__\ \__\__/  / /
+    \|_______|\|__|\|__|\|__|\|__|\|_______|\|__|\|__|\|__|\|__|\___/ /
+                                                               \|___|/
+]],
+					keys = {
+						{ icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+						{ icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+						{ icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+						{ icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+						{ icon = " ", key = "i", desc = "Config", action = ":e ~/.config/nvim" },
+						{ icon = " ", key = "z", desc = "Zshrc", action = ":e ~/.zshrc" },
+						{ icon = " ", key = "s", desc = "Restore Session", section = "session" },
+						{ icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
+						{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
+					},
+				},
+				sections = {
+					{ section = "header" },
+					{ section = "keys", gap = 1, padding = 1 },
+					{ section = "recent_files", limit = 8, padding = 1 },
+					{ section = "startup" },
+				},
+			},
 			indent = {
 				enabled = true,
 				indent = {
@@ -241,7 +257,7 @@ return {
 	--"folke/lazydev.nvim", -- lua language server
 	--"folke/twilight.nvim", -- this could be removed in favor of snack dim
 	-- { "echasnovski/mini.nvim", version = false },
-	"folke/zen-mode.nvim",
+	-- zen-mode.nvim removed - using Snacks.zen()
 	-- this one looks unnecessary
 	-- commands gpd - gpr -gP
 	{
@@ -273,4 +289,31 @@ return {
 	-- language specific stuff
 	--"ray-x/go.nvim",
 	--"ray-x/guihua.lua",
+
+	-- trouble.nvim - better diagnostics list
+	{
+		"folke/trouble.nvim",
+		opts = {},
+		cmd = "Trouble",
+		keys = {
+			{ "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+			{ "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
+			{ "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
+			{ "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions / references (Trouble)" },
+			{ "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
+			{ "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
+		},
+	},
+
+	-- which-key.nvim - keybinding hints
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {
+			preset = "modern",
+		},
+		keys = {
+			{ "<leader>?", function() require("which-key").show({ global = false }) end, desc = "Buffer Keymaps (which-key)" },
+		},
+	},
 }

@@ -29,6 +29,7 @@ require("mason-nvim-dap").setup({
 		"node2",
 		"chrome",
 		"firefox",
+		"js",
 	},
 })
 

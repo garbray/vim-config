@@ -18,7 +18,7 @@ return {
 				"cspell",
 				-- LSP servers
 				"jsonls",
-				"tsserver",
+				"ts_ls",
 				"html",
 				"bashls",
 				"dockerls",
@@ -32,47 +32,51 @@ return {
 		},
 	},
 	{ "williamboman/mason-lspconfig.nvim" },
+	-- blink.cmp - modern completion engine (replaces nvim-cmp)
 	{
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v4.x",
-	},
-	{ "neovim/nvim-lspconfig" },
-	-- Note: blink.cmp replaces nvim-cmp and is configured in blink-cmp.lua
-
-	{ "hrsh7th/cmp-nvim-lsp" },
-	{
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
+		"saghen/blink.cmp",
+		version = "1.*",
 		dependencies = {
+			"rafamadriz/friendly-snippets",
 			{
-				"L3MON4D3/LuaSnip",
-				dependencies = {
-					"rafamadriz/friendly-snippets",
-				},
-				opts = { history = true, updateevents = "TextChanged,TextChangedI" },
-				config = function(_, opts)
-					require("luasnip").config.set_config(opts)
-
-					-- vscode format
-					require("luasnip.loaders.from_vscode").lazy_load()
-					require("luasnip.loaders.from_vscode").lazy_load({
-						paths = vim.g.vscode_snippets_path or "",
-					})
-					-- snipmate format
-					require("luasnip.loaders.from_snipmate").load()
-					require("luasnip.loaders.from_snipmate").lazy_load({
-						paths = vim.g.snipmate_snippets_path or "",
-					})
-					-- lua format
-					require("luasnip.loaders.from_lua").load()
-					require("luasnip.loaders.from_lua").lazy_load({
-						paths = vim.g.lua_snippets_path or "",
-					})
-				end,
+				"giuxtaposition/blink-cmp-copilot",
+				dependencies = { "zbirenbaum/copilot.lua" },
 			},
-			"hrsh7th/nvim-cmp",
-			"onsails/lspkind.nvim",
 		},
+		opts = {
+			keymap = {
+				preset = "default",
+				["<CR>"] = { "accept", "fallback" },
+				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+				["<C-u>"] = { "scroll_documentation_up", "fallback" },
+				["<C-d>"] = { "scroll_documentation_down", "fallback" },
+				["<S-Tab>"] = { "select_prev", "fallback" },
+				["<Tab>"] = { "select_next", "fallback" },
+			},
+			appearance = {
+				nerd_font_variant = "mono",
+			},
+			completion = {
+				documentation = { auto_show = true, auto_show_delay_ms = 200 },
+			},
+			sources = {
+				default = { "copilot", "lsp", "path", "snippets", "buffer" },
+				providers = {
+					copilot = {
+						name = "copilot",
+						module = "blink-cmp-copilot",
+						score_offset = 100,
+						async = true,
+					},
+				},
+			},
+			fuzzy = { implementation = "prefer_rust_with_warning" },
+		},
+		opts_extend = { "sources.default" },
+	},
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = { "saghen/blink.cmp" },
 	},
 	-- formatting
 	{

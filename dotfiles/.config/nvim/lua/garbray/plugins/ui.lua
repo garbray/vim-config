@@ -2,7 +2,7 @@ return {
 	"nvim-lualine/lualine.nvim",
 	"vuciv/vim-bujo",
 	"preservim/tagbar",
-	"mhinz/vim-startify",
+	-- vim-startify removed - using snacks.dashboard
 	"windwp/nvim-autopairs",
 	"windwp/nvim-ts-autotag",
 	-- "lukas-reineke/indent-blankline.nvim",
@@ -15,12 +15,4 @@ return {
 			vim.cmd("colorscheme rose-pine")
 		end,
 	},
-
-	--{
-	--	"nvimdev/lspsaga.nvim",
-	--	after = "nvim-lspconfig",
-	--	config = function()
-	--		require("lspsaga").setup({})
-	--	end,
-	--},
 }

@@ -1,162 +1,74 @@
-# Vim as IDE
+# Vim/Neovim IDE Setup
 
-Lately, I have decided to use vim as my main IDE some points for it are:
+Personal macOS dev env: Neovim+Tmux+dotfiles, automated install, AI plugins.
 
-- vim is lightweight
-- persistent session management with Tmux just works
-- efficient workflow navigation using hotkeys
-- use less your mouse
-- Intellisense with LSP (build in on Neovim)
+## Features
+- Neovim IDE (LSP, Copilot, Avante)
+- Tmux session mgmt
+- Fast nav, hotkeys, minimal mouse
+- Full dotfiles, modular install scripts
 
-## TODO list
-
-- [ ] use ansible
-
-## Config keyboard speed on macOS
-
-Go to the system preferences and change the keyboard speed to the fastest, setup
-settings -> accessibility --> keyboard
-
-## Vim configuration and commands
-
-Here is my vim setup and the configurations I found best suite for me.
-
-## Dependencies
-
-To make vim works great in macOSX you can use the following third parties to improve his performance
-
-- brew
-- cask
-- kitty term
-- Plug
-- highlight
-- ripgrep
-
-### brew install
-
-```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+## Quick Start
+```sh
+./install-files/setup.sh   # install all deps, configs
+./install                  # symlink dotfiles
 ```
 
-### cask
+## Main Configs
+- `dotfiles/.config/nvim/` (Neovim, Lua plugins)
+- `dotfiles/.zshrc`, `.tmux.conf`, `.config/aerospace/`
+- `install-files/` (all install scripts)
 
-here are all the cask [formulas](https://github.com/neoclide/coc.nvim)
+## Dependencies (auto-installed)
 
-### kitty term
+### Core
+- Homebrew, GNU Stow, Python, Go, Rust, Lua, Node, Deno, Yarn, Volta, pnpm, Java11, Bun, Ansible, Ninja
 
-```
-brew cask install kitty
-```
+### Neovim/Editor
+- neovim (HEAD), stylua, efm-langserver, tree-sitter, pynvim, black, flake8
+- node: neovim, prettier, typescript, typescript-language-server, bash-language-server, vscode-langservers-extracted, graphql-language-service-cli, yaml-language-server, vim-language-server, emmet-ls, @tailwindcss/language-server
+- AI: @anthropic-ai/claude-code, Copilot, Avante.nvim
 
-if you are an `ohmyzsh` user to fix the autocomplete feature in kitty you should run
+### Shell/CLI
+- zsh, oh-my-zsh, zsh-syntax-highlighting, zsh-autosuggestions, fzf, tmux, ripgrep, highlight, ranger, exa, z, peco, speedtest-cli, htop, lazygit, commitizen
 
-> export LANG="en_US.UTF-8"
+### Fonts
+- FiraCode Nerd Font
 
-### Plug
+### Browsers
+- firefox, zen-browser
 
-is a minimalist vim plugin install [site](https://github.com/junegunn/vim-plug)
+### Utils
+- jq, tidy-html5, act, turso, xh, curlie, youtube-dl, ffmpeg, taskwarrior-tui, webp, imagemagick
 
-```
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-```
+### Misc
+- neofetch, keycastr, numi, ascii-image-converter
 
-### Highlight
+## Keyboard Speed (macOS)
+settings → accessibility → keyboard → key repeat → fast
 
-Display the pre visualizer with the color syntaxis
-
-```
-brew install highlight
-```
-
-### ripgrep
-
-a faster search than grep
-
-```
-brew install ripgrep
-```
-
-### Python3
-
-In the case, you decide to use `nvim` and use Coc as your intellisense plugin you should install
-
-```
-python3 -m pip install --user --upgrade pynvim
-```
-
-## Other resources
-
-Tmux basic usage
-
-[tmux](./tmux/README.md)
-
-CheatSheet
-
-[cheat-sheet vim](./cheatsheet-vim.md)
-
-Search inside vim project
-
-[link search example](https://stackoverflow.com/questions/7950558/how-can-i-search-a-word-in-whole-project-folder-recursively)
-
-Nice talk about the usage of vim as a IDE
-[talk](https://www.youtube.com/watch?v=E-ZbrtoSuzw)
-[commands](https://www.keycdn.com/blog/vim-commands)
-
-```
-chmod +x backup
-```
-
-# multiple gh accounts
-
-add a new ssh
-
-```
+## Multi-Git Account Example
+```sh
 ssh-keygen -t rsa -b 4096 -C "your-email"
-
-```
-
-for mac use:
-
-```
 ssh-add --apple-use-keychain ~/.ssh/id_rsa_another
-```
-
-in the ssh folder create a config file with the following
-
-```
-# Default Github
+# ~/.ssh/config example:
 Host work
-    HostName github.com
-    AddKeysToAgent yes
-    User git
-    IdentityFile ~/.ssh/id_rsa
-
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_rsa
 Host alias
-    HostName github.com
-    AddKeysToAgent yes
-    User git
-    IdentityFile ~/.ssh/id_rsa_another
-
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_rsa_another
 ```
 
-ssh-add path-to-ssh-key
+## More
+- [CLAUDE.md](./CLAUDE.md) (repo structure, commands)
+- [tmux usage](./tmux/README.md)
+- [vim cheatsheet](./cheatsheet-vim.md)
+- [cursor/config.md](./cursor/config.md) (VSCode/Cursor keybinds)
 
-test your ssh
 
-```
-ssh -T your-alias
-```
 
-## speed move in macosx:
 
-if you want to speed the movement of your cursor on macosx you need to go:
 
-settings -> accessibility -> keyboard -> key repeat -> fast
-
-<!-- TODO: -->
-
--[] add a script to install all the dependencies.
--[] update readme with the new changes.
--[] review the multiple github accounts
--[]

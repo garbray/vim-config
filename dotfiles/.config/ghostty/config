@@ -14,7 +14,7 @@ mouse-hide-while-typing = true
 
 # Theme
 # theme = ayu
-theme = rose-pine
+theme = Rose Pine
 # cursor-invert-fg-bg = true
 background-opacity = 0.95
 window-theme = ghostty
