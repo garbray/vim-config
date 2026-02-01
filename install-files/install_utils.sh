@@ -12,3 +12,5 @@ brew install ffmpeg
 brew install taskwarrior-tui
 brew install webp
 brew install imagemagick
+brew install just
+brew install claude
