@@ -1,4 +1,6 @@
 return {
+	-- lazydev.nvim for Lua development (vim globals, etc.)
+	{ "folke/lazydev.nvim", ft = "lua", opts = {} },
 	-- package manager
 	{
 		"williamboman/mason.nvim",
@@ -17,6 +19,8 @@ return {
 				"misspell",
 				"cspell",
 				-- LSP servers
+				"lua_ls",
+				"eslint",
 				"jsonls",
 				"ts_ls",
 				"html",
@@ -26,6 +30,8 @@ return {
 				"marksman",
 				"sqlls",
 				"vimls",
+				"tailwindcss",
+				"pyright",
 				-- markdown
 				"markdownlint",
 			},

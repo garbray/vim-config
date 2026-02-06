@@ -3,17 +3,53 @@ if not dap_status_ok then
 	return
 end
 
-local mason_ok, mason = pcall(require, "mason")
-if not mason_ok then
-	return
-end
-
 local dapui_ok, dapui = pcall(require, "dapui")
 if not dapui_ok then
 	return
 end
 
-mason.setup({})
+-- Load telescope-dap extension
+local telescope_ok, telescope = pcall(require, "telescope")
+if telescope_ok then
+	telescope.load_extension("dap")
+end
+
+-- Helper to pick process with telescope
+local function pick_process_telescope()
+	local pickers = require("telescope.pickers")
+	local finders = require("telescope.finders")
+	local conf = require("telescope.config").values
+	local actions = require("telescope.actions")
+	local action_state = require("telescope.actions.state")
+
+	return coroutine.create(function(coro)
+		local processes = require("dap.utils").get_processes()
+		pickers
+			.new({}, {
+				prompt_title = "Select Process",
+				finder = finders.new_table({
+					results = processes,
+					entry_maker = function(entry)
+						return {
+							value = entry.pid,
+							display = string.format("%d: %s", entry.pid, entry.name),
+							ordinal = entry.name,
+						}
+					end,
+				}),
+				sorter = conf.generic_sorter({}),
+				attach_mappings = function(bufnr)
+					actions.select_default:replace(function()
+						actions.close(bufnr)
+						local selection = action_state.get_selected_entry()
+						coroutine.resume(coro, selection.value)
+					end)
+					return true
+				end,
+			})
+			:find()
+	end)
+end
 
 require("mason-nvim-dap").setup({
 	automatic_setup = true,
@@ -30,6 +66,7 @@ require("mason-nvim-dap").setup({
 		"chrome",
 		"firefox",
 		"js",
+		"codelldb",
 	},
 })
 
@@ -52,53 +89,89 @@ vim.fn.sign_define(
 )
 vim.fn.sign_define("DapBreakpointCondition", { text = "🕷️", texthl = "DapBreakpointCondition" })
 
--- follow the instructions here https://codeberg.org/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#javascript
--- https://github.com/mxsdev/nvim-dap-vscode-js?tab=readme-ov-file
--- require("dap-vscode-js").setup({
--- 	-- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
--- 	-- debugger_path = "(runtimedir)/site/pack/packer/opt/vscode-js-debug", -- Path to vscode-js-debug installation.
--- 	-- debugger_cmd = { "js-debug-adapter" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
--- 	adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" }, -- which adapters to register in nvim-dap
--- 	debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug", -- adjust to your lazy.nvim dir
--- 	-- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
--- 	-- log_file_level = false -- Logging level for output to file. Set to false to disable file logging.
--- 	-- log_console_level = vim.log.levels.ERROR -- Logging level for output to console. Set to false to disable console output.
--- })
+-- JS/TS debugging setup via js-debug-adapter (Mason)
+dap.adapters["pwa-node"] = {
+	type = "server",
+	host = "localhost",
+	port = "${port}",
+	executable = {
+		command = vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter",
+		args = { "${port}" },
+	},
+}
 
--- for _, language in ipairs({ "typescript", "javascript" }) do
--- 	dap.configurations[language] = {
--- 		{
--- 			type = "pwa-node",
--- 			request = "launch",
--- 			name = "Launch file",
--- 			program = "${file}",
--- 			-- cwd = "${workspaceFolder}",
--- 			cwd = vim.fn.getcwd(),
--- 		},
--- 		{
--- 			type = "pwa-node",
--- 			request = "attach",
--- 			name = "Attach",
--- 			processId = require("dap.utils").pick_process,
--- 			cwd = "${workspaceFolder}",
--- 		},
--- {
--- 	type = "pwa-node",
--- 	request = "launch",
--- 	name = "Debug Jest Tests",
--- 	-- trace = true, -- include debugger info
--- 	runtimeExecutable = "node",
--- 	runtimeArgs = {
--- 		"./node_modules/jest/bin/jest.js",
--- 		"--runInBand",
--- 	},
--- 	rootPath = "${workspaceFolder}",
--- 	cwd = "${workspaceFolder}",
--- 	console = "integratedTerminal",
--- 	internalConsoleOptions = "neverOpen",
--- },
--- }
--- end
+dap.adapters["pwa-chrome"] = {
+	type = "server",
+	host = "localhost",
+	port = "${port}",
+	executable = {
+		command = vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter",
+		args = { "${port}" },
+	},
+}
+
+for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
+	dap.configurations[language] = {
+		{
+			type = "pwa-node",
+			request = "launch",
+			name = "Launch file",
+			program = "${file}",
+			cwd = vim.fn.getcwd(),
+		},
+		{
+			type = "pwa-node",
+			request = "attach",
+			name = "Attach",
+			processId = pick_process_telescope,
+			cwd = "${workspaceFolder}",
+		},
+		{
+			type = "pwa-node",
+			request = "launch",
+			name = "Debug Jest Tests",
+			runtimeExecutable = "node",
+			runtimeArgs = {
+				"./node_modules/jest/bin/jest.js",
+				"--runInBand",
+			},
+			rootPath = "${workspaceFolder}",
+			cwd = "${workspaceFolder}",
+			console = "integratedTerminal",
+			internalConsoleOptions = "neverOpen",
+		},
+		{
+			type = "pwa-chrome",
+			request = "launch",
+			name = "Launch Chrome",
+			url = "http://localhost:3000",
+			webRoot = "${workspaceFolder}",
+		},
+	}
+end
+
+-- Rust debugging setup
+dap.adapters.codelldb = {
+	type = "server",
+	port = "${port}",
+	executable = {
+		command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
+		args = { "--port", "${port}" },
+	},
+}
+
+dap.configurations.rust = {
+	{
+		name = "Launch file",
+		type = "codelldb",
+		request = "launch",
+		program = function()
+			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+		end,
+		cwd = "${workspaceFolder}",
+		stopOnEntry = false,
+	},
+}
 
 -- Keymaps
 vim.keymap.set(
@@ -112,11 +185,10 @@ vim.keymap.set("n", "<leader>B", function()
 end, { desc = "Dap Set conditional Breakpoint" })
 vim.keymap.set("n", "<leader>dc", dap.continue, { noremap = true, silent = true, desc = "Dap toggle breakpoint" })
 vim.keymap.set("n", "<leader>dr", function()
-	-- dapui:open({ reset = true })
-	dap.continue()
-end, { noremap = true, silent = true, desc = "Dap Run" })
+	dap.run_last()
+end, { noremap = true, silent = true, desc = "Dap Run Last" })
 vim.keymap.set("n", "<leader>dx", function()
-	dapui:close()
+	dapui.close()
 end, { noremap = true, silent = true, desc = "Dap UI close" })
 vim.keymap.set("n", "<leader>di", dap.step_into, { noremap = true, silent = true, desc = "Dap step into" })
 vim.keymap.set("n", "<leader>do", dap.step_over, { noremap = true, silent = true, desc = "Dap step over" })
@@ -124,7 +196,7 @@ vim.keymap.set("n", "<leader>du", dap.step_out, { noremap = true, silent = true,
 vim.keymap.set(
 	"n",
 	"<leader>lp",
-	":lua require'dap'.set_breakpoint(nill, nill, vim.fn.input('Log point message: '))<CR>"
+	":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>"
 )
 
 dap.listeners.before.attach.dapui_config = function()
