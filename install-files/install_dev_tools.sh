@@ -15,6 +15,7 @@ brew install efm-langserver
 brew install tree-sitter
 brew install java11
 brew install oven-sh/bun/bun
+brew install claude-code
 
 # Setup Python packages
 python3 -m pip install --user --upgrade pynvim
@@ -26,9 +27,6 @@ npm install -g prettier typescript typescript-language-server
 npm install -g bash-language-server vscode-langservers-extracted
 npm install -g graphql-language-service-cli yaml-language-server
 npm install -g vim-language-server emmet-ls @tailwindcss/language-server
-
-# AI
-npm install -g @anthropic-ai/claude-code
 
 # aws mock
 brew install act

@@ -6,11 +6,8 @@ return {
 		"williamboman/mason.nvim",
 		opts = {
 			ensure_installed = {
-				"stylua",
-				"gopls",
-				"jdtls",
-				"rust_analyzer",
 				-- formatters
+				"stylua",
 				"eslint_d",
 				"prettier",
 				"prettierd",
@@ -18,11 +15,20 @@ return {
 				"codespell",
 				"misspell",
 				"cspell",
-				-- LSP servers
+				-- markdown
+				"markdownlint",
+			},
+		},
+	},
+	{
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		opts = {
+			ensure_installed = {
 				"lua_ls",
+				"ts_ls",
 				"eslint",
 				"jsonls",
-				"ts_ls",
 				"html",
 				"bashls",
 				"dockerls",
@@ -32,12 +38,12 @@ return {
 				"vimls",
 				"tailwindcss",
 				"pyright",
-				-- markdown
-				"markdownlint",
+				"gopls",
+				"jdtls",
+				"rust_analyzer",
 			},
 		},
 	},
-	{ "williamboman/mason-lspconfig.nvim" },
 	-- blink.cmp - modern completion engine (replaces nvim-cmp)
 	{
 		"saghen/blink.cmp",
@@ -82,7 +88,70 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "saghen/blink.cmp" },
+		dependencies = { "saghen/blink.cmp", "williamboman/mason-lspconfig.nvim" },
+		config = function()
+			local buf = vim.lsp.buf
+			local diagnostic = vim.diagnostic
+			local keymap = vim.keymap.set
+			local lspconfig = require("lspconfig")
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+			local on_attach = function(_, bufnr)
+				keymap("n", "<leader>gd", buf.definition, { buffer = bufnr, desc = "Go to definition" })
+				keymap("n", "<leader>gr", buf.references, { buffer = bufnr, desc = "Go to references" })
+				keymap("n", "K", function()
+					buf.hover()
+				end, { buffer = bufnr, desc = "Hover documentation" })
+				keymap("n", "<leader>vws", buf.workspace_symbol, { buffer = bufnr, desc = "Workspace symbol" })
+				keymap("n", "<leader>vd", diagnostic.open_float, { buffer = bufnr, desc = "Open diagnostics" })
+				-- keymap("n", "<leader>gn", diagnostic.goto_next, { buffer = bufnr, desc = "Go to next diagnostic" })
+				-- keymap("n", "<leader>gp", diagnostic.goto_prev, { buffer = bufnr, desc = "Go to previous diagnostic" })
+				keymap("n", "<leader>gn", function()
+					diagnostic.jump({ count = 1 })
+				end, { buffer = bufnr, desc = "Go to next diagnostic" })
+				keymap("n", "<leader>gp", function()
+					diagnostic.jump({ count = -1 })
+				end, { buffer = bufnr, desc = "Go to previous diagnostic" })
+				keymap("n", "<leader>ca", function()
+					buf.code_action()
+				end, { buffer = bufnr, desc = "Code action" })
+				keymap("n", "<leader>vrr", buf.references, { buffer = bufnr, desc = "View references" })
+				keymap("n", "<leader>rn", buf.rename, { buffer = bufnr, desc = "Rename" })
+				keymap("i", "<C-h>", buf.signature_help, { buffer = bufnr, desc = "Signature help" })
+			end
+
+			-- Mason-lspconfig handlers
+			require("mason-lspconfig").setup_handlers({
+				function(server_name)
+					lspconfig[server_name].setup({
+						capabilities = capabilities,
+						on_attach = on_attach,
+					})
+				end,
+			})
+
+			-- Server-specific overrides
+			lspconfig.lua_ls.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				settings = {
+					Lua = {
+						diagnostics = { globals = { "vim" } },
+					},
+				},
+			})
+
+			lspconfig.ts_ls.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				filetypes = { "javascript", "typescript", "vue", "tsx", "jsx" },
+			})
+
+			lspconfig.eslint.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+			})
+		end,
 	},
 	-- formatting
 	{
