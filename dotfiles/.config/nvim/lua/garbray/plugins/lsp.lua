@@ -26,7 +26,7 @@ return {
 		opts = {
 			ensure_installed = {
 				"lua_ls",
-				"ts_ls",
+				"vtsls",
 				"eslint",
 				"jsonls",
 				"html",
@@ -139,10 +139,23 @@ return {
 				},
 			})
 
-			lspconfig.ts_ls.setup({
+			lspconfig.vtsls.setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
-				filetypes = { "javascript", "typescript", "vue", "tsx", "jsx" },
+				filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+				settings = {
+					typescript = {
+						inlayHints = {
+							parameterNames = { enabled = "literals" },
+							variableTypes = { enabled = true },
+							returnTypes = { enabled = true },
+						},
+					},
+					vtsls = {
+						enableMoveToFileCodeAction = true,
+						autoUseWorkspaceTsdk = true,
+					},
+				},
 			})
 
 			lspconfig.eslint.setup({
