@@ -1,5 +1,5 @@
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "javascript", "typescript", "c", "lua", "rust", "html", "vim", "markdown"  },
+	ensure_installed = { "javascript", "javascriptreact", "typescript", "typescriptreact", "tsx", "c", "lua", "rust", "html", "vim", "markdown" },
 	-- 	parser_install_dir = "~/.treesitter/parsers",
 	sync_install = false,
 	auto_install = true,
