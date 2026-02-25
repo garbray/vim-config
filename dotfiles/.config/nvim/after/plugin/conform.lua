@@ -34,10 +34,7 @@ conform.setup({
 		lsp_format = "fallback",
 		timeout_ms = 5000,
 	},
-	format_after_save = {
-		lsp_format = "fallback",
-	},
-	notify_on_error = true,
+notify_on_error = true,
 	-- Conform will notify you when no formatters are available for the buffer
 	notify_no_formatters = true,
 	formatters = {
