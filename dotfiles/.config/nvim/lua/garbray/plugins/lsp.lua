@@ -96,7 +96,7 @@ return {
 			local lspconfig = require("lspconfig")
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-			local on_attach = function(_, bufnr)
+			local on_attach = function(client, bufnr)
 				keymap("n", "<leader>gd", buf.definition, { buffer = bufnr, desc = "Go to definition" })
 				keymap("n", "<leader>gr", buf.references, { buffer = bufnr, desc = "Go to references" })
 				keymap("n", "K", function()
@@ -116,51 +116,60 @@ return {
 				keymap("n", "<leader>vrr", buf.references, { buffer = bufnr, desc = "View references" })
 				keymap("n", "<leader>rn", buf.rename, { buffer = bufnr, desc = "Rename" })
 				keymap("i", "<C-h>", buf.signature_help, { buffer = bufnr, desc = "Signature help" })
+				if client.supports_method("textDocument/inlayHint") then
+					vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+				end
 			end
 
 			-- Mason-lspconfig handlers
 			require("mason-lspconfig").setup_handlers({
+				-- default handler for all other servers
 				function(server_name)
 					lspconfig[server_name].setup({
 						capabilities = capabilities,
 						on_attach = on_attach,
 					})
 				end,
-			})
-
-			-- Server-specific overrides
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				settings = {
-					Lua = {
-						diagnostics = { globals = { "vim" } },
-					},
-				},
-			})
-
-			lspconfig.vtsls.setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-				settings = {
-					typescript = {
-						inlayHints = {
-							parameterNames = { enabled = "literals" },
-							variableTypes = { enabled = true },
-							returnTypes = { enabled = true },
+				-- lua_ls override
+				["lua_ls"] = function()
+					lspconfig.lua_ls.setup({
+						capabilities = capabilities,
+						on_attach = on_attach,
+						settings = {
+							Lua = {
+								diagnostics = { globals = { "vim" } },
+							},
 						},
-					},
-					vtsls = {
-						enableMoveToFileCodeAction = true,
-						autoUseWorkspaceTsdk = true,
-					},
-				},
-			})
-
-			lspconfig.eslint.setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
+					})
+				end,
+				-- vtsls override
+				["vtsls"] = function()
+					lspconfig.vtsls.setup({
+						capabilities = capabilities,
+						on_attach = on_attach,
+						filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+						settings = {
+							typescript = {
+								inlayHints = {
+									parameterNames = { enabled = "literals" },
+									variableTypes = { enabled = true },
+									returnTypes = { enabled = true },
+								},
+							},
+							javascript = {
+								inlayHints = {
+									parameterNames = { enabled = "literals" },
+									variableTypes = { enabled = true },
+									returnTypes = { enabled = true },
+								},
+							},
+							vtsls = {
+								enableMoveToFileCodeAction = true,
+								autoUseWorkspaceTsdk = true,
+							},
+						},
+					})
+				end,
 			})
 		end,
 	},
