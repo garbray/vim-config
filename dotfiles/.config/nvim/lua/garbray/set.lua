@@ -40,7 +40,7 @@ vim.opt.ignorecase = true
 vim.g.mapleader = " "
 vim.opt.guifont = "Hack_Nerd_Font:h11"
 vim.g.noshowmode = false
-vim.conceallevel = 1
+vim.opt.conceallevel = 1
 
 -- netrw
 -- Netrw banner
