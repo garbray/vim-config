@@ -8,10 +8,37 @@ Personal macOS dev env: Neovim+Tmux+dotfiles, automated install, AI plugins.
 - Fast nav, hotkeys, minimal mouse
 - Full dotfiles, modular install scripts
 
-## Quick Start
+## Requirements
+- macOS (tested on Sonoma+)
+- Git
+- Xcode Command Line Tools: `xcode-select --install`
+
+## Installation
+
+### 1. Clone
 ```sh
-./install-files/setup.sh   # install all deps, configs
-./install                  # symlink dotfiles
+git clone https://github.com/<your-username>/vim-config.git ~/workspace/personal/vim-config
+cd ~/workspace/personal/vim-config
+```
+
+### 2. Install all dependencies
+```sh
+cd install-files
+./setup.sh
+cd ..
+```
+Runs all `install_*.sh` scripts in order: Homebrew → shell tools → dev tools → Neovim → fonts → Git → misc → browsers → utils → env setup.
+
+### 3. Symlink dotfiles
+```sh
+./install
+```
+Uses GNU Stow to link configs and symlinks `.zshrc`, `.tmux.conf`, `tmuxSelector`.
+
+### 4. Reload shell & open Neovim
+```sh
+source ~/.zshrc
+nvim  # lazy.nvim auto-installs plugins on first launch
 ```
 
 ## Main Configs

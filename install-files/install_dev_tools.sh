@@ -16,6 +16,9 @@ brew install tree-sitter
 brew install java11
 brew install oven-sh/bun/bun
 brew install claude-code
+brew install gromgit/brewtils/taproom
+brew install csvlens
+brew install eza
 
 # Setup Python packages
 python3 -m pip install --user --upgrade pynvim
