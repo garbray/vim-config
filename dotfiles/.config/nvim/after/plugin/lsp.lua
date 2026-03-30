@@ -13,6 +13,14 @@ if not ok_mason then
 	return
 end
 
+-- c# server
+require("mason").setup({
+	registries = {
+		"github:mason-org/mason-registry",
+		"github:Crashdummyy/mason-registry",
+	},
+})
+
 local buf = vim.lsp.buf
 local diagnostic = vim.diagnostic
 local keymap = vim.keymap.set
@@ -70,6 +78,25 @@ vim.lsp.config("bashls", {
 	on_attach = on_attach,
 })
 
+vim.lsp.config("omnisharp", {
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+-- vim.lsp.config("roslyn", {
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+-- 	settings = {
+-- 		["csharp|inlay_hints"] = {
+-- 			csharp_enable_inlay_hints_for_implicit_object_creation = true,
+-- 			csharp_enable_inlay_hints_for_implicit_variable_types = true,
+-- 		},
+-- 		["csharp|code_lens"] = {
+-- 			dotnet_enable_references_code_lens = true,
+-- 		},
+-- 	},
+-- })
+
 vim.lsp.enable({
 	"lua_ls",
 	"pyright",
@@ -77,6 +104,8 @@ vim.lsp.enable({
 	"vtsls",
 	"gopls",
 	"clangd",
+	-- "roslyn",
+	"omnisharp",
 })
 
 -- mason_lspconfig.setup_handlers({

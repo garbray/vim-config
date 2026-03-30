@@ -75,7 +75,7 @@ source /opt/homebrew/etc/profile.d/z.sh
 
 # =============== runtime versions (mise) ========================
 # replaces: volta, nvm, pyenv
-eval "$(/Users/bryan_garzon/.local/bin/mise activate zsh)"
+eval "$($HOME/.local/bin/mise activate zsh)"
 
 # =============== language paths ========================
 
