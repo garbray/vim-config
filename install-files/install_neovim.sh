@@ -2,4 +2,4 @@
 set -e
 echo "Installing Neovim extras..."
 
-cargo install stylua
+command -v stylua &>/dev/null || cargo install stylua
