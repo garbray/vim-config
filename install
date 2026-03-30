@@ -1,29 +1,48 @@
 #!/usr/bin/env bash
-# mkdir -p ~/.config/nvim/plugin
-# mkdir -p ~/.config/nvim/spell
+set -e
 repoPath="$PWD"
 
-if [ ! -d $HOME/.config/ ]; then
-    mkdir $HOME/.config
+link_dotfiles() {
+    mkdir -p "$HOME/.config"
+    stow --restow -t "$HOME/.config" -d dotfiles .config
+    ln -sf "$repoPath/dotfiles/.tmux.conf" ~/.tmux.conf
+    ln -sf "$repoPath/dotfiles/.zshrc" ~/.zshrc
+    ln -sf "$repoPath/tmuxSelector" ~/tmuxSelector
+    sudo mkdir -p /usr/local/bin
+    sudo ln -sf "$repoPath/tmuxSelector" /usr/local/bin/projectSelector
+}
+
+install_tools() {
+    sh "$(dirname "$0")/install-files/setup.sh"
+}
+
+HAS_BREW=false
+HAS_DOTFILES=false
+command -v brew &>/dev/null && HAS_BREW=true
+[ -L "$HOME/.zshrc" ] && HAS_DOTFILES=true
+
+if ! $HAS_BREW && ! $HAS_DOTFILES; then
+    echo "Fresh install detected — running full setup..."
+    install_tools
+    link_dotfiles
+elif $HAS_BREW && ! $HAS_DOTFILES; then
+    echo "Tools already installed — linking dotfiles..."
+    link_dotfiles
+elif ! $HAS_BREW && $HAS_DOTFILES; then
+    echo "Dotfiles already linked — installing tools..."
+    install_tools
 else
-    stow -t $HOME/.config -D .
+    echo "What would you like to do?"
+    echo "  1) Dotfiles only"
+    echo "  2) Tools only"
+    echo "  3) Both [default]"
+    read -r choice
+    choice="${choice:-3}"
+    case "$choice" in
+        1) link_dotfiles ;;
+        2) install_tools ;;
+        *) install_tools && link_dotfiles ;;
+    esac
 fi
 
-# create symlinnks for dot files
-stow -t $HOME/.config -d dotfiles .config
-
-rm ~/.tmux.conf
-ln -s $repoPath/dotfiles/.tmux.conf ~/.tmux.conf
-
-rm ~/.zshrc
-ln -s $repoPath/dotfiles/.zshrc ~/.zshrc
-
-rm ~/tmuxSelector
-ln -s $repoPath/tmuxSelector ~/tmuxSelector
-
-if [ ! -d /usr/local/bin/ ]; then
-    mkdir /usr/local/bin
-else
-    rm /usr/local/bin/projectSelector
-fi
-sudo ln -s $repoPath/tmuxSelector /usr/local/bin/projectSelector
+echo "Done!"
