@@ -1,37 +1,26 @@
-#!/bin/sh
-export FGRN="\033[32m" # Foreground green
+#!/bin/bash
+set -e
+export FGRN="\033[32m"
 
 echo "$FGRN Installing Homebrew..."
-sh install_brew.sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+echo "$FGRN Installing all dependencies via Brewfile..."
+brew bundle --file="$(dirname "$0")/../Brewfile"
 
 echo "$FGRN Installing shell tools..."
-sh install_shell_tools.sh
+sh "$(dirname "$0")/install_shell_tools.sh"
 
 echo "$FGRN Installing development tools..."
-sh install_dev_tools.sh
+sh "$(dirname "$0")/install_dev_tools.sh"
 
-echo "$FGRN Installing Neovim..."
-sh install_neovim.sh
-
-echo "$FGRN Installing fonts..."
-sh install_fonts.sh
+echo "$FGRN Installing Neovim extras..."
+sh "$(dirname "$0")/install_neovim.sh"
 
 echo "$FGRN Configuring Git and GitHub CLI..."
-sh install_git_tools.sh
-
-echo "$FGRN Installing miscellaneous tools..."
-sh install_misc.sh
-
-echo "$FGRN Installing browsers..."
-sh install_browsers.sh
-
-echo "$FGRN Installing Docker..."
-sh install_docker.sh
-
-echo "$FGRN Installing utility tools..."
-sh install_utils.sh
+sh "$(dirname "$0")/install_git_tools.sh"
 
 echo "$FGRN Setting up environment..."
-sh setup_env.sh
+sh "$(dirname "$0")/setup_env.sh"
 
 echo "$FGRN Setup complete!"
