@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
+set -e
 echo "Configuring Git and GitHub CLI..."
 
-brew install gh
 mkdir -p ~/.config/gh
 touch ~/.config/gh/hosts.yml.personal ~/.config/gh/hosts.yml.work
 
@@ -12,5 +12,3 @@ git config --global user.email "bryangarzonb@gmail.com"
 git config --global user.name "Bryan Garzon"
 git config --global core.editor "nvim"
 git config --global rebase.updateRefs true
-
-

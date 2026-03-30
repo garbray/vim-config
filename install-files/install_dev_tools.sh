@@ -1,38 +1,14 @@
-#!/bin/sh
+#!/bin/bash
+set -e
 echo "Installing development tools..."
 
-brew install python
-brew install go
-brew install rust
-brew install lua
-brew install luarocks
-brew install yarn node deno
-brew install volta pnpm
-brew install ansible
-brew install ninja
-brew install stow
-brew install efm-langserver
-brew install tree-sitter
-brew install java11
-brew install oven-sh/bun/bun
-brew install claude-code
-brew install gromgit/brewtils/taproom
-brew install csvlens
-brew install eza
+# mise for runtime version management (replaces volta)
+curl https://mise.run | sh
+mise install
 
-# Setup Python packages
+# Python packages
 python3 -m pip install --user --upgrade pynvim
 pip install black flake8
 
-# Node language servers
+# Node: only the neovim bridge — LSPs managed by Mason.nvim inside Neovim
 npm install -g neovim
-npm install -g prettier typescript typescript-language-server
-npm install -g bash-language-server vscode-langservers-extracted
-npm install -g graphql-language-service-cli yaml-language-server
-npm install -g vim-language-server emmet-ls @tailwindcss/language-server
-
-# aws mock
-brew install act
-
-# python
-brew install uv
