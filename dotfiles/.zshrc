@@ -64,64 +64,27 @@ export FYEL="\033[33m" # foreground yellow
 # fix locale issue on kitty terminal
 export LANG="en_US.UTF-8"
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
 export BAT_THEME="gruvbox"
 
-# lf complements
-# LFCD="$GOPATH/src/github.com/gokcehan/lf/etc/lfcd.sh"  # source
-# LFCD="/path/to/lfcd.sh"                                #  pre-built binary, make sure to use absolute path
-# if [ -f "$LFCD" ]; then
-#     source "$LFCD"
-# fi
+# =============== shell plugins ========================
 
-# bindkey '^o' "lfcd\n"
-
-#highlighting
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-#autosuggestions
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#Z config
 source /opt/homebrew/etc/profile.d/z.sh
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# alias python=/usr/local/bin/python3.9
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
 
-# Go config
+# =============== runtime versions (mise) ========================
+# replaces: volta, nvm, pyenv
+eval "$(/Users/bryan_garzon/.local/bin/mise activate zsh)"
+
+# =============== language paths ========================
+
+# Go
 export GOPATH=$HOME/.go
 export PATH=$PATH:$(go env GOPATH)/bin
 
-# JAVA config
-# /usr/libexec/java_home --verbose // provide information of JAVA version current installed
-# export JAVA_HOME=$(/usr/libexec/java_home)
-# export JDK_8=`/usr/libexec/java_home -v 1.8.0_282`
-# export JDK_11=`/usr/libexec/java_home -v 11.0.10`
-# export JAVA_HOME=$JDK_8
-# export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_282`
-# set other java environment
-# alias java8='export JAVA_HOME=$JDK_8'
-# alias java11='export JAVA_HOME=$JDK_11'
-
-# Load localenv variables
-[ -f "$HOME/.localenv" ] && source "$HOME/.localenv"
-
-alias lg="lazygit"
-
-# alias luamake=$HOME/workspace/lua/lua-language-server/3rd/luamake/compile/luamake
-export PATH="$HOME/tools/lua-language-server/bin/macOS:$PATH"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
+# Java
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-# export PATH="$HOME/.cargo/bin:$PATH"
-
-#source $HOME/.docker/init-zsh.sh || true # Added by Docker Desktop
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
@@ -129,39 +92,26 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
- export TASKRC="$HOME/.config/task-warrior/.taskrc"
- # export TASKDATA="$HOME/.config/task-warrior"
-
-# cargo
-# source "$HOME/.cargo/env"
-#
-# export PATH="$HOME/.jenv/bin:$PATH"
-# eval "$(jenv init -)"
-# export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
-# export NVM_DIR="$HOME/.nvm"
-#   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-#   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
+# postgres client
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-# export XDG_CONFIG_HOME="$HOME/.config"
-#
+
+# =============== tools ========================
+
+export TASKRC="$HOME/.config/task-warrior/.taskrc"
 export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
-
 export PATH="$HOME/.orbit/bin:$PATH"
 
-# The next line updates PATH for the Google Cloud SDK.
+alias lg="lazygit"
+
+# Load localenv variables
+[ -f "$HOME/.localenv" ] && source "$HOME/.localenv"
+
+# Google Cloud SDK
 if [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"; fi
-
-# The next line enables shell command completion for gcloud.
 if [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"; fi
-
