@@ -91,11 +91,48 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = { "saghen/blink.cmp", "williamboman/mason-lspconfig.nvim" },
+		config = function()
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(event)
+					local map = function(keys, func, desc)
+						vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+					end
+					map("gd", vim.lsp.buf.definition, "Go to definition")
+					map("gr", vim.lsp.buf.references, "Go to references")
+					map("gi", vim.lsp.buf.implementation, "Go to implementation")
+					map("K", vim.lsp.buf.hover, "Hover docs")
+					map("<leader>rn", vim.lsp.buf.rename, "Rename")
+					map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+					map("[d", vim.diagnostic.goto_prev, "Prev diagnostic")
+					map("]d", vim.diagnostic.goto_next, "Next diagnostic")
+				end,
+			})
+
+			require("mason-lspconfig").setup_handlers({
+				function(server_name)
+					require("lspconfig")[server_name].setup({ capabilities = capabilities })
+				end,
+			})
+		end,
 	},
 	-- formatting
 	{
 		"stevearc/conform.nvim",
-		opts = {},
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+				javascript = { "prettierd", "prettier", stop_after_first = true },
+				javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+				typescript = { "prettierd", "prettier", stop_after_first = true },
+				typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+				css = { "prettierd", "prettier", stop_after_first = true },
+				json = { "prettierd", "prettier", stop_after_first = true },
+				html = { "prettierd", "prettier", stop_after_first = true },
+			},
+			format_on_save = { timeout_ms = 500, lsp_fallback = true },
+		},
 	},
 	-- {
 	-- 	"seblyng/roslyn.nvim",

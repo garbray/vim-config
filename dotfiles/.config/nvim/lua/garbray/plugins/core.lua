@@ -10,6 +10,19 @@ return {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 		build = ":TSUpdate",
+		opts = {
+			ensure_installed = {
+				"tsx", "typescript", "javascript",
+				"css", "html", "json",
+				"lua", "bash", "markdown", "markdown_inline",
+				"go", "python", "rust", "yaml",
+			},
+			highlight = { enable = true },
+			indent = { enable = true },
+		},
+		config = function(_, opts)
+			require("nvim-treesitter.configs").setup(opts)
+		end,
 	},
 	"mbbill/undotree",
 	"tpope/vim-fugitive",

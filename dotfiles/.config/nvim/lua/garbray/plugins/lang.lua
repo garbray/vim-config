@@ -1,4 +1,5 @@
 return {
+	{ "windwp/nvim-ts-autotag", opts = {} },
 	"prisma/vim-prisma",
 	-- markdown
 	"plasticboy/vim-markdown",
