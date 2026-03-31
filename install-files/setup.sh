@@ -14,8 +14,13 @@ elif [ -f /usr/local/bin/brew ]; then
     eval "$(/usr/local/bin/brew shellenv)"
 fi
 
+echo "$FGRN Adding taps..."
+grep '^tap ' "$(dirname "$0")/../Brewfile" | sed 's/tap "\(.*\)"/\1/' | while read -r t; do
+    brew tap "$t" 2>/dev/null || echo "  Warning: could not tap $t, continuing..."
+done
+
 echo "$FGRN Installing all dependencies via Brewfile..."
-brew bundle --file="$(dirname "$0")/../Brewfile"
+brew bundle --file="$(dirname "$0")/../Brewfile" || echo "  Warning: some packages failed — re-run setup.sh to retry."
 
 echo "$FGRN Installing shell tools..."
 sh "$(dirname "$0")/install_shell_tools.sh"
