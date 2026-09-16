@@ -1,7 +1,3 @@
--- local mark = require("harpoon.mark")
--- local ui = require("harpoon.ui")
--- local term = require("harpoon.term")
-
 -- v2
 local harpoon = require("harpoon")
 
@@ -32,7 +28,7 @@ vim.keymap.set("n", "<C-e>", function()
 	toggle_telescope(harpoon:list())
 end, { desc = "Open harpoon window" })
 
-vim.keymap.set("n", "<leader>ha", function()
+vim.keymap.set("n", "<leader>aa", function()
 	harpoon:list():add()
 end)
 
@@ -59,7 +55,7 @@ end)
 
 -- vim.keymap.set("n", "<leader>aa", mark.add_file)
 -- vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
-vim.keymap.set("n", "<leader>hc", function()
+vim.keymap.set("n", "<leader>ac", function()
 	harpoon:list():remove_at(1)
 	harpoon:list():remove_at(2)
 	harpoon:list():remove_at(3)
