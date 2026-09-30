@@ -151,6 +151,21 @@ return {
 			terminal = {
 				win = {
 					position = "float",
+					-- setting position alone does not apply the "float" style,
+					-- which is where snacks' default backdrop lives
+					backdrop = 60,
+					wo = {
+						winhighlight = table.concat({
+							"Normal:SnacksTerminalNormal",
+							"NormalNC:SnacksTerminalNormal",
+							"FloatBorder:SnacksTerminalBorder",
+							"WinBar:SnacksWinBar",
+							"WinBarNC:SnacksWinBarNC",
+							"FloatTitle:SnacksTitle",
+							"FloatFooter:SnacksFooter",
+							"WinSeparator:SnacksWinSeparator",
+						}, ","),
+					},
 				},
 			},
 			words = { enabled = true },
