@@ -1,7 +1,3 @@
-local comment = require("Comment.api")
-
-vim.keymap.set("n", "<leader>/", function()
-	comment.toggle.linewise.current()
-end, { desc = "Toggle comment" })
-
-vim.keymap.set("v", "<leader>/", "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { desc = "Toggle comment" })
+-- Commenting is built in since nvim 0.10 (gc / gcc). These keep <leader>/ working.
+vim.keymap.set("n", "<leader>/", "gcc", { remap = true, desc = "Toggle comment" })
+vim.keymap.set("x", "<leader>/", "gc", { remap = true, desc = "Toggle comment" })

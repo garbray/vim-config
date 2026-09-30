@@ -30,11 +30,6 @@ return {
 	"mbbill/undotree",
 	"tpope/vim-fugitive",
 	{
-		"numToStr/Comment.nvim",
-		opts = {},
-		lazy = false,
-	},
-	{
 		"kylechui/nvim-surround",
 		version = "*",
 		event = "VeryLazy",
