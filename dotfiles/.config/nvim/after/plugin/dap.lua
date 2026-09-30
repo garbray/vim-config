@@ -183,7 +183,7 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>B", function()
 	dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
 end, { desc = "Dap Set conditional Breakpoint" })
-vim.keymap.set("n", "<leader>dc", dap.continue, { noremap = true, silent = true, desc = "Dap toggle breakpoint" })
+vim.keymap.set("n", "<leader>dc", dap.continue, { noremap = true, silent = true, desc = "Dap continue" })
 vim.keymap.set("n", "<leader>dr", function()
 	dap.run_last()
 end, { noremap = true, silent = true, desc = "Dap Run Last" })
@@ -196,7 +196,8 @@ vim.keymap.set("n", "<leader>du", dap.step_out, { noremap = true, silent = true,
 vim.keymap.set(
 	"n",
 	"<leader>lp",
-	":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>"
+	":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>",
+	{ desc = "Dap set log point" }
 )
 
 dap.listeners.before.attach.dapui_config = function()

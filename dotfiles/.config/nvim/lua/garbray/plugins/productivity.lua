@@ -262,6 +262,21 @@ return {
 		event = "VeryLazy",
 		opts = {
 			preset = "modern",
+			-- Group labels. <leader>d, <leader>u, <leader>x and <leader>f are
+			-- deliberately absent: each has a direct mapping that shadows the
+			-- group, so labelling them would be misleading. See
+			-- docs/nvim-plan.md Tier 2 for the full collision list.
+			spec = {
+				{ "<leader>a", group = "Harpoon" },
+				{ "<leader>A", group = "AI / Claude Code" },
+				{ "<leader>S", group = "Snacks (trial)" },
+				{ "<leader>b", group = "Buffers / Bujo" },
+				{ "<leader>c", group = "Code / Colors" },
+				{ "<leader>g", group = "Git / Goto" },
+				{ "<leader>p", group = "Project / Find" },
+				{ "<leader>t", group = "Tabs / Terminals" },
+				{ "<leader>v", group = "LSP view / Splits" },
+			},
 		},
 		keys = {
 			{ "<leader>?", function() require("which-key").show({ global = false }) end, desc = "Buffer Keymaps (which-key)" },

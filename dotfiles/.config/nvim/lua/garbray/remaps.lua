@@ -1,85 +1,76 @@
 -- Global keymaps. Leader is set in garbray/init.lua.
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
--- vim.keymap.set("n", "<leader>pv", vim.cmd.Sex)
-local opts = { noremap = true, silent = true }
+-- Every map carries a `desc` so which-key can label it.
 
-vim.keymap.set("i", "jk", "<ESC>", opts)
+local map = vim.keymap.set
 
--- navigation remap
-vim.keymap.set("n", "<leader>h", "<C-W>h")
-vim.keymap.set("n", "<leader>j", "<C-W>j")
-vim.keymap.set("n", "<leader>k", "<C-W>k")
-vim.keymap.set("n", "<leader>l", "<C-W>l")
+map("n", "<leader>pv", vim.cmd.Ex, { desc = "Open netrw (file explorer)" })
 
--- move on highlight
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+map("i", "jk", "<ESC>", { noremap = true, silent = true, desc = "Escape insert mode" })
 
--- move current line but maintain current focus
-vim.keymap.set("n", "J", "mzJ`z")
+-- window navigation
+map("n", "<leader>h", "<C-W>h", { desc = "Window left" })
+map("n", "<leader>j", "<C-W>j", { desc = "Window down" })
+map("n", "<leader>k", "<C-W>k", { desc = "Window up" })
+map("n", "<leader>l", "<C-W>l", { desc = "Window right" })
 
--- keep cursor in the middle when use Ctrl d / u
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+-- move the highlighted block up/down, re-indenting as it goes
+map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
--- when search for a word keep the cursor in the middle
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+-- join the line below without moving the cursor
+map("n", "J", "mzJ`z", { desc = "Join line below (keep cursor)" })
 
--- highlight a text and past over without losing your current register
--- using the void register
-vim.keymap.set("x", "<leader>p", '"_dP')
+-- keep the cursor centred while paging and searching
+map("n", "<C-d>", "<C-d>zz", { desc = "Half page down (centred)" })
+map("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centred)" })
+map("n", "n", "nzzzv", { desc = "Next search result (centred)" })
+map("n", "N", "Nzzzv", { desc = "Previous search result (centred)" })
 
--- copy on your system clipboard
-vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
-vim.keymap.set("n", "<leader>Y", '"+Y')
+-- paste over a selection without clobbering the unnamed register
+map("x", "<leader>p", '"_dP', { desc = "Paste over selection (keep register)" })
 
--- delete
-vim.keymap.set({ "n", "v" }, "<leader>d", '"_d')
--- ignore capital Q
-vim.keymap.set("n", "Q", "<nop>")
--- jump to another tmux session
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+-- system clipboard
+map({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to system clipboard" })
+map("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard" })
 
-vim.keymap.set("n", "<leader>f", function()
+-- delete into the void register
+map({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
+
+map("n", "Q", "<nop>", { desc = "Disabled (was Ex mode)" })
+
+map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", { desc = "Tmux sessionizer" })
+
+map("n", "<leader>f", function()
 	require("conform").format({ async = true, lsp_format = "fallback" })
 end, { desc = "Format buffer" })
 
--- quick fix list
-vim.keymap.set("n", "<C-n>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-b>", "<cmd>cprev<CR>zz")
--- vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
--- vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
--- TODO add a quickfix list into a telescope
+-- quickfix list (see also <leader>Sq for the snacks picker)
+map("n", "<C-n>", "<cmd>cnext<CR>zz", { desc = "Next quickfix item" })
+map("n", "<C-b>", "<cmd>cprev<CR>zz", { desc = "Previous quickfix item" })
 
--- search and replace the current word
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {
+	desc = "Substitute word under cursor",
+})
 
--- make executable the current file
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true, desc = "Make current file executable" })
 
 -- tabs
-vim.keymap.set("n", "<leader>tc", vim.cmd.tabnew)
-vim.keymap.set("n", "<leader>tx", vim.cmd.tabclose)
-vim.keymap.set("n", "<leader>tp", vim.cmd.tabprevious)
-vim.keymap.set("n", "<leader>tn", vim.cmd.tabnext)
+map("n", "<leader>tc", vim.cmd.tabnew, { desc = "Tab: new" })
+map("n", "<leader>tx", vim.cmd.tabclose, { desc = "Tab: close" })
+map("n", "<leader>tp", vim.cmd.tabprevious, { desc = "Tab: previous" })
+map("n", "<leader>tn", vim.cmd.tabnext, { desc = "Tab: next" })
 
 -- splits
-vim.keymap.set("n", "<leader>vs", vim.cmd.vsplit)
-vim.keymap.set("n", "<leader>hs", vim.cmd.split)
+map("n", "<leader>vs", vim.cmd.vsplit, { desc = "Split vertically" })
+map("n", "<leader>hs", vim.cmd.split, { desc = "Split horizontally" })
 
--- list buffers
--- nnoremap <Leader>bl :buffers<CR>:buffer<Space>
-vim.keymap.set("n", "<leader>bl", vim.cmd.buffers)
-
--- source vim config
-vim.keymap.set("n", "<leader><CR>", ":so ~/.config/nvim/init.lua<CR>")
+map("n", "<leader>bl", vim.cmd.buffers, { desc = "List buffers" })
 
 -- copy current file path to clipboard
 vim.api.nvim_create_user_command("Cppath", function()
 	local path = vim.fn.expand("%:.")
 	vim.fn.setreg("+", path)
 	vim.notify('Copied "' .. path .. '" to the clipboard!')
-end, {})
+end, { desc = "Copy current file path to clipboard" })
 
-vim.keymap.set("n", "<leader>pp", ":Cppath<CR>")
+map("n", "<leader>pp", ":Cppath<CR>", { desc = "Copy file path to clipboard" })
