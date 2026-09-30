@@ -5,7 +5,6 @@ return {
 	},
 	"theHamsta/nvim-dap-virtual-text",
 	"leoluz/nvim-dap-go",
-	"jayp0521/mason-nvim-dap.nvim",
 	"mfussenegger/nvim-dap-python",
 	-- JS/TS debugging via mason js-debug-adapter
 	{

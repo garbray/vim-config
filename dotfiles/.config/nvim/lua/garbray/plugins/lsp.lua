@@ -30,6 +30,11 @@ return {
 				"eslint_d",
 				"markdownlint",
 				"codespell",
+				-- debug adapters (were mason-nvim-dap's ensure_installed)
+				"debugpy",
+				"delve",
+				"js-debug-adapter",
+				"codelldb",
 			},
 			run_on_start = false,
 		},

@@ -51,34 +51,12 @@ local function pick_process_telescope()
 	end)
 end
 
-require("mason-nvim-dap").setup({
-	automatic_setup = true,
-	automatic_installation = true,
-	handlers = {
-		function(config)
-			require("mason-nvim-dap").default_setup(config)
-		end,
-	},
-	ensure_installed = {
-		"python",
-		"delve",
-		"node2",
-		"chrome",
-		"firefox",
-		"js",
-		"codelldb",
-	},
-})
-
 require("dapui").setup()
 require("dap-go").setup()
-require("dap-python").setup()
-
--- it may require use virtual envs to work properly, follow these steps
--- mkdir ~/.virtualenvs
--- cd ~/.virtualenvs
--- python -m venv debugpy
--- debugpy/bin/python -m pip install debugpy
+-- debugpy is installed by mason-tool-installer; fall back to whatever python
+-- is on PATH if it is not there yet
+local debugpy = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+require("dap-python").setup(vim.uv.fs_stat(debugpy) and debugpy or "python3")
 
 require("nvim-dap-virtual-text").setup()
 
