@@ -74,3 +74,7 @@ vim.api.nvim_create_user_command("Cppath", function()
 end, { desc = "Copy current file path to clipboard" })
 
 map("n", "<leader>pp", ":Cppath<CR>", { desc = "Copy file path to clipboard" })
+
+-- commenting is built in since nvim 0.10 (gc operator, gcc linewise)
+map("n", "<leader>/", "gcc", { remap = true, desc = "Toggle comment" })
+map("x", "<leader>/", "gc", { remap = true, desc = "Toggle comment" })

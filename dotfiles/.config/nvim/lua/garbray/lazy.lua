@@ -1,4 +1,4 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+-- Bootstraps lazy.nvim and loads the plugin specs.
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -16,13 +16,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Every file under lua/garbray/plugins/ is a spec module and is imported
+-- automatically, so adding a plugin means adding (or editing) one file there.
 require("lazy").setup({
-	require("garbray.plugins.core"),
-	require("garbray.plugins.ui"),
-	require("garbray.plugins.lsp"),
-	require("garbray.plugins.ai"),
-	require("garbray.plugins.debug"),
-	require("garbray.plugins.lang"),
-	require("garbray.plugins.productivity"),
-	require("garbray.plugins.personal"),
-}, {})
+	spec = { { import = "garbray.plugins" } },
+	change_detection = { notify = false },
+})

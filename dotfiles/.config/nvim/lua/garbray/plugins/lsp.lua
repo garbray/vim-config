@@ -1,7 +1,6 @@
+-- LSP: server installation, attach keymaps, diagnostics UI.
 return {
-	-- lazydev.nvim for Lua development (vim globals, etc.)
 	{ "folke/lazydev.nvim", ft = "lua", opts = {} },
-	-- package manager
 	{ "mason-org/mason.nvim", opts = {} },
 	{
 		"mason-org/mason-lspconfig.nvim",
@@ -12,7 +11,6 @@ return {
 			automatic_enable = false,
 		},
 	},
-	-- mason.nvim itself has no ensure_installed; this installs formatters/linters/debuggers
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		dependencies = { "mason-org/mason.nvim" },
@@ -39,77 +37,87 @@ return {
 			run_on_start = false,
 		},
 	},
-	-- blink.cmp - modern completion engine (replaces nvim-cmp)
-	{
-		"saghen/blink.cmp",
-		version = "1.*",
-		dependencies = {
-			"rafamadriz/friendly-snippets",
-			{
-				"giuxtaposition/blink-cmp-copilot",
-				dependencies = { "zbirenbaum/copilot.lua" },
-			},
-		},
-		opts = {
-			keymap = {
-				preset = "default",
-				["<CR>"] = { "accept", "fallback" },
-				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-				["<C-u>"] = { "scroll_documentation_up", "fallback" },
-				["<C-d>"] = { "scroll_documentation_down", "fallback" },
-				["<S-Tab>"] = { "select_prev", "fallback" },
-				["<Tab>"] = { "select_next", "fallback" },
-			},
-			appearance = {
-				nerd_font_variant = "mono",
-			},
-			completion = {
-				documentation = { auto_show = true, auto_show_delay_ms = 200 },
-			},
-			sources = {
-				default = { "copilot", "lsp", "path", "snippets", "buffer" },
-				providers = {
-					copilot = {
-						name = "copilot",
-						module = "blink-cmp-copilot",
-						score_offset = 100,
-						async = true,
-					},
-				},
-			},
-			fuzzy = { implementation = "prefer_rust_with_warning" },
-		},
-		opts_extend = { "sources.default" },
-	},
 	{
 		"neovim/nvim-lspconfig",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = { "saghen/blink.cmp", "mason-org/mason-lspconfig.nvim" },
+		config = function()
+			-- one wildcard config instead of repeating capabilities per server
+			vim.lsp.config("*", {
+				capabilities = require("blink.cmp").get_lsp_capabilities(),
+			})
+
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("garbray-lsp-attach", { clear = true }),
+				callback = function(event)
+					local bufnr = event.buf
+					local buf = vim.lsp.buf
+					local map = function(mode, keys, fn, desc)
+						vim.keymap.set(mode, keys, fn, { buffer = bufnr, desc = "LSP: " .. desc })
+					end
+
+					map("n", "<leader>gd", buf.definition, "Go to definition")
+					map("n", "<leader>gr", buf.references, "Go to references")
+					map("n", "<leader>vrr", buf.references, "View references")
+					map("n", "K", buf.hover, "Hover documentation")
+					map("n", "<leader>vws", buf.workspace_symbol, "Workspace symbol")
+					map("n", "<leader>vd", vim.diagnostic.open_float, "Open diagnostics")
+					map("n", "<leader>gn", function()
+						vim.diagnostic.jump({ count = 1, float = true })
+					end, "Go to next diagnostic")
+					map("n", "<leader>gp", function()
+						vim.diagnostic.jump({ count = -1, float = true })
+					end, "Go to previous diagnostic")
+					map("n", "<leader>ca", buf.code_action, "Code action")
+					map("n", "<leader>rn", buf.rename, "Rename")
+					map("i", "<C-h>", buf.signature_help, "Signature help")
+
+					local client = vim.lsp.get_client_by_id(event.data.client_id)
+					if client and client:supports_method("textDocument/inlayHint") then
+						vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+					end
+				end,
+			})
+
+			vim.lsp.enable(require("garbray.servers"))
+		end,
 	},
-	-- formatting: single source of truth (after/plugin/conform.lua removed)
 	{
-		"stevearc/conform.nvim",
-		cmd = "ConformInfo",
-		opts = {
-			formatters_by_ft = {
-				lua = { "stylua" },
-				python = { "isort", "black" },
-				rust = { "rustfmt", lsp_format = "fallback" },
-				javascript = { "prettierd", "prettier", stop_after_first = true },
-				javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-				typescript = { "prettierd", "prettier", stop_after_first = true },
-				typescriptreact = { "prettierd", "prettier", stop_after_first = true },
-				css = { "prettierd", "prettier", stop_after_first = true },
-				html = { "prettierd", "prettier", stop_after_first = true },
-				json = { "prettierd", "prettier", stop_after_first = true },
-				jsonc = { "prettierd", "prettier", stop_after_first = true },
-				yaml = { "prettierd", "prettier", stop_after_first = true },
-				markdown = { "prettierd", "prettier", stop_after_first = true },
-				go = { "goimports", "gofmt" },
-				sh = { "shfmt" },
-				["_"] = { "trim_whitespace" },
-			},
-			format_on_save = { lsp_format = "fallback", timeout_ms = 3000 },
-			notify_on_error = true,
+		"rmagatti/goto-preview",
+		event = "LspAttach",
+		config = function()
+			require("goto-preview").setup({
+				width = 120,
+				height = 15,
+				border = { "↖", "─", "┐", "│", "┘", "─", "└", "│" },
+				default_mappings = true,
+				debug = false,
+				opacity = nil,
+				resizing_mappings = false,
+				post_open_hook = nil,
+				references = {
+					telescope = require("telescope.themes").get_dropdown({ hide_preview = false }),
+				},
+				focus_on_open = true,
+				dismiss_on_move = false,
+				force_close = true,
+				bufhidden = "wipe",
+				stack_floating_preview_windows = true,
+				preview_window_title = { enable = true, position = "left" },
+			})
+		end,
+	},
+	{
+		"folke/trouble.nvim",
+		opts = {},
+		cmd = "Trouble",
+		keys = {
+			{ "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+			{ "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
+			{ "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
+			{ "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions / references (Trouble)" },
+			{ "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
+			{ "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
 		},
 	},
 }

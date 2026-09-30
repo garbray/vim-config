@@ -1,8 +1,5 @@
+-- AI assistance.
 return {
-	-- Claude Code, via its WebSocket IDE protocol (same one the VS Code extension
-	-- speaks): selection/buffer context is sent automatically and Claude's edits
-	-- arrive as native diff buffers to accept or deny.
-	-- Keys live under <leader>A, not the upstream <leader>a -- harpoon owns that.
 	{
 		"coder/claudecode.nvim",
 		dependencies = { "folke/snacks.nvim" },

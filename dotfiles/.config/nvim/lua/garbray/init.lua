@@ -1,7 +1,6 @@
-local g = vim.g
+-- Leader must be set before lazy.nvim reads any `keys =` spec.
+vim.g.mapleader = " "
 
-g.mapleader = " "
-
-require("garbray.remaps")
-require("garbray.set")
-require("garbray.pluginsList")
+require("garbray.options")
+require("garbray.keymaps")
+require("garbray.lazy")
