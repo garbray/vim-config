@@ -2,48 +2,36 @@ return {
 	-- lazydev.nvim for Lua development (vim globals, etc.)
 	{ "folke/lazydev.nvim", ft = "lua", opts = {} },
 	-- package manager
+	{ "mason-org/mason.nvim", opts = {} },
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason-lspconfig.nvim",
+		dependencies = { "mason-org/mason.nvim" },
+		opts = {
+			ensure_installed = require("garbray.servers"),
+			-- servers are enabled explicitly in after/plugin/lsp.lua
+			automatic_enable = false,
+		},
+	},
+	-- mason.nvim itself has no ensure_installed; this installs formatters/linters/debuggers
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = { "mason-org/mason.nvim" },
 		opts = {
 			ensure_installed = {
 				-- formatters
 				"stylua",
-				"eslint_d",
-				"prettier",
 				"prettierd",
-				-- code spell
-				"codespell",
-				"misspell",
-				"cspell",
-				-- markdown
+				"prettier",
+				"black",
+				"isort",
+				"shfmt",
+				"goimports",
+				-- linters
+				"eslint_d",
 				"markdownlint",
+				"codespell",
 			},
-		},
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		dependencies = { "williamboman/mason.nvim" },
-		opts = {
-			ensure_installed = {
-				"lua_ls",
-				"vtsls",
-				"eslint",
-				"jsonls",
-				"html",
-				"bashls",
-				"dockerls",
-				"yamlls",
-				"marksman",
-				"sqlls",
-				"vimls",
-				"tailwindcss",
-				"pyright",
-				"gopls",
-				"jdtls",
-				"rust_analyzer",
-				-- "roslyn",
-				"omnisharp",
-			},
+			run_on_start = false,
 		},
 	},
 	-- blink.cmp - modern completion engine (replaces nvim-cmp)
@@ -90,23 +78,33 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "saghen/blink.cmp", "williamboman/mason-lspconfig.nvim" },
+		dependencies = { "saghen/blink.cmp", "mason-org/mason-lspconfig.nvim" },
 	},
-	-- formatting
+	-- formatting: single source of truth (after/plugin/conform.lua removed)
 	{
 		"stevearc/conform.nvim",
+		cmd = "ConformInfo",
 		opts = {
 			formatters_by_ft = {
 				lua = { "stylua" },
+				python = { "isort", "black" },
+				rust = { "rustfmt", lsp_format = "fallback" },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 				javascriptreact = { "prettierd", "prettier", stop_after_first = true },
 				typescript = { "prettierd", "prettier", stop_after_first = true },
 				typescriptreact = { "prettierd", "prettier", stop_after_first = true },
 				css = { "prettierd", "prettier", stop_after_first = true },
-				json = { "prettierd", "prettier", stop_after_first = true },
 				html = { "prettierd", "prettier", stop_after_first = true },
+				json = { "prettierd", "prettier", stop_after_first = true },
+				jsonc = { "prettierd", "prettier", stop_after_first = true },
+				yaml = { "prettierd", "prettier", stop_after_first = true },
+				markdown = { "prettierd", "prettier", stop_after_first = true },
+				go = { "goimports", "gofmt" },
+				sh = { "shfmt" },
+				["_"] = { "trim_whitespace" },
 			},
-			format_on_save = { timeout_ms = 500, lsp_fallback = true },
+			format_on_save = { lsp_format = "fallback", timeout_ms = 3000 },
+			notify_on_error = true,
 		},
 	},
 }

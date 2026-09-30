@@ -8,19 +8,6 @@ if not ok_blink then
 	return
 end
 
-local ok_mason, mason_lspconfig = pcall(require, "mason-lspconfig")
-if not ok_mason then
-	return
-end
-
--- c# server
-require("mason").setup({
-	registries = {
-		"github:mason-org/mason-registry",
-		"github:Crashdummyy/mason-registry",
-	},
-})
-
 local buf = vim.lsp.buf
 local diagnostic = vim.diagnostic
 local keymap = vim.keymap.set

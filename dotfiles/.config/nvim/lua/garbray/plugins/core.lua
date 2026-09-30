@@ -12,12 +12,15 @@ return {
 		build = ":TSUpdate",
 		opts = {
 			ensure_installed = {
-				"tsx", "typescript", "javascript",
-				"css", "html", "json",
-				"lua", "bash", "markdown", "markdown_inline",
-				"go", "python", "rust", "yaml",
+				"bash", "c", "c_sharp", "css", "diff", "go", "html",
+				"javascript", "json", "jsonc", "lua", "luadoc",
+				"markdown", "markdown_inline", "python", "query",
+				"rust", "sql", "toml", "tsx", "typescript",
+				"vim", "vimdoc", "yaml",
 			},
-			highlight = { enable = true },
+			sync_install = false,
+			auto_install = true,
+			highlight = { enable = true, additional_vim_regex_highlighting = false },
 			indent = { enable = true },
 		},
 		config = function(_, opts)
