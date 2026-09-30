@@ -18,7 +18,8 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- move current line but maintain current focus
 vim.keymap.set("n", "J", "mzJ`z")
 
--- keep cursor in the middle when use Ctrl d / u vim.keymap.set("n", "<C-d>", "<C-d>zz")
+-- keep cursor in the middle when use Ctrl d / u
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 -- when search for a word keep the cursor in the middle
@@ -41,8 +42,8 @@ vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 vim.keymap.set("n", "<leader>f", function()
-	vim.lsp.buf.format()
-end)
+	require("conform").format({ async = true, lsp_format = "fallback" })
+end, { desc = "Format buffer" })
 
 -- quick fix list
 vim.keymap.set("n", "<C-n>", "<cmd>cnext<CR>zz")

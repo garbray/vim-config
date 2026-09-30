@@ -38,7 +38,8 @@ vim.opt.colorcolumn = "80"
 vim.opt.ignorecase = true
 
 vim.opt.guifont = "Hack_Nerd_Font:h11"
-vim.g.noshowmode = false
+-- mode is shown by lualine/noice
+vim.opt.showmode = false
 vim.opt.conceallevel = 1
 
 -- netrw
