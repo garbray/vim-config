@@ -27,7 +27,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
--- highlight a text and past over without loosing your current register
+-- highlight a text and past over without losing your current register
 -- using the void register
 vim.keymap.set("x", "<leader>p", '"_dP')
 
@@ -75,6 +75,15 @@ vim.keymap.set("n", "<leader>bl", vim.cmd.buffers)
 
 -- source vim config
 vim.keymap.set("n", "<leader><CR>", ":so ~/.config/nvim/init.lua<CR>")
+
+-- copy current file path to clipboard
+vim.api.nvim_create_user_command("Cppath", function()
+	local path = vim.fn.expand("%:.")
+	vim.fn.setreg("+", path)
+	vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, {})
+
+vim.keymap.set("n", "<leader>pp", ":Cppath<CR>")
 
 -- copilot
 -- vim.g.copilot_assume_mapped = true

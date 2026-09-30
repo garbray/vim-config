@@ -37,7 +37,7 @@ alias ytdd="yarn test --watch --verbose"
 alias yd="yarn dev"
 # alias pnpm 
 alias pr="pnpm run"
-alias ps="pnpm run start"
+alias prs="pnpm run start"
 alias pd="pnpm run dev"
 alias pt="pnpm run test"
 alias ptw="pnpm run test --watch"

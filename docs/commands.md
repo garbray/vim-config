@@ -36,3 +36,15 @@ test your ssh
 ssh -T your-alias
 
 ```
+
+usage of webp
+
+```
+cwebp input.png -o output.webp
+```
+
+create icons using image magick
+
+```
+magick path-to-file.png -resize 128x128 new-image.ico
+```

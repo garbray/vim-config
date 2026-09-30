@@ -1,24 +1,160 @@
 #!/usr/bin/env bash
+# tmuxSelector — fuzzy project/session switcher for tmux
+#
+# Usage:
+#   tmuxSelector              interactive picker
+#   tmuxSelector <path>       open that directory
+#   tmuxSelector <name>       jump to existing session by name
+#
+# Keys inside the picker:
+#   enter    open / switch     ctrl-x  kill session under cursor
+#   ctrl-o   toggle preview    ctrl-r  reload list
+#
+# Env overrides:
+#   TMUXSEL_PATHS   colon-separated roots scanned for project dirs
+#   TMUXSEL_DEPTH   how deep under each root a project lives (default 2)
+#   TMUXSEL_EXTRA   colon-separated single dirs added as-is (skipped if missing)
 
-if [[ $# -eq 1 ]]; then
-    selected=$1
+set -uo pipefail
+
+# ---------------------------------------------------------------- config ----
+DEFAULT_PATHS="$HOME/workspace"
+DEFAULT_EXTRA="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Documents/notes:$HOME/.config/nvim:$HOME/workspace"
+
+SEARCH_PATHS="${TMUXSEL_PATHS:-$DEFAULT_PATHS}"
+EXTRA_DIRS="${TMUXSEL_EXTRA:-$DEFAULT_EXTRA}"
+DEPTH="${TMUXSEL_DEPTH:-2}"
+
+# ---------------------------------------------------------------- helpers ---
+sanitize() { echo "$1" | tr '. :' '___'; }
+
+label_for() { # compact display path: $HOME -> ~, iCloud Drive -> ☁
+  local p="$1"
+  p="${p/#$HOME\/Library\/Mobile Documents\/com~apple~CloudDocs/☁}"
+  p="${p/#$HOME/~}"
+  echo "$p"
+}
+
+has_session() { tmux has-session -t "=$1" 2>/dev/null; }
+
+# ------------------------------------------------------------ subcommands ---
+if [[ "${1:-}" == "--preview" ]]; then
+  target="${2:-}"
+  name="${3:-}"
+  if [[ -n "$name" ]] && has_session "$name"; then
+    printf '\033[1;32m● session %s\033[0m\n' "$name"
+    tmux list-windows -t "=$name" -F '  #{window_index}: #{window_name}#{?window_active, (active),}'
+    echo
+  fi
+  [[ -d "$target" ]] || exit 0
+  printf '\033[1;34m%s\033[0m\n' "$target"
+  if git -C "$target" rev-parse --git-dir >/dev/null 2>&1; then
+    printf '\033[33m  %s\033[0m  %s\n' \
+      "$(git -C "$target" branch --show-current 2>/dev/null || echo detached)" \
+      "$(git -C "$target" log -1 --format='%cr · %s' 2>/dev/null)"
+    dirty=$(git -C "$target" status --porcelain 2>/dev/null | wc -l | tr -d ' ')
+    [[ "$dirty" != "0" ]] && printf '\033[31m  %s uncommitted\033[0m\n' "$dirty"
+  fi
+  echo
+  if command -v eza >/dev/null 2>&1; then
+    eza -a --icons=always --color=always --group-directories-first --git-ignore --level=1 "$target" 2>/dev/null | head -40
+  else
+    ls -A "$target" | head -40
+  fi
+  exit 0
+fi
+
+# ---------------------------------------------------------------- listing ---
+build_list() {
+  # active tmux sessions first
+  tmux list-sessions -F '#{session_name}	#{session_path}	#{session_windows}	#{?session_attached,1,0}' 2>/dev/null |
+    while IFS=$'\t' read -r name path wins attached; do
+      mark="●"; [[ "$attached" == "1" ]] && mark="◉"
+      printf '\033[32m%s %-24s\033[0m \033[90m%sw · %s\033[0m\t%s\t%s\n' \
+        "$mark" "$name" "$wins" "$(label_for "$path")" "$path" "$name"
+    done
+
+  # candidate dirs
+  {
+    IFS=':' read -r -a roots <<< "$SEARCH_PATHS"
+    for root in "${roots[@]}"; do
+      [[ -d "$root" ]] || continue
+      find "$root" -maxdepth "$DEPTH" -mindepth "$DEPTH" -type d ! -path '*/.*' -print 2>/dev/null
+    done
+    IFS=':' read -r -a extras <<< "$EXTRA_DIRS"
+    for d in "${extras[@]}"; do
+      [[ -d "$d" ]] && echo "$d"
+    done
+  } | while IFS= read -r dir; do
+      name=$(sanitize "$(basename "$dir")")
+      has_session "$name" && continue   # already listed above
+      printf '\033[90m○\033[0m %-24s \033[90m%s\033[0m\t%s\t%s\n' \
+        "$(basename "$dir")" "$(label_for "$(dirname "$dir")")" "$dir" "$name"
+    done
+}
+
+# these are re-entrant calls made by the fzf key bindings
+case "${1:-}" in
+  --list) build_list; exit 0 ;;
+  --kill) [[ -n "${2:-}" ]] && tmux kill-session -t "=$2" 2>/dev/null; exit 0 ;;
+esac
+
+# ---------------------------------------------------------------- select ----
+selected=""
+session=""
+
+if [[ $# -ge 1 ]]; then
+  if [[ -d "$1" ]]; then
+    selected="$1"
+    session=$(sanitize "$(basename "$selected")")
+  elif has_session "$(sanitize "$1")"; then
+    session=$(sanitize "$1")
+  else
+    echo "tmuxSelector: no such directory or session: $1" >&2
+    exit 1
+  fi
 else
-    items=`find ~/workspace/personal -maxdepth 1 -mindepth 1 -type d \
-        && find ~/workspace/work -maxdepth 1 -mindepth 1 -type d`
-    selected=`echo "$items" | fzf`
+  command -v fzf >/dev/null 2>&1 || { echo "tmuxSelector: fzf not installed" >&2; exit 1; }
+  self="${BASH_SOURCE[0]}"
+  [[ "$self" == /* ]] || self="$PWD/$self"
+  pick=$(build_list | fzf \
+    --ansi \
+    --delimiter='\t' \
+    --with-nth=1 \
+    --height=80% \
+    --layout=reverse \
+    --border=rounded \
+    --border-label=' projects ' \
+    --prompt='  ' \
+    --pointer='▶' \
+    --info=inline \
+    --header=$'enter open · ctrl-x kill · ctrl-o preview · ctrl-r reload\n' \
+    --preview="'$self' --preview {2} {3}" \
+    --preview-window='right,55%,border-left,wrap' \
+    --bind="ctrl-o:toggle-preview" \
+    --bind="ctrl-r:reload('$self' --list)" \
+    --bind="ctrl-x:execute-silent('$self' --kill {3})+reload('$self' --list)")
+  [[ -z "$pick" ]] && exit 0
+  selected=$(cut -f2 <<< "$pick")
+  session=$(cut -f3 <<< "$pick")
 fi
 
-dirname=`basename $selected`
+# ---------------------------------------------------------------- attach ----
+attach() {
+  if [[ -n "${TMUX:-}" ]]; then
+    tmux switch-client -t "=$1"
+  else
+    tmux attach-session -t "=$1"
+  fi
+}
 
-tmux switch-client -t $dirname
-if [[ $? -eq 0 ]]; then
-    exit 0
+if has_session "$session"; then
+  attach "$session"
+  exit $?
 fi
 
-tmux new-session -c $selected -d -s $dirname \
-    && tmux rename-window code \
-    && tmux new-window -c $selected\
-    && tmux rename-window TDD \
-    && tmux next-window \
-    && tmux send-keys -t $dirname 'nvim .' C-m \
-    && tmux switch-client -t $dirname || tmux new -c $selected -A -s $dirname
+tmux new-session -d -s "$session" -c "$selected" -n code
+tmux new-window -d -t "=$session" -c "$selected" -n TDD
+tmux send-keys -t "=$session:code" 'nvim .' C-m
+tmux select-window -t "=$session:code"
+attach "$session"
