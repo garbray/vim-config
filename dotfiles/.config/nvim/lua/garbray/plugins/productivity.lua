@@ -108,6 +108,9 @@ return {
 			{ "<leader>Su", function() Snacks.picker.undo() end, desc = "Picker: Undo History" },
 			{ "<leader>Sp", function() Snacks.picker.pickers() end, desc = "Picker: All Pickers" },
 			{ "<leader>St", function() Snacks.terminal.toggle() end, desc = "Snacks: Toggle Terminal" },
+			-- replaces vim-bujo: a scratch buffer persisted per cwd + git branch
+			{ "<leader>bt", function() Snacks.scratch() end, desc = "Toggle scratch buffer" },
+			{ "<leader>bs", function() Snacks.scratch.select() end, desc = "Select scratch buffer" },
 			{
 				"<leader>z",
 				function()
@@ -270,7 +273,7 @@ return {
 				{ "<leader>a", group = "Harpoon" },
 				{ "<leader>A", group = "AI / Claude Code" },
 				{ "<leader>S", group = "Snacks (trial)" },
-				{ "<leader>b", group = "Buffers / Bujo" },
+				{ "<leader>b", group = "Buffers / Scratch" },
 				{ "<leader>c", group = "Code / Colors" },
 				{ "<leader>g", group = "Git / Goto" },
 				{ "<leader>p", group = "Project / Find" },

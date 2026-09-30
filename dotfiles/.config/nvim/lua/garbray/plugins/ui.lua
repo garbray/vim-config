@@ -1,6 +1,5 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	"vuciv/vim-bujo",
 	-- vim-startify removed - using snacks.dashboard
 	{ "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
 	-- "lukas-reineke/indent-blankline.nvim",
