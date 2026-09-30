@@ -1,12 +1,11 @@
 return {
 	{ "windwp/nvim-ts-autotag", opts = {} },
 	"prisma/vim-prisma",
-	-- markdown
-	"plasticboy/vim-markdown",
+	-- markdown rendered in-buffer via treesitter, instead of a browser preview
 	{
-		"iamcco/markdown-preview.nvim",
-		config = function()
-			vim.fn["mkdp#util#install"]()
-		end,
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		ft = { "markdown" },
+		opts = {},
 	},
 }
