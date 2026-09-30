@@ -37,7 +37,6 @@ vim.opt.colorcolumn = "80"
 
 vim.opt.ignorecase = true
 
-vim.g.mapleader = " "
 vim.opt.guifont = "Hack_Nerd_Font:h11"
 vim.g.noshowmode = false
 vim.opt.conceallevel = 1

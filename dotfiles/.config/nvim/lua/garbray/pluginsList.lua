@@ -24,6 +24,5 @@ require("lazy").setup({
 	require("garbray.plugins.debug"),
 	require("garbray.plugins.lang"),
 	require("garbray.plugins.productivity"),
-	require("garbray.plugins.tools"),
 	require("garbray.plugins.personal"),
 }, {})

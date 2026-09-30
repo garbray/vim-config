@@ -51,8 +51,6 @@ local on_attach = function(client, bufnr)
 	end
 end
 
--- vim.api.nvim_create_autocmd("LspAttach", { group = augroup, callback = on_attach })
---
 vim.lsp.config("vtsls", {
 	capabilities = capabilities,
 	on_attach = on_attach,
@@ -83,20 +81,6 @@ vim.lsp.config("omnisharp", {
 	on_attach = on_attach,
 })
 
--- vim.lsp.config("roslyn", {
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
--- 	settings = {
--- 		["csharp|inlay_hints"] = {
--- 			csharp_enable_inlay_hints_for_implicit_object_creation = true,
--- 			csharp_enable_inlay_hints_for_implicit_variable_types = true,
--- 		},
--- 		["csharp|code_lens"] = {
--- 			dotnet_enable_references_code_lens = true,
--- 		},
--- 	},
--- })
-
 vim.lsp.enable({
 	"lua_ls",
 	"pyright",
@@ -104,53 +88,6 @@ vim.lsp.enable({
 	"vtsls",
 	"gopls",
 	"clangd",
-	-- "roslyn",
 	"omnisharp",
 })
 
--- mason_lspconfig.setup_handlers({
--- 	function(server_name)
--- 		lspconfig[server_name].setup({
--- 			capabilities = capabilities,
--- 			on_attach = on_attach,
--- 		})
--- 	end,
--- 	["lua_ls"] = function()
--- 		lspconfig.lua_ls.setup({
--- 			capabilities = capabilities,
--- 			on_attach = on_attach,
--- 			settings = {
--- 				Lua = {
--- 					diagnostics = { globals = { "vim" } },
--- 				},
--- 			},
--- 		})
--- 	end,
--- 	["vtsls"] = function()
--- 		lspconfig.vtsls.setup({
--- 			capabilities = capabilities,
--- 			on_attach = on_attach,
--- 			filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
--- 			settings = {
--- 				typescript = {
--- 					inlayHints = {
--- 						parameterNames = { enabled = "literals" },
--- 						variableTypes = { enabled = true },
--- 						returnTypes = { enabled = true },
--- 					},
--- 				},
--- 				javascript = {
--- 					inlayHints = {
--- 						parameterNames = { enabled = "literals" },
--- 						variableTypes = { enabled = true },
--- 						returnTypes = { enabled = true },
--- 					},
--- 				},
--- 				vtsls = {
--- 					enableMoveToFileCodeAction = true,
--- 					autoUseWorkspaceTsdk = true,
--- 				},
--- 			},
--- 		})
--- 	end,
--- })

@@ -1,6 +1,4 @@
--- new keymaps
--- local keymap = vim.api.nvim_set_keymap
-vim.g.mapleader = " "
+-- Global keymaps. Leader is set in garbray/init.lua.
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 -- vim.keymap.set("n", "<leader>pv", vim.cmd.Sex)
 local opts = { noremap = true, silent = true }
@@ -84,17 +82,3 @@ vim.api.nvim_create_user_command("Cppath", function()
 end, {})
 
 vim.keymap.set("n", "<leader>pp", ":Cppath<CR>")
-
--- copilot
--- vim.g.copilot_assume_mapped = true
--- vim.g.copilot_no_tab_map = true
--- vim.keymap.set("i", "<C-Space>", "copilot#Accept(“<CR>”)", { silent = true })
--- vim.api.nvim_set_keymap("i", "<C-/>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
--- vim.keymap.set("n", "<C-Right>", "copilot#Accept(“<CR>”)", { silent = true })
--- vim.keymap.set("v", "<C-Right>", "copilot#Accept(“<CR>”)", { silent = true })
--- vim.keymap.set("i", "<C-S-e>", "<Plug>(copilot-cancel)", { silent = true })
--- vim.keymap.set("n", "<C-S-e>", "<Plug>(copilot-cancel)", { silent = true })
--- vim.keymap.set("v", "<C-S-e>", "<Plug>(copilot-cancel)", { silent = true })
--- vim.keymap.set("i", "<C-Space>", "<Plug>(copilot-complete)", { silent = true })
--- vim.keymap.set("n", "<C-Space>", "<Plug>(copilot-complete)", { silent = true })
--- vim.keymap.set("v", "<C-Space>", "<Plug>(copilot-complete)", { silent = true })
