@@ -38,6 +38,7 @@ brew "pnpm"
 brew "python"
 brew "stow"
 brew "tree-sitter"
+brew "tree-sitter-cli"
 brew "uv"
 brew "gromgit/brewtils/taproom"
 
@@ -77,7 +78,7 @@ cask "kitty"
 cask "nikitabobko/tap/aerospace"
 cask "numi"
 cask "raycast"
-cask "zen-browser"
+cask "zen"
 
 # Mac App Store
 # mas "Xcode", id: 497799835
