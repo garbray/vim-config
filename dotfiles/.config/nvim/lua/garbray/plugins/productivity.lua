@@ -78,6 +78,7 @@ return {
 				enabled = true,
 				timeout = 3000,
 			},
+			picker = { enabled = true },
 			quickfile = { enabled = true },
 			terminal = {
 				win = {
@@ -90,6 +91,23 @@ return {
 			},
 		},
 		keys = {
+			-- <leader>S -- snacks trial namespace. Runs alongside telescope
+			-- (<leader>pf/<C-p>/<leader>ps) and simple-term (<leader>tu/<leader>te)
+			-- so both can be compared. See docs/nvim-plan.md Tier 3b.
+			{ "<leader>Sf", function() Snacks.picker.files() end, desc = "Picker: Files" },
+			{ "<leader>Sg", function() Snacks.picker.grep() end, desc = "Picker: Live Grep" },
+			{ "<leader>Sw", function() Snacks.picker.grep_word() end, desc = "Picker: Grep Word", mode = { "n", "x" } },
+			{ "<leader>Sb", function() Snacks.picker.buffers() end, desc = "Picker: Buffers" },
+			{ "<leader>Sr", function() Snacks.picker.recent() end, desc = "Picker: Recent Files" },
+			{ "<leader>SS", function() Snacks.picker.lsp_symbols() end, desc = "Picker: Document Symbols" },
+			{ "<leader>Sd", function() Snacks.picker.diagnostics() end, desc = "Picker: Diagnostics" },
+			{ "<leader>Sh", function() Snacks.picker.help() end, desc = "Picker: Help Pages" },
+			{ "<leader>Sk", function() Snacks.picker.keymaps() end, desc = "Picker: Keymaps" },
+			{ "<leader>Sq", function() Snacks.picker.qflist() end, desc = "Picker: Quickfix List" },
+			{ "<leader>Sc", function() Snacks.picker.git_log() end, desc = "Picker: Git Log" },
+			{ "<leader>Su", function() Snacks.picker.undo() end, desc = "Picker: Undo History" },
+			{ "<leader>Sp", function() Snacks.picker.pickers() end, desc = "Picker: All Pickers" },
+			{ "<leader>St", function() Snacks.terminal.toggle() end, desc = "Snacks: Toggle Terminal" },
 			{
 				"<leader>z",
 				function()
