@@ -85,6 +85,7 @@ to list everything; `<leader>?` shows buffer-local maps.
 |---|---|
 | `<leader>pf` / `<C-p>` / `<leader>ps` | find files / git files / grep prompt |
 | `<leader>S…` | full picker namespace — `Sf` files, `Sg` live grep, `Sb` buffers, `Sk` keymaps, `Sq` quickfix, `Sp` all pickers |
+| `<leader>t1`-`t4`, `<leader>ST` | terminals 1-4 (per project), pick an open terminal |
 | `<C-e>`, `<leader>aa`, `<C-h/j/k/l>` | harpoon menu, add file, jump to slots 1-4 |
 | `<leader>gd` / `<leader>gr` / `K` / `<leader>ca` / `<leader>rn` | LSP definition / references / hover / code action / rename |
 | `<leader>f` | format buffer (conform) |

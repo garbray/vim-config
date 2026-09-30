@@ -1,4 +1,45 @@
 -- Statusline, notifications, command line and keymap hints.
+-- snacks terminals are keyed by cmd + cwd + count, so a count gives an
+-- independent terminal, scoped to the current project. <leader>St stays
+-- count-aware (2<leader>St is terminal 2); <leader>t1..t4 are explicit.
+local function term(n)
+	return function()
+		Snacks.terminal.toggle(nil, { count = n })
+	end
+end
+
+-- jump to one of the terminals that is already open
+local function pick_terminal()
+	local wins = Snacks.terminal.list()
+	if #wins == 0 then
+		vim.notify("No open terminals", vim.log.levels.INFO)
+		return
+	end
+
+	local items = {}
+	for _, win in ipairs(wins) do
+		local meta = vim.b[win.buf].snacks_terminal or {}
+		table.insert(items, {
+			win = win,
+			label = string.format("terminal %s  %s", meta.id or "?", vim.fn.fnamemodify(meta.cwd or "", ":~")),
+		})
+	end
+	table.sort(items, function(a, b)
+		return a.label < b.label
+	end)
+
+	vim.ui.select(items, {
+		prompt = "Terminals",
+		format_item = function(item)
+			return item.label
+		end,
+	}, function(choice)
+		if choice then
+			choice.win:show():focus()
+		end
+	end)
+end
+
 return {
 	{
 		"nvim-lualine/lualine.nvim",
@@ -144,7 +185,12 @@ return {
 			{ "<leader>Sc", function() Snacks.picker.git_log() end, desc = "Picker: Git Log" },
 			{ "<leader>Su", function() Snacks.picker.undo() end, desc = "Picker: Undo History" },
 			{ "<leader>Sp", function() Snacks.picker.pickers() end, desc = "Picker: All Pickers" },
-			{ "<leader>St", function() Snacks.terminal.toggle() end, desc = "Snacks: Toggle Terminal" },
+			{ "<leader>St", function() Snacks.terminal.toggle() end, desc = "Toggle terminal (accepts a count)" },
+			{ "<leader>ST", pick_terminal, desc = "Pick an open terminal" },
+			{ "<leader>t1", term(1), desc = "Terminal 1" },
+			{ "<leader>t2", term(2), desc = "Terminal 2" },
+			{ "<leader>t3", term(3), desc = "Terminal 3" },
+			{ "<leader>t4", term(4), desc = "Terminal 4" },
 			-- replaces vim-bujo: a scratch buffer persisted per cwd + git branch
 			{ "<leader>bt", function() Snacks.scratch() end, desc = "Toggle scratch buffer" },
 			{ "<leader>bs", function() Snacks.scratch.select() end, desc = "Select scratch buffer" },
