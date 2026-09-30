@@ -118,9 +118,19 @@ return {
 			},
 		},
 		keys = {
-			-- <leader>S -- snacks trial namespace. Runs alongside telescope
-			-- (<leader>pf/<C-p>/<leader>ps) and simple-term (<leader>tu/<leader>te)
-			-- so both can be compared. See docs/nvim-plan.md Tier 3b.
+			-- Telescope's keys, kept as-is but backed by snacks.picker
+			{ "<leader>pf", function() Snacks.picker.files() end, desc = "Find files" },
+			{ "<C-p>", function() Snacks.picker.git_files() end, desc = "Find git files" },
+			{
+				"<leader>ps",
+				function()
+					-- one-shot fixed-string grep, matching telescope's grep_string
+					Snacks.picker.grep({ search = vim.fn.input("Grep > "), live = false })
+				end,
+				desc = "Grep prompt",
+			},
+			-- <leader>S -- the same pickers under one namespace, plus the ones
+			-- telescope was never bound to. simple-term stays on <leader>tu/te.
 			{ "<leader>Sf", function() Snacks.picker.files() end, desc = "Picker: Files" },
 			{ "<leader>Sg", function() Snacks.picker.grep() end, desc = "Picker: Live Grep" },
 			{ "<leader>Sw", function() Snacks.picker.grep_word() end, desc = "Picker: Grep Word", mode = { "n", "x" } },

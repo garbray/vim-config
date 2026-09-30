@@ -7,7 +7,6 @@ return {
 			"theHamsta/nvim-dap-virtual-text",
 			"leoluz/nvim-dap-go",
 			{ "mfussenegger/nvim-dap-python", lazy = true },
-			{ "nvim-telescope/telescope-dap.nvim", dependencies = { "nvim-telescope/telescope.nvim" } },
 		},
 		keys = {
 			{
@@ -86,49 +85,11 @@ return {
 			local debugpy = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
 			require("dap-python").setup(vim.uv.fs_stat(debugpy) and debugpy or "python3")
 
-			pcall(require("telescope").load_extension, "dap")
-
 			vim.fn.sign_define(
 				"DapBreakpoint",
 				{ text = "🐞", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
 			)
 			vim.fn.sign_define("DapBreakpointCondition", { text = "🕷️", texthl = "DapBreakpointCondition" })
-
-			-- pick a process to attach to, through telescope
-			local function pick_process_telescope()
-				local pickers = require("telescope.pickers")
-				local finders = require("telescope.finders")
-				local conf = require("telescope.config").values
-				local actions = require("telescope.actions")
-				local action_state = require("telescope.actions.state")
-
-				return coroutine.create(function(coro)
-					local processes = require("dap.utils").get_processes()
-					pickers
-						.new({}, {
-							prompt_title = "Select Process",
-							finder = finders.new_table({
-								results = processes,
-								entry_maker = function(entry)
-									return {
-										value = entry.pid,
-										display = string.format("%d: %s", entry.pid, entry.name),
-										ordinal = entry.name,
-									}
-								end,
-							}),
-							sorter = conf.generic_sorter({}),
-							attach_mappings = function(bufnr)
-								actions.select_default:replace(function()
-									actions.close(bufnr)
-									coroutine.resume(coro, action_state.get_selected_entry().value)
-								end)
-								return true
-							end,
-						})
-						:find()
-				end)
-			end
 
 			-- JS/TS via mason's js-debug-adapter
 			for _, adapter in ipairs({ "pwa-node", "pwa-chrome" }) do
@@ -156,7 +117,7 @@ return {
 						type = "pwa-node",
 						request = "attach",
 						name = "Attach",
-						processId = pick_process_telescope,
+						processId = require("dap.utils").pick_process,
 						cwd = "${workspaceFolder}",
 					},
 					{

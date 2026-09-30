@@ -96,7 +96,7 @@ return {
 				resizing_mappings = false,
 				post_open_hook = nil,
 				references = {
-					telescope = require("telescope.themes").get_dropdown({ hide_preview = false }),
+					provider = "snacks",
 				},
 				focus_on_open = true,
 				dismiss_on_move = false,
