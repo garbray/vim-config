@@ -24,10 +24,9 @@ return {
 				"isort",
 				"shfmt",
 				"goimports",
-				-- linters
-				"eslint_d",
+				-- linters (run by nvim-lint, see plugins/lint.lua). JS/TS lint
+				-- comes from the eslint LSP server, so no eslint_d here.
 				"markdownlint",
-				"codespell",
 				-- debug adapters (were mason-nvim-dap's ensure_installed)
 				"debugpy",
 				"delve",
