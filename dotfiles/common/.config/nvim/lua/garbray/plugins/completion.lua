@@ -3,13 +3,7 @@ return {
 	{
 		"saghen/blink.cmp",
 		version = "1.*",
-		dependencies = {
-			"rafamadriz/friendly-snippets",
-			{
-				"giuxtaposition/blink-cmp-copilot",
-				dependencies = { "zbirenbaum/copilot.lua" },
-			},
-		},
+		dependencies = { "rafamadriz/friendly-snippets" },
 		opts = {
 			keymap = {
 				preset = "default",
@@ -27,15 +21,7 @@ return {
 				documentation = { auto_show = true, auto_show_delay_ms = 200 },
 			},
 			sources = {
-				default = { "copilot", "lsp", "path", "snippets", "buffer" },
-				providers = {
-					copilot = {
-						name = "copilot",
-						module = "blink-cmp-copilot",
-						score_offset = 100,
-						async = true,
-					},
-				},
+				default = { "lsp", "path", "snippets", "buffer" },
 			},
 			fuzzy = { implementation = "prefer_rust_with_warning" },
 		},

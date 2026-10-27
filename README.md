@@ -4,7 +4,7 @@ Personal dev env: Neovim + Tmux + zsh dotfiles, one install script for **macOS**
 **[omarchy](https://omarchy.org)** (Arch + Hyprland).
 
 ## Features
-- Neovim IDE: LSP via Mason, blink.cmp completion, Copilot suggestions, Claude Code integration
+- Neovim IDE: LSP via Mason, blink.cmp completion, Claude Code integration
 - Tmux session management via `tmuxSelector`
 - macOS: Aerospace tiling. omarchy: keeps its own Hyprland setup
 - Dotfiles as GNU Stow packages, per-OS package lists
@@ -123,7 +123,7 @@ dotfiles/common/.config/nvim/
     └── plugins/
         ├── ai.lua           # claudecode.nvim
         ├── colorscheme.lua  # rose-pine + transparency
-        ├── completion.lua   # blink.cmp + Copilot source
+        ├── completion.lua   # blink.cmp
         ├── dap.lua          # nvim-dap, adapters, UI
         ├── editor.lua       # flash, surround, autopairs, sleuth, undotree, todo-comments
         ├── format.lua       # conform.nvim

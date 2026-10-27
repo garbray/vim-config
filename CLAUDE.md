@@ -69,8 +69,7 @@ Conventions:
 - Pickers, notifications, dashboard, terminal and scratch buffers come from snacks.nvim.
   Telescope is not installed.
 
-AI integration: `claudecode.nvim` (keys under `<leader>A`) plus Copilot suggestions
-through `blink-cmp-copilot`. Configured in `plugins/ai.lua` and `plugins/completion.lua`.
+AI integration: `claudecode.nvim` (keys under `<leader>A`), configured in `plugins/ai.lua`.
 
 ## Cursor/VSCode Integration
 
