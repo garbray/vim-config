@@ -9,32 +9,85 @@ Personal dev env: Neovim + Tmux + zsh dotfiles, one install script for **macOS**
 - macOS: Aerospace tiling. omarchy: keeps its own Hyprland setup
 - Dotfiles as GNU Stow packages, per-OS package lists
 
-## Requirements
-- Git
-- macOS: Xcode Command Line Tools (`xcode-select --install`)
-- omarchy: a working omarchy install (ships `yay`)
-
 ## Installation
 
-```sh
-git clone https://github.com/garbray/vim-config.git ~/workspace/personal/vim-config
-cd ~/workspace/personal/vim-config
-./install.sh            # packages → link → setup
-```
-
-Steps can run on their own: `./install.sh packages|link|setup`.
+`./install.sh` detects the OS on its own: macOS from `uname`, omarchy from
+`~/.local/share/omarchy`. Anything else exits with an error. It runs three steps in order:
 
 | Step | macOS | omarchy |
 |---|---|---|
-| `packages` | Homebrew + [`Brewfile`](./install/macos/Brewfile) | `yay -S --needed` from [`packages.txt`](./install/omarchy/packages.txt) |
-| `link` | stow `common` + `macos` | stow `common` |
-| `setup` | mise runtimes, oh-my-zsh (+ `chsh` to zsh), git/gh config | same |
+| `packages` | installs Homebrew if missing, then `brew bundle` from [`Brewfile`](./install/macos/Brewfile) | `yay -S --needed` from [`packages.txt`](./install/omarchy/packages.txt) |
+| `link` | stows `dotfiles/common` + `dotfiles/macos` into `~` | stows `dotfiles/common` into `~` |
+| `setup` | mise runtimes, oh-my-zsh, git/gh config | same, and switches login shell from bash to zsh |
 
-`link` moves anything already in the way (e.g. omarchy's LazyVim `~/.config/nvim`) to
-`~/.dotfiles-backup/<timestamp>/` before stowing, and drops broken symlinks. Re-running is safe.
+### macOS
 
-Then open a new shell and run `nvim` — lazy.nvim installs plugins, Mason installs
-LSPs/formatters, treesitter compiles parsers (`:checkhealth nvim-treesitter`).
+1. Install the Xcode Command Line Tools (provides `git`):
+   ```sh
+   xcode-select --install
+   ```
+2. Clone and run:
+   ```sh
+   git clone https://github.com/garbray/vim-config.git ~/workspace/personal/vim-config
+   cd ~/workspace/personal/vim-config
+   ./install.sh
+   ```
+   Homebrew asks for your password once.
+3. Open a new terminal (Ghostty or Kitty), then:
+   ```sh
+   gh auth login       # GitHub CLI
+   nvim                # first launch installs plugins, LSPs, treesitter parsers
+   ```
+4. Open AeroSpace and Karabiner-Elements once and grant them Accessibility permission
+   (System Settings → Privacy & Security → Accessibility).
+
+### omarchy
+
+1. Install [omarchy](https://omarchy.org) first. It provides `git`, `yay` and Hyprland.
+2. Clone and run:
+   ```sh
+   git clone https://github.com/garbray/vim-config.git ~/workspace/personal/vim-config
+   cd ~/workspace/personal/vim-config
+   ./install.sh
+   ```
+   `yay` asks for your sudo password, `chsh` asks for your user password.
+3. Log out and back in so zsh becomes the login shell.
+4. Open a terminal, then:
+   ```sh
+   gh auth login
+   nvim
+   ```
+
+What changes on omarchy:
+- omarchy's LazyVim config (`~/.config/nvim`), plus its `ghostty` and `kitty` configs, are
+  replaced by this repo's. The originals are moved to `~/.dotfiles-backup/<timestamp>/`.
+  To go back, delete the symlink and move the backup back:
+  ```sh
+  rm ~/.config/nvim && mv ~/.dotfiles-backup/<timestamp>/.config/nvim ~/.config/nvim
+  ```
+- Hyprland, Waybar, Walker, Alacritty and omarchy themes are not touched.
+- Default shell changes from bash to zsh (oh-my-zsh).
+
+### Running one step
+
+```sh
+./install.sh packages    # after editing Brewfile / packages.txt
+./install.sh link        # after adding, moving or removing files in dotfiles/
+./install.sh setup       # runtimes, shell, git again
+```
+
+Every step can be re-run safely. `link` needs `stow`, which the `packages` step installs.
+
+## Day to day
+
+| Task | How |
+|---|---|
+| Change a config | edit it in the repo; `~` already points at it |
+| Add a config for both OSes | put it under `dotfiles/common/` with its path relative to `~`, then `./install.sh link` |
+| Add a config for one OS | same, under `dotfiles/macos/` or `dotfiles/omarchy/` (created when needed, picked up automatically) |
+| Add a package | add it to both `install/macos/Brewfile` and `install/omarchy/packages.txt`, then `./install.sh packages` |
+| Change a runtime version | edit `dotfiles/common/.tool-versions`, then `mise install` |
+| Machine-only secrets / env vars | `~/.localenv` (sourced by `.zshrc`, not in the repo) |
 
 ## Layout
 
@@ -52,9 +105,6 @@ dotfiles/                    # stow packages, each mirrors $HOME
   macos/   .config/{aerospace,Karabiner}
 docs/  cursor/               # notes
 ```
-
-New config for both OSes goes in `dotfiles/common`, OS-only config in `dotfiles/<os>`.
-Packages go in both the Brewfile and `packages.txt`.
 
 ## Neovim
 
