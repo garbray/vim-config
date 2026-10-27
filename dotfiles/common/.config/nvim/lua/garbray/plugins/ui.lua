@@ -334,6 +334,7 @@ return {
 				{ "<leader>c", group = "Code / Colors" },
 				{ "<leader>g", group = "Git / Goto" },
 				{ "<leader>p", group = "Project / Find" },
+				{ "<leader>q", group = "Sessions" },
 				{ "<leader>t", group = "Tabs / Terminals" },
 				{ "<leader>v", group = "LSP view / Splits" },
 			},
