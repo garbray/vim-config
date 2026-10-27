@@ -1,0 +1,57 @@
+# Arch packages (official repos + AUR), installed with `yay -S --needed`.
+# omarchy already ships many of these; --needed skips them.
+# Keep in sync with install/macos/Brewfile.
+
+# Shell
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
+z
+fzf
+htop
+lazygit
+ranger
+ripgrep
+tmux
+
+# Dev tools
+act
+bun-bin
+csvlens
+deno
+eza
+go
+jdk-openjdk
+lua
+luarocks
+mise
+nodejs
+npm
+pnpm
+python
+stow
+tree-sitter-cli
+uv
+
+# Neovim
+neovim
+
+# Git
+github-cli
+
+# Utils
+cliamp
+curlie
+ffmpeg
+imagemagick
+jq
+just
+taskwarrior-tui
+trash-cli
+xh
+yt-dlp
+
+# Terminals + fonts
+ghostty
+kitty
+ttf-firacode-nerd
