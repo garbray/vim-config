@@ -38,7 +38,7 @@ map({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
 
 map("n", "Q", "<nop>", { desc = "Disabled (was Ex mode)" })
 
-map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", { desc = "Tmux sessionizer" })
+map("n", "<C-f>", "<cmd>silent !tmux neww tmuxSelector<CR>", { desc = "Tmux session selector" })
 
 map("n", "<leader>f", function()
 	require("conform").format({ async = true, lsp_format = "fallback" })
