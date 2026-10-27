@@ -1,8 +1,8 @@
 # Taps
 tap "FelixKratz/formulae"
 tap "gromgit/brewtils"
-tap "koekeishiya/formulae"
 tap "nikitabobko/tap"
+tap "bjarneo/cliamp"
 tap "oven-sh/bun"
 tap "TheZoraiz/ascii-image-converter"
 tap "tursodatabase/tap"
@@ -49,6 +49,7 @@ brew "neovim"
 brew "gh"
 
 # Utils
+brew "bjarneo/cliamp/cliamp"
 brew "curlie"
 brew "ffmpeg"
 brew "imagemagick"
@@ -65,8 +66,6 @@ brew "TheZoraiz/ascii-image-converter/ascii-image-converter"
 # macOS environment
 brew "FelixKratz/formulae/borders"
 brew "highlight"
-brew "koekeishiya/formulae/skhd"
-brew "koekeishiya/formulae/yabai"
 brew "trash-cli"
 
 # Casks

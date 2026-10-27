@@ -1,5 +1,5 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# tmuxSelector and mise live here
+export PATH="$HOME/.local/bin:$PATH"
 
 # deactivate magic functions
 export DISABLE_MAGIC_FUNCTIONS=true
@@ -68,26 +68,45 @@ export BAT_THEME="gruvbox"
 
 # =============== shell plugins ========================
 
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /opt/homebrew/etc/profile.d/z.sh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# first match wins: homebrew (macOS), then arch (omarchy)
+for f in \
+  /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
+  /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh; do
+  [ -f "$f" ] && source "$f" && break
+done
+for f in \
+  /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh; do
+  [ -f "$f" ] && source "$f" && break
+done
+for f in /opt/homebrew/etc/profile.d/z.sh /usr/share/z/z.sh; do
+  [ -f "$f" ] && source "$f" && break
+done
+command -v fzf >/dev/null && source <(fzf --zsh)
 
 # =============== runtime versions (mise) ========================
 # replaces: volta, nvm, pyenv
-eval "$($HOME/.local/bin/mise activate zsh)"
+command -v mise >/dev/null && eval "$(mise activate zsh)"
+
+# =============== OS specifics ========================
+
+if [[ "$OSTYPE" == darwin* ]]; then
+  export PATH="/opt/homebrew/opt/openjdk/bin:/opt/homebrew/opt/libpq/bin:$PATH"
+  export PNPM_HOME="$HOME/Library/pnpm"
+else
+  export PNPM_HOME="$HOME/.local/share/pnpm"
+  # keep mac muscle memory working on wayland
+  alias pbcopy="wl-copy"
+  alias pbpaste="wl-paste"
+fi
 
 # =============== language paths ========================
 
 # Go
 export GOPATH=$HOME/.go
-export PATH=$PATH:$(go env GOPATH)/bin
-
-# Java
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH=$PATH:$GOPATH/bin
 
 # pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -97,9 +116,6 @@ esac
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# postgres client
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 # =============== tools ========================
 

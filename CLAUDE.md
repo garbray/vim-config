@@ -5,41 +5,38 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Repository Overview
 
 Personal development environment configuration: Neovim as an IDE, dotfiles, and
-installation automation for macOS.
+installation automation for macOS and omarchy (Arch + Hyprland).
 
-## Key Components
+## Layout
 
-### Configuration Files
-- `dotfiles/.config/nvim/` - Neovim configuration (Lua, lazy.nvim)
-- `dotfiles/.config/aerospace/` - window manager configuration
-- `dotfiles/.zshrc` - Zsh shell configuration
-- `dotfiles/.tmux.conf` - Tmux terminal multiplexer configuration
+- `install.sh` - single entry point: detects OS (`macos` | `omarchy`), runs `packages`, `link`, `setup`
+- `install/lib.sh` - logging, OS detection, backup of conflicting files before stow
+- `install/common/` - cross-OS steps: `mise.sh`, `shell.sh` (oh-my-zsh, chsh), `git.sh`
+- `install/macos/` - `packages.sh` + `Brewfile`
+- `install/omarchy/` - `packages.sh` + `packages.txt` (installed with `yay -S --needed`)
+- `dotfiles/common/` - stow package mirroring `$HOME`, used on every OS: `.zshrc`,
+  `.tmux.conf`, `.tool-versions`, `.config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior}`,
+  `.local/bin/tmuxSelector`
+- `dotfiles/macos/` - macOS-only stow package: aerospace, Karabiner
+- `docs/`, `cursor/` - notes
 
-### Installation System
-- `Brewfile` - every brew formula and cask; the bulk of the install
-- `install-files/setup.sh` - orchestrates the install
-- `install` - GNU Stow symlink management
-- `.tool-versions` - runtime versions for mise
-
-### Project Structure
-- `tmuxSelector` - project/session selector script
-- `task/` - task management configurations
-- `docs/` - commands, mise, taskwarrior notes
+Conventions:
+- Config for every OS goes in `dotfiles/common`; OS-only config in `dotfiles/<os>`.
+  A `dotfiles/omarchy` package is picked up automatically if created.
+- A new package goes in both `install/macos/Brewfile` and `install/omarchy/packages.txt`.
+- `.zshrc` must work on both OSes: probe paths (`/opt/homebrew/...` vs `/usr/share/...`)
+  or branch on `$OSTYPE`; never hardcode a Homebrew path unguarded.
+- Install scripts are bash (`#!/usr/bin/env bash`, `set -euo pipefail`), get `$REPO` from
+  `install.sh`, and must be idempotent.
 
 ## Common Commands
 
-### Initial Setup
 ```bash
-./install-files/setup.sh   # dependencies
-./install                  # symlink dotfiles
-```
-
-### Development Workflow
-```bash
-tmuxSelector      # session selector (also linked as projectSelector)
-lazygit           # git TUI
-brew bundle       # sync packages after editing Brewfile
-mise install      # sync runtimes after editing .tool-versions
+./install.sh                 # everything
+./install.sh link            # restow dotfiles after adding/moving files
+./install.sh packages        # sync packages after editing Brewfile / packages.txt
+tmuxSelector                 # tmux session selector
+mise install                 # sync runtimes after editing .tool-versions
 ```
 
 ## Neovim Configuration
@@ -82,7 +79,6 @@ navigation, terminal and split management).
 
 ## Symlink Management
 
-GNU Stow:
-- `stow -t $HOME/.config -d dotfiles .config` creates the config symlinks
-- manual symlinks for `.tmux.conf`, `.zshrc` and `tmuxSelector`
-- global binary link for `projectSelector` in `/usr/local/bin/`
+GNU Stow, one call: `stow --restow -d dotfiles -t ~ common <os>`. `install.sh link` first
+creates `~/.config` and `~/.local/bin` (so stow doesn't fold them into the repo) and moves
+conflicting top-level entries to `~/.dotfiles-backup/<timestamp>/`.

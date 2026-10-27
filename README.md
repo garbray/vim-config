@@ -1,52 +1,60 @@
 # Vim/Neovim IDE Setup
 
-Personal macOS dev env: Neovim + Tmux + dotfiles, automated install.
+Personal dev env: Neovim + Tmux + zsh dotfiles, one install script for **macOS** and
+**[omarchy](https://omarchy.org)** (Arch + Hyprland).
 
 ## Features
 - Neovim IDE: LSP via Mason, blink.cmp completion, Copilot suggestions, Claude Code integration
 - Tmux session management via `tmuxSelector`
-- Aerospace/yabai tiling, fast nav, hotkeys, minimal mouse
-- Full dotfiles, Brewfile + modular install scripts
+- macOS: Aerospace tiling. omarchy: keeps its own Hyprland setup
+- Dotfiles as GNU Stow packages, per-OS package lists
 
 ## Requirements
-- macOS (tested on Sonoma+)
 - Git
-- Xcode Command Line Tools: `xcode-select --install`
-- Neovim >= 0.11 (0.12+ recommended; installed by the Brewfile)
+- macOS: Xcode Command Line Tools (`xcode-select --install`)
+- omarchy: a working omarchy install (ships `yay`)
 
 ## Installation
 
-### 1. Clone
 ```sh
 git clone https://github.com/garbray/vim-config.git ~/workspace/personal/vim-config
 cd ~/workspace/personal/vim-config
+./install.sh            # packages → link → setup
 ```
 
-### 2. Install all dependencies
-```sh
-./install-files/setup.sh
-```
-Order: Homebrew → taps → `brew bundle` (everything in [`Brewfile`](./Brewfile)) → shell tools → dev tools → Neovim extras → Git/GitHub CLI → env setup.
+Steps can run on their own: `./install.sh packages|link|setup`.
 
-### 3. Symlink dotfiles
-```sh
-./install
-```
-GNU Stow links `.config/*`, plus `.zshrc`, `.tmux.conf` and `tmuxSelector`.
+| Step | macOS | omarchy |
+|---|---|---|
+| `packages` | Homebrew + [`Brewfile`](./install/macos/Brewfile) | `yay -S --needed` from [`packages.txt`](./install/omarchy/packages.txt) |
+| `link` | stow `common` + `macos` | stow `common` |
+| `setup` | mise runtimes, oh-my-zsh (+ `chsh` to zsh), git/gh config | same |
 
-### 4. Reload shell & open Neovim
-```sh
-source ~/.zshrc
-nvim  # lazy.nvim installs plugins, Mason installs LSPs/formatters on first launch
-```
-First launch also compiles treesitter parsers, which needs the `tree-sitter` CLI (in the Brewfile). Check with `:checkhealth nvim-treesitter`.
+`link` moves anything already in the way (e.g. omarchy's LazyVim `~/.config/nvim`) to
+`~/.dotfiles-backup/<timestamp>/` before stowing, and drops broken symlinks. Re-running is safe.
 
-## Main Configs
-- `dotfiles/.config/nvim/` — Neovim (see below)
-- `dotfiles/.zshrc`, `dotfiles/.tmux.conf`, `dotfiles/.config/aerospace/`
-- `Brewfile` — all brew/cask packages
-- `install-files/` — install scripts
-- `.tool-versions` — runtimes managed by [mise](./docs/mise.md)
+Then open a new shell and run `nvim` — lazy.nvim installs plugins, Mason installs
+LSPs/formatters, treesitter compiles parsers (`:checkhealth nvim-treesitter`).
+
+## Layout
+
+```
+install.sh                   # entry point: detects OS, runs steps
+install/
+  lib.sh                     # logging, OS detection, backup-before-stow
+  common/  mise.sh shell.sh git.sh
+  macos/   packages.sh Brewfile
+  omarchy/ packages.sh packages.txt
+dotfiles/                    # stow packages, each mirrors $HOME
+  common/  .zshrc .tmux.conf .tool-versions
+           .config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior}
+           .local/bin/tmuxSelector
+  macos/   .config/{aerospace,Karabiner}
+docs/  cursor/               # notes
+```
+
+New config for both OSes goes in `dotfiles/common`, OS-only config in `dotfiles/<os>`.
+Packages go in both the Brewfile and `packages.txt`.
 
 ## Neovim
 
@@ -54,7 +62,7 @@ Lua config on [lazy.nvim](https://github.com/folke/lazy.nvim). One file per conc
 file under `plugins/` is imported automatically, so adding a plugin means adding one file.
 
 ```
-dotfiles/.config/nvim/
+dotfiles/common/.config/nvim/
 ├── init.lua
 └── lua/garbray/
     ├── init.lua      # leader, then options/keymaps/lazy
@@ -102,23 +110,20 @@ Add a server to `lua/garbray/servers.lua` and it is both installed and enabled.
 
 ## Dependencies
 
-Everything brew-installable lives in [`Brewfile`](./Brewfile) — run `brew bundle` to sync.
-Highlights:
+macOS: [`install/macos/Brewfile`](./install/macos/Brewfile). omarchy:
+[`install/omarchy/packages.txt`](./install/omarchy/packages.txt). Highlights:
 
-- **Editor**: neovim, tree-sitter, efm-langserver, stylua (via cargo)
-- **Languages/runtimes**: python, go, lua, luarocks, node, deno, bun, pnpm, openjdk, uv, ninja
-- **Runtime versions**: mise, pinned in `.tool-versions`
-- **Shell/CLI**: zsh-syntax-highlighting, zsh-autosuggestions, fzf, tmux, ripgrep, eza, z, peco, htop, lazygit, ranger, just, csvlens, trash-cli
-- **Window management**: aerospace, yabai, skhd, borders
+- **Editor**: neovim, tree-sitter-cli
+- **Languages/runtimes**: python, go, lua, luarocks, node, deno, bun, pnpm, openjdk, uv
+- **Runtime versions**: mise, from `~/.tool-versions` (linked from `dotfiles/common`)
+- **Shell/CLI**: zsh, zsh-syntax-highlighting, zsh-autosuggestions, fzf, tmux, ripgrep, eza, z, htop, lazygit, ranger, just, csvlens, trash-cli
+- **Music**: [cliamp](https://github.com/bjarneo/cliamp)
+- **Window management (macOS)**: aerospace, borders
 - **Terminals**: ghostty, kitty
-- **Utils**: jq, xh, curlie, ffmpeg, imagemagick, webp, yt-dlp, act, turso, taskwarrior-tui, tidy-html5, ascii-image-converter
-- **Apps**: firefox, zen-browser, raycast, numi, keycastr
-- **Font**: FiraCode Nerd Font
+- **Utils**: jq, xh, curlie, ffmpeg, imagemagick, yt-dlp, act, taskwarrior-tui
 
-Not from brew: oh-my-zsh and fzf key bindings (`install_shell_tools.sh`), mise +
-`pynvim`/`black`/`flake8` + the `neovim` npm bridge (`install_dev_tools.sh`), stylua
-(`install_neovim.sh`). Language servers are **not** installed globally — Mason handles them
-inside Neovim.
+Not from a package manager: oh-my-zsh, mise on macOS (`curl mise.run`). Language servers,
+formatters (stylua, black, …) and debug adapters are installed by Mason inside Neovim.
 
 ## Keyboard Speed (macOS)
 Settings → Accessibility → Keyboard → Key repeat → fast
@@ -143,5 +148,4 @@ Host alias
 - [docs/commands.md](./docs/commands.md) — command notes
 - [docs/mise.md](./docs/mise.md) — runtime version management
 - [docs/task-warrior.md](./docs/task-warrior.md) — taskwarrior setup
-- [tmux/README.md](./tmux/README.md) — tmux usage
 - [cursor/config.md](./cursor/config.md) — VSCode/Cursor keybindings
