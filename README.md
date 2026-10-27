@@ -125,12 +125,13 @@ dotfiles/common/.config/nvim/
         ├── colorscheme.lua  # rose-pine + transparency
         ├── completion.lua   # blink.cmp
         ├── dap.lua          # nvim-dap, adapters, UI
-        ├── editor.lua       # flash, surround, autopairs, sleuth, undotree, todo-comments
+        ├── editor.lua       # flash, surround, autopairs, sleuth, undotree, todo-comments, persistence
         ├── format.lua       # conform.nvim
         ├── git.lua          # gitsigns, fugitive
         ├── lang.lua         # prisma, render-markdown
+        ├── lint.lua         # nvim-lint (markdownlint)
         ├── lsp.lua          # Mason, lspconfig, trouble, goto-preview
-        ├── navigation.lua   # harpoon
+        ├── navigation.lua   # oil, harpoon
         ├── personal.lua     # simple-term
         ├── treesitter.lua   # nvim-treesitter (main branch) + autotag
         └── ui.lua           # lualine, snacks, noice, which-key, pickers
@@ -141,6 +142,7 @@ to list everything; `<leader>?` shows buffer-local maps.
 
 | Keys | |
 |---|---|
+| `-` / `<leader>pv` | file explorer (oil) — see [Oil](#oil-file-explorer) |
 | `<leader>pf` / `<C-p>` / `<leader>ps` | find files / git files / grep prompt |
 | `<leader>S…` | full picker namespace — `Sf` files, `Sg` live grep, `Sb` buffers, `Sk` keymaps, `Sq` quickfix, `Sp` all pickers |
 | `<leader>t1`-`t4`, `<leader>ST` | terminals 1-4 (per project), pick an open terminal |
@@ -157,6 +159,48 @@ Pickers, notifications, dashboard, terminal and scratch buffers all come from
 
 LSP servers, formatters, linters and debug adapters are installed by Mason.
 Add a server to `lua/garbray/servers.lua` and it is both installed and enabled.
+
+### Oil (file explorer)
+
+[oil.nvim](https://github.com/stevearc/oil.nvim) replaces netrw. A directory is a normal
+buffer with one line per file: you change the filesystem by editing text, then `:w`.
+
+Open it with `-` (directory of the current file; press again to go up), `<leader>pv`, or
+`nvim .` / `:e some/dir`.
+
+| Do this | In oil | Was (netrw) |
+|---|---|---|
+| open file / enter dir | `<CR>` | `<CR>` |
+| go up a directory | `-` | `-` |
+| new file | `o`, type `name.lua`, `:w` | `%` |
+| new directory | `o`, type `name/`, `:w` | `d` |
+| rename | edit the line (`cw`, `ciw`…), `:w` | `R` |
+| delete | `dd`, `:w` | `D` |
+| move | `dd` here, `p` in another oil buffer, `:w` | mark + `mm` |
+| copy | `yy` here, `p` in another oil buffer, `:w` | mark + `mc` |
+| refresh | `gR` | `<C-l>` |
+
+Nothing touches the disk until `:w`; oil then lists the changes and asks to confirm. Undo
+(`u`) or close the buffer to throw edits away. Batch work is plain vim: `:%s/foo/bar/`
+renames many files, `dj` deletes two, a macro can rename a whole directory. Nested paths
+work too: `o` then `a/b/c.lua` creates both directories and the file.
+
+Other keys inside oil (`g?` lists them all):
+
+| Keys | |
+|---|---|
+| `<C-s>` / `<C-x>` / `<C-t>` | open in vertical split / horizontal split / tab |
+| `<C-p>` | preview file under cursor |
+| `_` | jump to cwd |
+| `` ` `` | `:cd` into the directory |
+| `gs` | change sort |
+| `g.` | toggle hidden files (shown by default) |
+| `gx` | open with the system app |
+| `<C-c>` | close oil |
+| `<leader>AS` | add file to Claude Code |
+
+`<C-h>` and `<C-l>` stay on harpoon inside oil, so horizontal split is `<C-x>` and refresh is
+`gR` instead of oil's defaults. Deleted files are removed for good, not sent to the trash.
 
 ## Dependencies
 
