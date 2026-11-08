@@ -241,5 +241,6 @@ Host alias
 - [CLAUDE.md](./CLAUDE.md) — repo structure and commands
 - [docs/commands.md](./docs/commands.md) — command notes
 - [docs/mise.md](./docs/mise.md) — runtime version management
-- [docs/task-warrior.md](./docs/task-warrior.md) — taskwarrior setup
+- [docs/task-warrior.md](./docs/task-warrior.md) — taskwarrior cheat sheet
+- [docs/task-warrior-sync.md](./docs/task-warrior-sync.md) — taskwarrior LAN sync server
 - [cursor/config.md](./cursor/config.md) — VSCode/Cursor keybindings

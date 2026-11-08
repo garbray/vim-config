@@ -1,3 +1,8 @@
 news.version=3.4.1
 
-data.location=~/.config/task-warrior
+# Data stays local per machine; machines share tasks via the sync server.
+data.location=~/.local/share/task
+
+# Machine-local sync settings (server url, client id, encryption secret).
+# Created by install/common/taskwarrior.sh; see docs/task-warrior-sync.md.
+include ~/.local/share/task/sync.rc

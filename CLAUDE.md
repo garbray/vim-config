@@ -11,13 +11,15 @@ installation automation for macOS and omarchy (Arch + Hyprland).
 
 - `install.sh` - single entry point: detects OS (`macos` | `omarchy`), runs `packages`, `link`, `setup`
 - `install/lib.sh` - logging, OS detection, backup of conflicting files before stow
-- `install/common/` - cross-OS steps: `mise.sh`, `shell.sh` (oh-my-zsh, chsh), `git.sh`
+- `install/common/` - cross-OS steps: `mise.sh`, `shell.sh` (oh-my-zsh, chsh), `git.sh`,
+  `taskwarrior.sh` (local data dir, sync.rc, sync cron)
 - `install/macos/` - `packages.sh` + `Brewfile`
 - `install/omarchy/` - `packages.sh` + `packages.txt` (installed with `yay -S --needed`)
 - `dotfiles/common/` - stow package mirroring `$HOME`, used on every OS: `.zshrc`,
   `.tmux.conf`, `.tool-versions`, `.config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior}`,
-  `.local/bin/tmuxSelector`
+  `.local/bin/{tmuxSelector,task-sync}`
 - `dotfiles/macos/` - macOS-only stow package: aerospace, Karabiner
+- `server/taskchampion/` - docker compose for the LAN taskwarrior sync server
 - `docs/`, `cursor/` - notes
 
 Conventions:

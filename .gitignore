@@ -125,3 +125,7 @@ session
 # karabiner
 dotfiles/.config/Karabiner
 
+
+# taskwarrior: data lives in ~/.local/share/task, synced via server
+dotfiles/common/.config/task-warrior/*.sqlite3*
+server/taskchampion/.env

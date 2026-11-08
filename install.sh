@@ -3,7 +3,7 @@
 #
 #   packages  OS packages (Homebrew on macOS, pacman/yay on omarchy)
 #   link      stow dotfiles/common + dotfiles/<os> into $HOME
-#   setup     runtimes (mise), shell (oh-my-zsh), git
+#   setup     runtimes (mise), shell (oh-my-zsh), git, taskwarrior
 #   all       the three above, in that order (default)
 set -euo pipefail
 
@@ -34,7 +34,7 @@ link() {
 }
 
 setup() {
-    for step in mise shell git; do
+    for step in mise shell git taskwarrior; do
         bash "$REPO/install/common/$step.sh"
     done
 }

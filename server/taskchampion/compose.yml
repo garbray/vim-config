@@ -1,0 +1,17 @@
+# Taskwarrior sync server for the LAN. Copy this dir to the server, then:
+#   echo "CLIENT_ID=<uuid>" > .env && docker compose up -d
+# See docs/task-warrior-sync.md.
+services:
+  taskchampion:
+    image: ghcr.io/gothenburgbitfactory/taskchampion-sync-server:0.7
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      RUST_LOG: info
+      CLIENT_ID: ${CLIENT_ID:?set CLIENT_ID in .env}
+    volumes:
+      - data:/var/lib/taskchampion-sync-server/data
+
+volumes:
+  data:
