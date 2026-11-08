@@ -5,16 +5,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Repository Overview
 
 Personal development environment configuration: Neovim as an IDE, dotfiles, and
-installation automation for macOS and omarchy (Arch + Hyprland).
+installation automation for macOS, omarchy (Arch + Hyprland) and Ubuntu desktop.
 
 ## Layout
 
-- `install.sh` - single entry point: detects OS (`macos` | `omarchy`), runs `packages`, `link`, `setup`
+- `install.sh` - single entry point: detects OS (`macos` | `omarchy` | `ubuntu`), runs `packages`, `link`, `setup`
 - `install/lib.sh` - logging, OS detection, backup of conflicting files before stow
 - `install/common/` - cross-OS steps: `mise.sh`, `shell.sh` (oh-my-zsh, chsh), `git.sh`,
   `taskwarrior.sh` (local data dir, sync.rc, sync cron)
 - `install/macos/` - `packages.sh` + `Brewfile`
 - `install/omarchy/` - `packages.sh` + `packages.txt` (installed with `yay -S --needed`)
+- `install/ubuntu/` - `packages.sh` + `apt.txt` (base) + `Brewfile` (Homebrew on Linux,
+  CLI tools); ghostty via snap, Nerd Font downloaded
 - `dotfiles/common/` - stow package mirroring `$HOME`, used on every OS: `.zshrc`,
   `.tmux.conf`, `.tool-versions`, `.config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior}`,
   `.local/bin/{tmuxSelector,task-sync}`
@@ -24,9 +26,10 @@ installation automation for macOS and omarchy (Arch + Hyprland).
 
 Conventions:
 - Config for every OS goes in `dotfiles/common`; OS-only config in `dotfiles/<os>`.
-  A `dotfiles/omarchy` package is picked up automatically if created.
-- A new package goes in both `install/macos/Brewfile` and `install/omarchy/packages.txt`.
-- `.zshrc` must work on both OSes: probe paths (`/opt/homebrew/...` vs `/usr/share/...`)
+  A `dotfiles/omarchy` or `dotfiles/ubuntu` package is picked up automatically if created.
+- A new package goes in `install/macos/Brewfile`, `install/omarchy/packages.txt` and
+  `install/ubuntu/Brewfile` (or `apt.txt` for GUI/system packages).
+- `.zshrc` must work on every OS: probe paths (`/opt/homebrew/...`, `/home/linuxbrew/.linuxbrew/...`, `/usr/share/...`)
   or branch on `$OSTYPE`; never hardcode a Homebrew path unguarded.
 - Install scripts are bash (`#!/usr/bin/env bash`, `set -euo pipefail`), get `$REPO` from
   `install.sh`, and must be idempotent.

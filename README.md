@@ -1,7 +1,7 @@
 # Vim/Neovim IDE Setup
 
-Personal dev env: Neovim + Tmux + zsh dotfiles, one install script for **macOS** and
-**[omarchy](https://omarchy.org)** (Arch + Hyprland).
+Personal dev env: Neovim + Tmux + zsh dotfiles, one install script for **macOS**,
+**[omarchy](https://omarchy.org)** (Arch + Hyprland) and **Ubuntu** desktop.
 
 ## Features
 - Neovim IDE: LSP via Mason, blink.cmp completion, Claude Code integration
@@ -12,13 +12,14 @@ Personal dev env: Neovim + Tmux + zsh dotfiles, one install script for **macOS**
 ## Installation
 
 `./install.sh` detects the OS on its own: macOS from `uname`, omarchy from
-`~/.local/share/omarchy`. Anything else exits with an error. It runs three steps in order:
+`~/.local/share/omarchy`, Ubuntu from `/etc/os-release`. Anything else exits with an
+error. It runs three steps in order:
 
-| Step | macOS | omarchy |
-|---|---|---|
-| `packages` | installs Homebrew if missing, then `brew bundle` from [`Brewfile`](./install/macos/Brewfile) | `yay -S --needed` from [`packages.txt`](./install/omarchy/packages.txt) |
-| `link` | stows `dotfiles/common` + `dotfiles/macos` into `~` | stows `dotfiles/common` into `~` |
-| `setup` | mise runtimes, oh-my-zsh, git/gh config | same, and switches login shell from bash to zsh |
+| Step | macOS | omarchy | Ubuntu |
+|---|---|---|---|
+| `packages` | installs Homebrew if missing, then `brew bundle` from [`Brewfile`](./install/macos/Brewfile) | `yay -S --needed` from [`packages.txt`](./install/omarchy/packages.txt) | `apt-get` from [`apt.txt`](./install/ubuntu/apt.txt), Homebrew on Linux + [`Brewfile`](./install/ubuntu/Brewfile), ghostty (snap), FiraCode Nerd Font |
+| `link` | stows `dotfiles/common` + `dotfiles/macos` into `~` | stows `dotfiles/common` into `~` | same as omarchy |
+| `setup` | mise runtimes, oh-my-zsh, git/gh config, taskwarrior | same, and switches login shell from bash to zsh | same as omarchy |
 
 ### macOS
 
@@ -68,10 +69,26 @@ What changes on omarchy:
 - Hyprland, Waybar, Walker, Alacritty and omarchy themes are not touched.
 - Default shell changes from bash to zsh (oh-my-zsh).
 
+### Ubuntu
+
+Desktop, 25.04 or newer. Base packages come from apt; CLI tools from Homebrew on Linux
+(`/home/linuxbrew/.linuxbrew`), since apt ships an old neovim and taskwarrior 2.x.
+
+1. `sudo apt-get install -y git`
+2. Clone and run:
+   ```sh
+   git clone https://github.com/garbray/vim-config.git ~/workspace/personal/vim-config
+   cd ~/workspace/personal/vim-config
+   ./install.sh
+   ```
+   `apt`/`snap` ask for your sudo password, `chsh` for your user password.
+3. Log out and back in so zsh becomes the login shell.
+4. Open Ghostty or Kitty, then `gh auth login` and `nvim`.
+
 ### Running one step
 
 ```sh
-./install.sh packages    # after editing Brewfile / packages.txt
+./install.sh packages    # after editing Brewfile / packages.txt / apt.txt
 ./install.sh link        # after adding, moving or removing files in dotfiles/
 ./install.sh setup       # runtimes, shell, git again
 ```
@@ -84,8 +101,8 @@ Every step can be re-run safely. `link` needs `stow`, which the `packages` step 
 |---|---|
 | Change a config | edit it in the repo; `~` already points at it |
 | Add a config for both OSes | put it under `dotfiles/common/` with its path relative to `~`, then `./install.sh link` |
-| Add a config for one OS | same, under `dotfiles/macos/` or `dotfiles/omarchy/` (created when needed, picked up automatically) |
-| Add a package | add it to both `install/macos/Brewfile` and `install/omarchy/packages.txt`, then `./install.sh packages` |
+| Add a config for one OS | same, under `dotfiles/macos/`, `dotfiles/omarchy/` or `dotfiles/ubuntu/` (created when needed, picked up automatically) |
+| Add a package | add it to `install/macos/Brewfile`, `install/omarchy/packages.txt` and `install/ubuntu/Brewfile` (or `apt.txt`), then `./install.sh packages` |
 | Change a runtime version | edit `dotfiles/common/.tool-versions`, then `mise install` |
 | Machine-only secrets / env vars | `~/.localenv` (sourced by `.zshrc`, not in the repo) |
 
@@ -95,13 +112,14 @@ Every step can be re-run safely. `link` needs `stow`, which the `packages` step 
 install.sh                   # entry point: detects OS, runs steps
 install/
   lib.sh                     # logging, OS detection, backup-before-stow
-  common/  mise.sh shell.sh git.sh
+  common/  mise.sh shell.sh git.sh taskwarrior.sh
   macos/   packages.sh Brewfile
   omarchy/ packages.sh packages.txt
+  ubuntu/  packages.sh apt.txt Brewfile
 dotfiles/                    # stow packages, each mirrors $HOME
   common/  .zshrc .tmux.conf .tool-versions
            .config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior}
-           .local/bin/tmuxSelector
+           .local/bin/{tmuxSelector,task-sync}
   macos/   .config/{aerospace,Karabiner}
 docs/  cursor/               # notes
 ```
@@ -205,7 +223,9 @@ Other keys inside oil (`g?` lists them all):
 ## Dependencies
 
 macOS: [`install/macos/Brewfile`](./install/macos/Brewfile). omarchy:
-[`install/omarchy/packages.txt`](./install/omarchy/packages.txt). Highlights:
+[`install/omarchy/packages.txt`](./install/omarchy/packages.txt). Ubuntu:
+[`install/ubuntu/apt.txt`](./install/ubuntu/apt.txt) +
+[`install/ubuntu/Brewfile`](./install/ubuntu/Brewfile). Highlights:
 
 - **Editor**: neovim, tree-sitter-cli
 - **Languages/runtimes**: python, go, lua, luarocks, node, deno, bun, pnpm, openjdk, uv

@@ -3,7 +3,7 @@
 # Called from cron (see install/common/taskwarrior.sh); safe to run by hand.
 set -euo pipefail
 
-export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+export PATH="/opt/homebrew/bin:/home/linuxbrew/.linuxbrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
 export TASKRC="${TASKRC:-$HOME/.config/task-warrior/.taskrc}"
 
 grep -q '^sync\.server\.url=' "$HOME/.local/share/task/sync.rc" 2>/dev/null || exit 0

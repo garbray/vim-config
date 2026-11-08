@@ -8,12 +8,14 @@ RESET="\033[0m"
 log() { printf "${GREEN}==>${RESET} %s\n" "$*"; }
 warn() { printf "${YELLOW}warn:${RESET} %s\n" "$*" >&2; }
 
-# macos | omarchy | unsupported
+# macos | omarchy | ubuntu | unsupported
 detect_os() {
     if [[ "$(uname -s)" == "Darwin" ]]; then
         echo macos
     elif [[ -d "$HOME/.local/share/omarchy" ]]; then
         echo omarchy
+    elif [[ -r /etc/os-release ]] && grep -q '^ID=ubuntu$' /etc/os-release; then
+        echo ubuntu
     else
         echo unsupported
     fi

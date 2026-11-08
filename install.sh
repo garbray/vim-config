@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Usage: ./install.sh [all|packages|link|setup]
 #
-#   packages  OS packages (Homebrew on macOS, pacman/yay on omarchy)
+#   packages  OS packages (Homebrew on macOS, yay on omarchy, apt + Homebrew on ubuntu)
 #   link      stow dotfiles/common + dotfiles/<os> into $HOME
 #   setup     runtimes (mise), shell (oh-my-zsh), git, taskwarrior
 #   all       the three above, in that order (default)
@@ -12,7 +12,7 @@ export REPO
 source "$REPO/install/lib.sh"
 
 OS="$(detect_os)"
-[[ "$OS" == unsupported ]] && { warn "only macOS and omarchy are supported"; exit 1; }
+[[ "$OS" == unsupported ]] && { warn "only macOS, omarchy and ubuntu are supported"; exit 1; }
 log "detected $OS"
 
 packages() {

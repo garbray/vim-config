@@ -1,3 +1,6 @@
+# Homebrew on Linux (ubuntu); on macOS ~/.zprofile does this
+[ -x /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 # tmuxSelector and mise live here
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -58,14 +61,15 @@ export BAT_THEME="gruvbox"
 
 # =============== shell plugins ========================
 
-# first match wins: homebrew (macOS), then arch (omarchy)
+# first match wins: homebrew (macOS), linuxbrew (ubuntu), then arch (omarchy)
 for f in \
   /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
+  /home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
   /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh; do
   [ -f "$f" ] && source "$f" && break
 done
 bindkey '^\' autosuggest-execute
-for f in /opt/homebrew/etc/profile.d/z.sh /usr/share/z/z.sh; do
+for f in /opt/homebrew/etc/profile.d/z.sh /home/linuxbrew/.linuxbrew/etc/profile.d/z.sh /usr/share/z/z.sh; do
   [ -f "$f" ] && source "$f" && break
 done
 command -v fzf >/dev/null && source <(fzf --zsh)
@@ -121,6 +125,7 @@ if [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/D
 # must be sourced last so it wraps every widget defined above
 for f in \
   /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
   /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh; do
   [ -f "$f" ] && source "$f" && break
 done
