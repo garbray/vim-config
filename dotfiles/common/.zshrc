@@ -117,6 +117,8 @@ alias lg="lazygit"
 
 # Load localenv variables
 [ -f "$HOME/.localenv" ] && source "$HOME/.localenv"
+# gh account per directory (needs GH_WORK_USER from .localenv)
+[ -f "$HOME/.config/zsh/ghAccount" ] && source "$HOME/.config/zsh/ghAccount"
 
 # Google Cloud SDK
 if [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"; fi

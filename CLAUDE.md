@@ -18,7 +18,7 @@ installation automation for macOS, omarchy (Arch + Hyprland) and Ubuntu desktop.
 - `install/ubuntu/` - `packages.sh` + `apt.txt` (base) + `Brewfile` (Homebrew on Linux,
   CLI tools); ghostty via snap, Nerd Font downloaded
 - `dotfiles/common/` - stow package mirroring `$HOME`, used on every OS: `.zshrc`,
-  `.tmux.conf`, `.tool-versions`, `.config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior}`,
+  `.tmux.conf`, `.tool-versions`, `.config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior,git-accounts}`,
   `.local/bin/{tmuxSelector,task-sync}`
 - `dotfiles/macos/` - macOS-only stow package: aerospace, Karabiner
 - `server/taskchampion/` - docker compose for the LAN taskwarrior sync server

@@ -85,6 +85,28 @@ Desktop, 25.04 or newer. Base packages come from apt; CLI tools from Homebrew on
 3. Log out and back in so zsh becomes the login shell.
 4. Open Ghostty or Kitty, then `gh auth login` and `nvim`.
 
+### GitHub accounts (personal + work)
+
+Git author, ssh key and `gh` account follow the directory: work under
+`~/workspace/work/`, personal everywhere else. Details:
+[docs/github-accounts.md](./docs/github-accounts.md).
+
+1. Log in to both accounts in gh (it keeps both):
+   ```sh
+   gh auth login     # personal
+   gh auth login     # work
+   ```
+2. Make one ssh key per account, add each public key to its GitHub account, and in
+   `~/.ssh/config` set `Host github.com` with `IdentitiesOnly yes` and no `IdentityFile`.
+3. Run `./install.sh setup`. It asks for the work email and work ssh key and writes
+   them to `~/.config/git/work.gitconfig` (not in the repo).
+4. Add `export GH_WORK_USER=<work-github-user>` to `~/.localenv`, then open a new terminal.
+5. Clone work repos into `~/workspace/work/`. Check from inside a repo:
+   ```sh
+   git config user.email && gh api user -q .login
+   ```
+6. One-off override in the current shell: `ghw` (work), `ghp` (personal), `gha` (back to automatic).
+
 ### Running one step
 
 ```sh
@@ -118,7 +140,7 @@ install/
   ubuntu/  packages.sh apt.txt Brewfile
 dotfiles/                    # stow packages, each mirrors $HOME
   common/  .zshrc .tmux.conf .tool-versions
-           .config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior}
+           .config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior,git-accounts}
            .local/bin/{tmuxSelector,task-sync}
   macos/   .config/{aerospace,Karabiner}
 docs/  cursor/               # notes
@@ -263,4 +285,5 @@ Host alias
 - [docs/mise.md](./docs/mise.md) — runtime version management
 - [docs/task-warrior.md](./docs/task-warrior.md) — taskwarrior cheat sheet
 - [docs/task-warrior-sync.md](./docs/task-warrior-sync.md) — taskwarrior LAN sync server
+- [docs/github-accounts.md](./docs/github-accounts.md) — personal/work GitHub accounts
 - [cursor/config.md](./cursor/config.md) — VSCode/Cursor keybindings
