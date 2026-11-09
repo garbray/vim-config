@@ -5,7 +5,7 @@ Personal dev env: Neovim + Tmux + zsh dotfiles, one install script for **macOS**
 
 ## Features
 - Neovim IDE: LSP via Mason, blink.cmp completion, Claude Code integration
-- Tmux session management via `tmuxSelector`
+- Tmux session management via `projectSelector`
 - macOS: Aerospace tiling. omarchy: keeps its own Hyprland setup
 - Dotfiles as GNU Stow packages, per-OS package lists
 
@@ -140,7 +140,7 @@ install/
 dotfiles/                    # stow packages, each mirrors $HOME
   common/  .zshrc .tmux.conf .tool-versions
            .config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior,git-accounts}
-           .local/bin/{tmuxSelector,task-sync}
+           .local/bin/{projectSelector,task-sync}
   macos/   .config/{aerospace,Karabiner}
 docs/  cursor/               # notes
 ```

@@ -1,7 +1,7 @@
 # Homebrew on Linux (ubuntu); on macOS ~/.zprofile does this
 [ -x /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# tmuxSelector and mise live here
+# projectSelector and mise live here
 export PATH="$HOME/.local/bin:$PATH"
 
 # deactivate magic functions
