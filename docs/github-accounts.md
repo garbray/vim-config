@@ -35,16 +35,24 @@ Work email, work key name and work username stay out of this repo because it is 
 
 ## Setup on a machine
 
-1. Both GitHub logins in gh (keyring):
+`./install.sh setup` (or just this step: `REPO=$PWD bash install/common/git.sh`) does
+everything it can. Run it in a terminal; it prompts, and only warns when not
+interactive. Safe to re-run: it skips what is already done.
 
-   ```bash
-   gh auth login                 # personal
-   gh auth login                 # work, again; gh keeps both
-   gh auth status                # lists both accounts
-   ```
+| Does | Prompts / writes |
+|------|------------------|
+| `~/.gitconfig` includes | personal default + `includeIf` for `~/workspace/work/` |
+| work identity | work email + work ssh key -> `~/.config/git/work.gitconfig` |
+| gh hook user | work github username -> `GH_WORK_USER` in `~/.localenv` |
+| gh logins | runs `gh auth login --web` for each account not logged in |
+| old setup | removes `gh personal`/`gh work` aliases, offers to delete `hosts.yml.*` snapshots |
+| checks | ssh keys exist, `IdentitiesOnly yes` for `Host github.com` |
 
-2. SSH keys: one per account, each public key added to its GitHub account
-   (Settings -> SSH and GPG keys). `~/.ssh/config`:
+Manual, the script can't do it:
+
+1. SSH keys: one per account, each public key added to its GitHub account
+   (Settings -> SSH and GPG keys).
+2. `~/.ssh/config` (the script only checks it):
 
    ```sshconfig
    Host github.com
@@ -61,18 +69,9 @@ Work email, work key name and work username stay out of this repo because it is 
        IdentitiesOnly yes
    ```
 
-3. `./install.sh setup` (or `REPO=$PWD bash install/common/git.sh`). It asks for the work
-   email and key and writes `~/.config/git/work.gitconfig`:
-
-   ```ini
-   [user]
-   	email = you@company.com
-   [core]
-   	sshCommand = ssh -i ~/.ssh/<work-key> -o IdentitiesOnly=yes
-   ```
-
-4. Add `export GH_WORK_USER=<work-github-user>` to `~/.localenv`, open a new shell.
-5. Keep work repos under `~/workspace/work/`.
+3. If old `hosts.yml.*` snapshots existed: revoke their tokens at
+   <https://github.com/settings/applications>.
+4. Open a new shell, keep work repos under `~/workspace/work/`.
 
 ## Check
 

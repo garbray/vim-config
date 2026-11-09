@@ -91,16 +91,12 @@ Git author, ssh key and `gh` account follow the directory: work under
 `~/workspace/work/`, personal everywhere else. Details:
 [docs/github-accounts.md](./docs/github-accounts.md).
 
-1. Log in to both accounts in gh (it keeps both):
-   ```sh
-   gh auth login     # personal
-   gh auth login     # work
-   ```
-2. Make one ssh key per account, add each public key to its GitHub account, and in
-   `~/.ssh/config` set `Host github.com` with `IdentitiesOnly yes` and no `IdentityFile`.
-3. Run `./install.sh setup`. It asks for the work email and work ssh key and writes
-   them to `~/.config/git/work.gitconfig` (not in the repo).
-4. Add `export GH_WORK_USER=<work-github-user>` to `~/.localenv`, then open a new terminal.
+1. Make one ssh key per account and add each public key to its GitHub account.
+2. In `~/.ssh/config`, set `Host github.com` with `IdentitiesOnly yes` and no `IdentityFile`.
+3. Run `./install.sh setup` in a terminal. It prompts for the work email, work ssh key and
+   work GitHub username, logs in to any gh account missing (browser), removes the old
+   setup and warns about anything still wrong. Re-run it until it prints no warnings.
+4. Open a new terminal.
 5. Clone work repos into `~/workspace/work/`. Check from inside a repo:
    ```sh
    git config user.email && gh api user -q .login
