@@ -2,10 +2,11 @@
 set -euo pipefail
 source "$REPO/install/lib.sh"
 
-if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+# check the entry file, not the dir: a failed clone leaves a partial dir behind
+if [[ ! -f "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]]; then
     log "installing oh-my-zsh"
-    # KEEP_ZSHRC: ~/.zshrc is already our symlink
-    KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    rm -rf "$HOME/.oh-my-zsh"
+    git clone --depth 1 https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
 fi
 
 # omarchy and ubuntu default to bash
