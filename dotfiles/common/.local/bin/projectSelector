@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# tmuxSelector — fuzzy project/session switcher for tmux
+# projectSelector — fuzzy project/session switcher for tmux
 #
 # Usage:
-#   tmuxSelector              interactive picker
-#   tmuxSelector <path>       open that directory
-#   tmuxSelector <name>       jump to existing session by name
+#   projectSelector              interactive picker
+#   projectSelector <path>       open that directory
+#   projectSelector <name>       jump to existing session by name
 #
 # Keys inside the picker:
 #   enter    open / switch     ctrl-x  kill session under cursor
@@ -110,11 +110,11 @@ if [[ $# -ge 1 ]]; then
   elif has_session "$(sanitize "$1")"; then
     session=$(sanitize "$1")
   else
-    echo "tmuxSelector: no such directory or session: $1" >&2
+    echo "projectSelector: no such directory or session: $1" >&2
     exit 1
   fi
 else
-  command -v fzf >/dev/null 2>&1 || { echo "tmuxSelector: fzf not installed" >&2; exit 1; }
+  command -v fzf >/dev/null 2>&1 || { echo "projectSelector: fzf not installed" >&2; exit 1; }
   self="${BASH_SOURCE[0]}"
   [[ "$self" == /* ]] || self="$PWD/$self"
   pick=$(build_list | fzf \

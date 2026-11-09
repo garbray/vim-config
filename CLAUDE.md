@@ -19,7 +19,7 @@ installation automation for macOS, omarchy (Arch + Hyprland) and Ubuntu desktop.
   CLI tools); ghostty via snap, Nerd Font downloaded
 - `dotfiles/common/` - stow package mirroring `$HOME`, used on every OS: `.zshrc`,
   `.tmux.conf`, `.tool-versions`, `.config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior,git-accounts}`,
-  `.local/bin/{tmuxSelector,task-sync}`
+  `.local/bin/{projectSelector,task-sync}`
 - `dotfiles/macos/` - macOS-only stow package: aerospace, Karabiner
 - `server/taskchampion/` - docker compose for the LAN taskwarrior sync server
 - `docs/`, `cursor/` - notes
@@ -42,7 +42,7 @@ Conventions:
 ./install.sh packages        # sync packages after editing Brewfile / packages.txt
 ./install.sh git             # one setup step (mise|shell|git|taskwarrior)
 ./install.sh git --check     # test personal/work GitHub accounts
-tmuxSelector                 # tmux session selector
+projectSelector              # tmux session selector
 mise install                 # sync runtimes after editing .tool-versions
 ```
 
