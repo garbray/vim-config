@@ -12,6 +12,54 @@ localenv="$HOME/.localenv"
 
 work_user() { sed -n 's/^export GH_WORK_USER=//p' "$localenv" 2>/dev/null | tail -1; }
 
+# ensure_key <personal|work> <github user>
+# ~/.ssh/github_<account>: link an existing key or generate one, then make sure
+# its public half is on that GitHub account.
+ensure_key() {
+    local acct=$1 user=$2 key="$HOME/.ssh/github_$1" src="" token pub ans=y
+    mkdir -p "$HOME/.ssh" && chmod 700 "$HOME/.ssh"
+    if [[ ! -e "$key" ]]; then
+        if [[ ! -t 0 ]]; then
+            warn "no $key: run ./install.sh git in a terminal"
+            return 0
+        fi
+        log "ssh key for $acct${user:+ ($user)} -> $key"
+        find "$HOME/.ssh" -maxdepth 1 -name '*.pub' ! -name 'github_*' | sed 's/\.pub$//; s|^|  |'
+        read -rp "existing $acct private key to reuse (blank = generate new): " src
+        if [[ -n "$src" ]]; then
+            src="${src/#\~/$HOME}"
+            if [[ ! -f "$src" || ! -f "$src.pub" ]]; then
+                warn "$src or $src.pub not found; skipped $acct key"
+                return 0
+            fi
+            ln -s "$src" "$key"
+            ln -s "$src.pub" "$key.pub"
+            log "linked $key -> $src"
+        else
+            ssh-keygen -t ed25519 -C "github_$acct $(hostname -s)" -f "$key"
+        fi
+    fi
+
+    [[ -n "$user" ]] || return 0
+    if ! token="$(gh auth token --user "$user" 2>/dev/null)"; then
+        warn "gh not logged in as $user; can't check $key.pub on GitHub"
+        return 0
+    fi
+    pub="$(awk '{print $2}' "$key.pub")"
+    GH_TOKEN=$token gh api user/keys -q '.[].key' 2>/dev/null | grep -qF "$pub" && return 0
+    if [[ -t 0 ]]; then
+        read -rp "add $key.pub to GitHub user $user? [Y/n] " ans
+    else
+        ans=n
+    fi
+    if [[ "$ans" != [nN]* ]]; then
+        GH_TOKEN=$token gh ssh-key add "$key.pub" --title "$(hostname -s) github_$acct" ||
+            warn "upload failed (key already on another account?)"
+    else
+        warn "$key.pub is not on GitHub user $user"
+    fi
+}
+
 setup() {
     log "configuring git"
     git config --global core.editor "nvim"
@@ -27,24 +75,22 @@ setup() {
     # shellcheck disable=SC2088
     git config --global "includeIf.gitdir:~/workspace/work/.path" "~/.config/git-accounts/work.gitconfig"
 
-    # machine-local work identity, kept out of this public repo
+    # machine-local work email, kept out of this public repo
     if [[ ! -e "$local_work" ]]; then
         mkdir -p "$(dirname "$local_work")"
-        email="" key=""
-        if [[ -t 0 ]]; then
-            read -rp "work git email (blank to skip): " email
-            if [[ -n "$email" ]]; then
-                ls ~/.ssh/*.pub 2>/dev/null | sed 's/\.pub$//; s|^|  |'
-                read -rp "work ssh private key (path from the list above): " key
-            fi
-        fi
-        if [[ -n "$email" && -n "$key" ]]; then
-            printf '[user]\n\temail = %s\n[core]\n\tsshCommand = ssh -i %s -o IdentitiesOnly=yes\n' \
-                "$email" "$key" >"$local_work"
+        email=""
+        [[ -t 0 ]] && read -rp "work git email (blank to skip): " email
+        if [[ -n "$email" ]]; then
+            printf '[user]\n\temail = %s\n' "$email" >"$local_work"
             log "wrote $local_work"
         else
-            warn "no work identity: create $local_work (docs/github-accounts.md)"
+            warn "no work email: create $local_work (docs/github-accounts.md)"
         fi
+    fi
+    # the key path is standard now and set in the repo's work.gitconfig
+    if git config -f "$local_work" core.sshCommand >/dev/null 2>&1; then
+        git config -f "$local_work" --unset core.sshCommand
+        log "dropped core.sshCommand from $local_work (now ~/.ssh/github_work)"
     fi
 
     # work github user for the ghAccount zsh hook, machine-local
@@ -70,6 +116,9 @@ setup() {
             warn "gh not logged in as $user: run gh auth login"
         fi
     done
+
+    ensure_key personal "$PERSONAL_USER"
+    ensure_key work "$(work_user)"
 
     # old hosts.yml-copy aliases broke multi-account gh; ghAccount replaces them
     for a in personal work; do
@@ -139,11 +188,6 @@ check() {
     log "ssh config"
     # any IdentityFile under Host github.com is offered by ssh-agent before the
     # per-account key, so GitHub may log you in as the wrong user
-    if ssh -G github.com 2>/dev/null | grep -qx 'identitiesonly yes'; then
-        ok "IdentitiesOnly yes"
-    else
-        bad "add 'IdentitiesOnly yes' under Host github.com"
-    fi
     files="$(ssh -G github.com 2>/dev/null | sed -n 's/^identityfile //p' |
         grep -vE '/\.ssh/id_(rsa|ecdsa|ecdsa_sk|ed25519|ed25519_sk|xmss|dsa)$' || true)"
     if [[ -z "$files" ]]; then

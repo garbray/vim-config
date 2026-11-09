@@ -4,8 +4,8 @@
 
 | Repo lives in | Commits as | Pushes with | `gh` acts as |
 |---------------|------------|-------------|--------------|
-| `~/workspace/work/...` | work email | work ssh key | work user (`GH_WORK_USER`) |
-| anywhere else | personal email | personal ssh key | `garbray` |
+| `~/workspace/work/...` | work email | `~/.ssh/github_work` | work user (`GH_WORK_USER`) |
+| anywhere else | personal email | `~/.ssh/github_personal` | `garbray` |
 
 ## Test it
 
@@ -18,14 +18,13 @@ Good output:
 ```
 ==> personal (expect github user: garbray)
   ✓ commit email: bryangarzonb@gmail.com
-  ✓ ssh key ~/.ssh/id_rsa_personal -> garbray
+  ✓ ssh key ~/.ssh/github_personal -> garbray
   ✓ gh login: garbray
 ==> work (expect github user: <work-user>)
   ✓ commit email: <work email>
-  ✓ ssh key ~/.ssh/<work-key> -> <work-user>
+  ✓ ssh key ~/.ssh/github_work -> <work-user>
   ✓ gh login: <work-user>
 ==> ssh config
-  ✓ IdentitiesOnly yes
   ✓ no IdentityFile under Host github.com
 ==> all good
 ```
@@ -61,16 +60,13 @@ Programs not started from a terminal (GUI apps) use gh's default account:
 
 ## Set up a machine
 
-1. **SSH keys**: one per GitHub account. Add each `.pub` to its account
-   (GitHub -> Settings -> SSH and GPG keys). Skip if already done.
-2. **`~/.ssh/config`**: `Host github.com` must have `IdentitiesOnly yes` and **no
-   `IdentityFile`**:
+1. **`~/.ssh/config`**: `Host github.com` must have **no `IdentityFile`** (or no
+   `Host github.com` block at all). Fine to keep:
 
    ```sshconfig
    Host github.com
        HostName github.com
        User git
-       IdentitiesOnly yes
        AddKeysToAgent yes
        UseKeychain yes     # macOS only; drop on Linux
    ```
@@ -78,32 +74,36 @@ Programs not started from a terminal (GUI apps) use gh's default account:
    Why: ssh-agent offers an `IdentityFile` from here before the key git asks for, and
    GitHub logs you in as the owner of the first key it accepts. Result: personal pushes
    go out as the work user (or the other way round).
-3. **Run the git step** in a terminal (it asks questions):
+2. **Run the git step** in a terminal (it asks questions):
 
    ```bash
    ./install.sh git
    ```
 
-   It asks for, and stores outside this public repo:
-   - work email and work ssh key -> `~/.config/git/work.gitconfig`
-   - work GitHub username -> `export GH_WORK_USER=...` in `~/.localenv`
-   - a browser `gh auth login` for each account not yet logged in
-   - deleting old `~/.config/gh/hosts.yml.*` token snapshots (revoke those tokens at
-     <https://github.com/settings/applications>)
+   It does, skipping whatever is already done:
+   - asks the work email -> `~/.config/git/work.gitconfig` (not in this public repo)
+   - asks the work GitHub username -> `export GH_WORK_USER=...` in `~/.localenv`
+   - browser `gh auth login` for each account not logged in yet
+   - **ssh keys** `~/.ssh/github_personal` and `~/.ssh/github_work`: for each missing
+     one it lists your existing keys and either symlinks the one you name
+     (`github_work -> id_old_name`) or generates a new ed25519 key; then, if the public
+     key is not on that GitHub account yet, uploads it (`gh ssh-key add`)
+   - offers to delete old `~/.config/gh/hosts.yml.*` token snapshots (revoke those
+     tokens at <https://github.com/settings/applications>)
+   - runs the check
+3. Open a new terminal (loads the `gh` hook).
 
-   Then it runs the check.
-4. Open a new terminal (loads the `gh` hook).
-
-Re-run `./install.sh git` any time; it skips what is already done. To redo the work
-identity, delete `~/.config/git/work.gitconfig` and run it again.
+Re-run `./install.sh git` any time. To redo something, delete it and re-run:
+`~/.config/git/work.gitconfig` (work email), `~/.ssh/github_<account>` (+ `.pub`) for a
+key (deleting a symlink leaves the original key alone).
 
 ## Fix
 
 | `✗` says | Fix |
 |----------|-----|
 | `authenticates as '<other user>'` | remove `IdentityFile` under `Host github.com` in `~/.ssh/config` |
-| `authenticates as 'nothing'` | key not added to GitHub, or wrong key path |
-| `ssh key ... does not exist` | wrong path: edit `~/.config/git/work.gitconfig` (work) |
+| `authenticates as 'nothing'` | key not on GitHub: `./install.sh git` uploads it |
+| `ssh key ... does not exist` | `./install.sh git` in a terminal creates or links it |
 | `no commit email` (work) | `~/.config/git/work.gitconfig` missing: `./install.sh git` |
 | `no github user` | `./install.sh git`, or add `export GH_WORK_USER=<user>` to `~/.localenv` |
 | `gh not logged in as <user>` | `gh auth login`, pick that account in the browser |
@@ -123,8 +123,8 @@ Other symptoms:
 - **Commits + pushes**: `~/.gitconfig` includes
   `~/.config/git-accounts/personal.gitconfig` (default), then, for repos under
   `~/workspace/work/`, `work.gitconfig`, which includes the machine-local
-  `~/.config/git/work.gitconfig`. Each sets `user.email` and
-  `core.sshCommand = ssh -i <key> -o IdentitiesOnly=yes`. `insteadOf` turns
+  `~/.config/git/work.gitconfig` (work email only). Each sets `user.email` and
+  `core.sshCommand = ssh -i ~/.ssh/github_<account> -o IdentitiesOnly=yes`. `insteadOf` turns
   `https://github.com/` remotes into ssh (all in work, only `garbray/*` elsewhere), so
   keychain HTTPS credentials never pick the account.
 - **gh**: `~/.config/zsh/ghAccount` runs on every `cd` and exports `GH_TOKEN` for the
@@ -134,10 +134,11 @@ Other symptoms:
 | File | In repo | Holds |
 |------|---------|-------|
 | `dotfiles/common/.config/git-accounts/personal.gitconfig` | yes | personal email, key |
-| `dotfiles/common/.config/git-accounts/work.gitconfig` | yes | https->ssh rewrite, include |
+| `dotfiles/common/.config/git-accounts/work.gitconfig` | yes | work key, https->ssh rewrite, include |
 | `dotfiles/common/.config/zsh/ghAccount` | yes | gh hook, `ghw`/`ghp`/`gha` |
 | `install/common/git.sh` | yes | setup + `--check` |
-| `~/.config/git/work.gitconfig` | no | work email, work key |
+| `~/.config/git/work.gitconfig` | no | work email |
+| `~/.ssh/github_{personal,work}` | no | ssh keys (file or symlink) |
 | `~/.localenv` | no | `GH_WORK_USER` |
 
-Work email, key name and username stay out of the repo because it is public.
+Work email and username stay out of the repo because it is public.

@@ -93,11 +93,11 @@ as work; everything else as personal. Full guide:
 
 **Set up** (once per machine):
 
-1. One ssh key per account, each added to its GitHub account.
-2. `~/.ssh/config`: `Host github.com` with `IdentitiesOnly yes` and **no** `IdentityFile`.
-3. `./install.sh git` in a terminal: asks for work email, work key, work GitHub user,
-   logs in to gh, then checks everything.
-4. Open a new terminal.
+1. `~/.ssh/config`: no `IdentityFile` under `Host github.com`.
+2. `./install.sh git` in a terminal: asks for work email and work GitHub user, logs in
+   to gh, sets up `~/.ssh/github_personal` and `~/.ssh/github_work` (links an existing
+   key or generates one, uploads it to the right account), then checks everything.
+3. Open a new terminal.
 
 **Test**: `./install.sh git --check`. Prints a `✓`/`✗` per item and what to fix.
 

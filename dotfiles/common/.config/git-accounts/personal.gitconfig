@@ -5,7 +5,7 @@
 	email = bryangarzonb@gmail.com
 [core]
 	# pin the key so ssh-agent can't offer the work one first
-	sshCommand = ssh -i ~/.ssh/id_rsa_personal -o IdentitiesOnly=yes
+	sshCommand = ssh -i ~/.ssh/github_personal -o IdentitiesOnly=yes
 # own repos over ssh, so https remotes don't depend on keychain credentials
 [url "git@github.com:garbray/"]
 	insteadOf = https://github.com/garbray/
