@@ -1,165 +1,122 @@
 # Taskwarrior Cheat Sheet
 
-1. **Basic Task Management**:
-   - **Add a Task**: `task add "Write project report" due:2025-04-10 priority:H`
-     - **Tip**: Always include a due date and priority to help prioritize tasks.
-2. **Organizing Tasks**:
+Taskwarrior 3.x. Config: `dotfiles/common/.config/task-warrior/.taskrc`, picked up via
+`TASKRC` in `.zshrc`. Data: `~/.local/share/task` (not in repo). TUI: `taskwarrior-tui`.
+Sync across machines: see
+[task-warrior-sync.md](task-warrior-sync.md).
 
-   - **Use Projects**: `task add "Design homepage" project:Website`
-     - **Tip**: Group related tasks under projects to keep your task list organized.
-   - **Tagging**: `task add "Prepare presentation" +work +urgent`
-     - **Tip**: Use tags to categorize tasks by context or urgency.
+Command shape: `task [filter] <command> [modifications]`. No filter on `modify`/`done`/
+`delete` = Taskwarrior asks to confirm for every task.
 
-3. **Prioritization**:
+## Add
 
-   - **Set Priorities**: `task modify 1 priority:M`
-     - **Tip**: Regularly review and adjust task priorities to reflect changing priorities.
-
-   - **Change Due Date**: `task modify 1 due:2025-08-15`
-     - **Tip**: Modify due dates to adapt to changing deadlines.
-
-   - **Update Tags**: `task modify 1 +urgent -pending`
-     - **Tip**: Add or remove tags to keep tasks better organized.
-
-   - **Edit Description**: `task modify 1 description:"Updated task description"`
-     - **Tip**: Keep task descriptions accurate and up-to-date.
-
-4. **Recurring Tasks**:
-
-   - **Create Recurring Tasks**: `task add "Weekly team meeting" recur:weekly due:friday`
-     - **Tip**: Use recurring tasks for regular activities to ensure they are not forgotten.
-
-5. **Time Tracking**:
-
-   - **Start a Timer**: `task start 1`
-   - **Stop a Timer**: `task stop 1`
-     - **Tip**: Use time tracking to monitor how long tasks take and improve time management.
-
-6. **Task Dependencies**:
-
-   - **Set Dependencies**: `task add "Submit report" depends:2`
-     - **Tip**: Use dependencies to ensure tasks are completed in the correct order.
-
-7. **Marking Tasks as Done**:
-
-   - **Mark a Task as Done**: `task done 1`
-     - **Tip**: Use the `done` command to mark tasks as completed and remove them from your active list.
-     - **Example**: `task done 3` will mark the task with ID 3 as completed.
-
-   - **Batch Mark Tasks as Done**: `task done 3,5,7`
-     - **Tip**: Use commas to mark multiple tasks as done in one command.
-     - **Example**: `task done 2,4` will mark the tasks with IDs 2 and 4 as completed.
-
-7. **Custom Reports**:
-
-   - **Generate Reports**: `task report`
-     - **Tip**: Customize reports to focus on specific projects, tags, or priorities.
-
-8. **Review and Reflect**:
-
-   - **Daily Review**: `task next`
-     - **Tip**: Review your task list daily to plan your day and adjust priorities.
-   - **Weekly Review**: `task summary`
-     - **Tip**: Conduct a weekly review to assess progress and plan for the upcoming week.
-
-9. **Synchronization**:
-
-   - **Sync Tasks**: `task sync`
-     - **Tip**: Use synchronization to keep your tasks updated across multiple devices.
-
-   - **Remote Database Setup**:
-
-     - **Using Remote Database**: Taskwarrior can be configured to use a central, remote Taskserver for synchronization. This allows multiple devices to share and synchronize tasks seamlessly.
-
-### Setting Up a Remote Taskserver
-
-1. **Install Taskserver**:
-   - Install Taskserver on a self-hosted server or use a cloud-based service.
-     - For Linux users: Install using your package manager (e.g., `sudo apt install taskd`).
-     - For macOS users: Install using Homebrew (`brew install taskd`).
-
-2. **Initialize Taskserver**:
-   - Create a directory for Taskserver data:
-     ```bash
-     mkdir -p ~/taskd_data
-     taskd init --data ~/taskd_data
-     ```
-
-3. **Generate Certificates**:
-   - Taskserver requires SSL certificates. Use the `taskdctl` script to generate them:
-     ```bash
-     cd ~/taskd_data/pki
-     ./generate
-     ```
-   - This will create `client.cert.pem`, `client.key.pem`, and `ca.cert.pem` files for the client.
-
-4. **Configure Taskserver**:
-   - Edit the Taskserver configuration file:
-     ```bash
-     taskd config --data ~/taskd_data --set server.address=0.0.0.0:53589
-     taskd config --data ~/taskd_data --set log=/var/log/taskd.log
-     ```
-
-5. **Start Taskserver**:
-   ```bash
-   taskd server --data ~/taskd_data
-   ```
-
-6. **Configure Taskwarrior**:
-   - Update your `.taskrc` file with the following:
-     ```bash
-     taskd.server=SERVER_ADDRESS
-     taskd.credentials=ORGANIZATION/USERNAME/KEY
-     taskd.certificate=/path/to/client.cert.pem
-     taskd.key=/path/to/client.key.pem
-     taskd.ca=/path/to/ca.cert.pem
-     ```
-
-### Hosting Options
-
-You can self-host Taskserver on your own server or use the following services:
-
-- **DigitalOcean**: Provides affordable cloud servers for self-hosting.
-- **AWS EC2**: Offers scalable options for hosting Taskserver.
-- **Linode**: Another popular choice for hosting servers.
-- **Taskserver Hosting by Third Parties**: Some providers offer ready-made Taskserver hosting solutions.
-
-### Practical Examples
-
-1. **Meeting Preparation**:
-   - Add a Task: `task add "Prepare slides for meeting" project:Work due:2025-08-15 +presentation`
-   - Mark as Done: `task done 1`
-   - Update Priority: `task modify 1 priority:H`
-
-2. **Personal Errands**:
-   - Add a Task: `task add "Buy groceries" project:Personal due:2025-08-12 +shopping`
-   - Update Tags: `task modify 2 +urgent`
-   - Mark as Done: `task done 2`
-
-3. **Team Collaboration**:
-   - Add a Task: `task add "Review team report" project:Team due:2025-08-20 +review`
-   - Set Dependencies: `task modify 3 depends:1`
-   - Track Time: `task start 3`, `task stop 3`
-
-By leveraging these examples, users can manage both personal and professional tasks efficiently.
-
-10. **Automation and Scripting**:
-
-    - **Automate Tasks**: Use scripts to automate repetitive task management actions.
-    - **Tip**: Integrate Taskwarrior with other tools using scripts to streamline workflows.
-
-11. **Use Aliases**:
-
-    - **Create Aliases**: `alias t='task'`
-    - **Tip**: Use shell aliases to shorten common Taskwarrior commands for efficiency.
-
-12. **Stay Updated**:
-    - **Regular Updates**: Keep Taskwarrior updated to benefit from new features and improvements.
-
-By following these examples and best practices, you can effectively manage your tasks with Taskwarrior, ensuring that you stay organized, prioritize effectively, and maintain productivity.
-
-s3 sync
-
+```bash
+task add Write project report due:friday priority:H project:work +writing
+task add Pay rent due:eom recur:monthly          # recurring (needs due)
+task add Submit report depends:12                # blocked until 12 done
+task add Renew passport wait:2026-12-01          # hidden until wait date
+task add Call bank scheduled:tomorrow            # "ready" from that date
+task log Fixed the printer                       # add already-completed task
 ```
-man task-sync
+
+Priority: `H` `M` `L` (or none). Tags: `+tag` add, `-tag` remove.
+
+## Dates
+
+| Value | Meaning |
+|-------|---------|
+| `today` `tomorrow` `yesterday` | midnight of that day |
+| `monday` .. `sunday` | next one |
+| `eod` `eow` `eom` `eoy` | end of day/week/month/year |
+| `sow` `som` `soy` | start of week/month/year |
+| `now+3d` `due-2d` | relative (`d` `w` `mo` `y` `h` `min`) |
+| `2026-12-01` `2026-12-01T09:00` | ISO |
+
+Attributes: `due:` deadline, `scheduled:` earliest start, `wait:` hide until,
+`until:` auto-delete after.
+
+## Modify / complete
+
+```bash
+task 3 modify priority:M due:2026-11-15
+task 3 modify +urgent -someday             # tags
+task 3 modify Updated description          # bare words replace description
+task 3 modify due:                         # clear attribute
+task 3 annotate "link: https://..."        # add note
+task 3 edit                                # open in $EDITOR
+task 3 start / task 3 stop                 # mark active (+ACTIVE)
+task 3 done                                # complete
+task 3,5,7 done                            # several
+task 3-6 done                              # range
+task 3 delete
+task undo                                  # revert last change (not after sync)
+task 3 duplicate due:tomorrow
 ```
+
+## Filters
+
+```bash
+task project:work list                     # project and subprojects (work.api)
+task +urgent list
+task -work list                            # without tag
+task priority:H due.before:eow list
+task description.contains:report list
+task /regex/ list
+task "(project:work or +urgent)" list
+task status:completed end.after:today-7d all
+```
+
+Virtual tags (computed, no need to add): `+OVERDUE` `+DUE` (soon) `+TODAY` `+WEEK`
+`+ACTIVE` `+BLOCKED` `+BLOCKING` `+WAITING` `+READY` `+TAGGED` `+ANNOTATED`.
+
+## Reports
+
+| Command | Shows |
+|---------|-------|
+| `task` / `task next` | most urgent first (default) |
+| `task list` / `task ls` | pending, compact |
+| `task ready` | actionable now (not waiting/scheduled later/blocked) |
+| `task active` | started |
+| `task overdue` | past due |
+| `task waiting` | hidden by `wait:` |
+| `task blocked` / `task blocking` | dependency chains |
+| `task recurring` | recurring templates |
+| `task completed` | done tasks |
+| `task all` | everything incl. deleted |
+| `task 3 info` | every field + change history |
+| `task projects` / `task tags` | counts |
+| `task summary` | % complete per project |
+| `task calendar` | month view with due dates |
+| `task burndown.weekly` | progress chart |
+| `task history.monthly` | added/done/deleted per month |
+| `task reports` | list all reports |
+
+## Contexts
+
+Persistent filter, applied to every report and to new tasks.
+
+```bash
+task context define work project:work
+task context define home "-work"
+task context work
+task context none
+task context list
+```
+
+## Review routine
+
+- Daily: `task next`, start one thing (`task N start`), `task overdue`.
+- Weekly: `task summary`, `task waiting`, `task +BLOCKED`, re-prioritize, clear stale.
+
+## Misc
+
+```bash
+task show <setting>                        # current config value
+task config <name> <value>                 # write to .taskrc
+task _get 3.uuid                           # one field (scripting)
+task export project:work > work.json       # JSON export
+task import tasks.json
+task diagnostics                           # version, config, data paths
+```
+
+IDs change as tasks complete; use the UUID (`task _get 3.uuid`) in scripts.

@@ -1,7 +1,7 @@
 # Vim/Neovim IDE Setup
 
-Personal dev env: Neovim + Tmux + zsh dotfiles, one install script for **macOS** and
-**[omarchy](https://omarchy.org)** (Arch + Hyprland).
+Personal dev env: Neovim + Tmux + zsh dotfiles, one install script for **macOS**,
+**[omarchy](https://omarchy.org)** (Arch + Hyprland) and **Ubuntu** desktop.
 
 ## Features
 - Neovim IDE: LSP via Mason, blink.cmp completion, Claude Code integration
@@ -12,13 +12,14 @@ Personal dev env: Neovim + Tmux + zsh dotfiles, one install script for **macOS**
 ## Installation
 
 `./install.sh` detects the OS on its own: macOS from `uname`, omarchy from
-`~/.local/share/omarchy`. Anything else exits with an error. It runs three steps in order:
+`~/.local/share/omarchy`, Ubuntu from `/etc/os-release`. Anything else exits with an
+error. It runs three steps in order:
 
-| Step | macOS | omarchy |
-|---|---|---|
-| `packages` | installs Homebrew if missing, then `brew bundle` from [`Brewfile`](./install/macos/Brewfile) | `yay -S --needed` from [`packages.txt`](./install/omarchy/packages.txt) |
-| `link` | stows `dotfiles/common` + `dotfiles/macos` into `~` | stows `dotfiles/common` into `~` |
-| `setup` | mise runtimes, oh-my-zsh, git/gh config | same, and switches login shell from bash to zsh |
+| Step | macOS | omarchy | Ubuntu |
+|---|---|---|---|
+| `packages` | installs Homebrew if missing, then `brew bundle` from [`Brewfile`](./install/macos/Brewfile) | `yay -S --needed` from [`packages.txt`](./install/omarchy/packages.txt) | `apt-get` from [`apt.txt`](./install/ubuntu/apt.txt), Homebrew on Linux + [`Brewfile`](./install/ubuntu/Brewfile), ghostty (snap), FiraCode Nerd Font |
+| `link` | stows `dotfiles/common` + `dotfiles/macos` into `~` | stows `dotfiles/common` into `~` | same as omarchy |
+| `setup` | mise runtimes, oh-my-zsh, git/gh config, taskwarrior | same, and switches login shell from bash to zsh | same as omarchy |
 
 ### macOS
 
@@ -68,12 +69,49 @@ What changes on omarchy:
 - Hyprland, Waybar, Walker, Alacritty and omarchy themes are not touched.
 - Default shell changes from bash to zsh (oh-my-zsh).
 
+### Ubuntu
+
+Desktop, 25.04 or newer. Base packages come from apt; CLI tools from Homebrew on Linux
+(`/home/linuxbrew/.linuxbrew`), since apt ships an old neovim and taskwarrior 2.x.
+
+1. `sudo apt-get install -y git`
+2. Clone and run:
+   ```sh
+   git clone https://github.com/garbray/vim-config.git ~/workspace/personal/vim-config
+   cd ~/workspace/personal/vim-config
+   ./install.sh
+   ```
+   `apt`/`snap` ask for your sudo password, `chsh` for your user password.
+3. Log out and back in so zsh becomes the login shell.
+4. Open Ghostty or Kitty, then `gh auth login` and `nvim`.
+
+### GitHub accounts (personal + work)
+
+The folder picks the account: repos under `~/workspace/work/` commit, push and use `gh`
+as work; everything else as personal. Full guide:
+[docs/github-accounts.md](./docs/github-accounts.md).
+
+**Set up** (once per machine):
+
+1. `~/.ssh/config`: no `IdentityFile` under `Host github.com`.
+2. `./install.sh git` in a terminal: asks for work email and work GitHub user, logs in
+   to gh, sets up `~/.ssh/github_personal` and `~/.ssh/github_work` (links an existing
+   key or generates one, uploads it to the right account), then checks everything.
+3. Open a new terminal.
+
+**Test**: `./install.sh git --check`. Prints a `✓`/`✗` per item and what to fix.
+
+**Switch**: `cd` into the repo. Override `gh` in the current terminal with `ghw` (work),
+`ghp` (personal), `gha` (back to automatic).
+
 ### Running one step
 
 ```sh
-./install.sh packages    # after editing Brewfile / packages.txt
+./install.sh packages    # after editing Brewfile / packages.txt / apt.txt
 ./install.sh link        # after adding, moving or removing files in dotfiles/
-./install.sh setup       # runtimes, shell, git again
+./install.sh setup       # runtimes, shell, git, taskwarrior again
+./install.sh git         # only the git/accounts step (any setup step works: mise, shell, taskwarrior)
+./install.sh git --check # test the GitHub accounts
 ```
 
 Every step can be re-run safely. `link` needs `stow`, which the `packages` step installs.
@@ -84,8 +122,8 @@ Every step can be re-run safely. `link` needs `stow`, which the `packages` step 
 |---|---|
 | Change a config | edit it in the repo; `~` already points at it |
 | Add a config for both OSes | put it under `dotfiles/common/` with its path relative to `~`, then `./install.sh link` |
-| Add a config for one OS | same, under `dotfiles/macos/` or `dotfiles/omarchy/` (created when needed, picked up automatically) |
-| Add a package | add it to both `install/macos/Brewfile` and `install/omarchy/packages.txt`, then `./install.sh packages` |
+| Add a config for one OS | same, under `dotfiles/macos/`, `dotfiles/omarchy/` or `dotfiles/ubuntu/` (created when needed, picked up automatically) |
+| Add a package | add it to `install/macos/Brewfile`, `install/omarchy/packages.txt` and `install/ubuntu/Brewfile` (or `apt.txt`), then `./install.sh packages` |
 | Change a runtime version | edit `dotfiles/common/.tool-versions`, then `mise install` |
 | Machine-only secrets / env vars | `~/.localenv` (sourced by `.zshrc`, not in the repo) |
 
@@ -95,13 +133,14 @@ Every step can be re-run safely. `link` needs `stow`, which the `packages` step 
 install.sh                   # entry point: detects OS, runs steps
 install/
   lib.sh                     # logging, OS detection, backup-before-stow
-  common/  mise.sh shell.sh git.sh
+  common/  mise.sh shell.sh git.sh taskwarrior.sh
   macos/   packages.sh Brewfile
   omarchy/ packages.sh packages.txt
+  ubuntu/  packages.sh apt.txt Brewfile
 dotfiles/                    # stow packages, each mirrors $HOME
   common/  .zshrc .tmux.conf .tool-versions
-           .config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior}
-           .local/bin/tmuxSelector
+           .config/{nvim,zsh,tmux,lazygit,ghostty,kitty,task-warrior,git-accounts}
+           .local/bin/{tmuxSelector,task-sync}
   macos/   .config/{aerospace,Karabiner}
 docs/  cursor/               # notes
 ```
@@ -125,12 +164,13 @@ dotfiles/common/.config/nvim/
         ├── colorscheme.lua  # rose-pine + transparency
         ├── completion.lua   # blink.cmp
         ├── dap.lua          # nvim-dap, adapters, UI
-        ├── editor.lua       # flash, surround, autopairs, sleuth, undotree, todo-comments
+        ├── editor.lua       # flash, surround, autopairs, sleuth, undotree, todo-comments, persistence
         ├── format.lua       # conform.nvim
         ├── git.lua          # gitsigns, fugitive
         ├── lang.lua         # prisma, render-markdown
+        ├── lint.lua         # nvim-lint (markdownlint)
         ├── lsp.lua          # Mason, lspconfig, trouble, goto-preview
-        ├── navigation.lua   # harpoon
+        ├── navigation.lua   # oil, harpoon
         ├── personal.lua     # simple-term
         ├── treesitter.lua   # nvim-treesitter (main branch) + autotag
         └── ui.lua           # lualine, snacks, noice, which-key, pickers
@@ -141,6 +181,7 @@ to list everything; `<leader>?` shows buffer-local maps.
 
 | Keys | |
 |---|---|
+| `-` / `<leader>pv` | file explorer (oil) — see [Oil](#oil-file-explorer) |
 | `<leader>pf` / `<C-p>` / `<leader>ps` | find files / git files / grep prompt |
 | `<leader>S…` | full picker namespace — `Sf` files, `Sg` live grep, `Sb` buffers, `Sk` keymaps, `Sq` quickfix, `Sp` all pickers |
 | `<leader>t1`-`t4`, `<leader>ST` | terminals 1-4 (per project), pick an open terminal |
@@ -158,10 +199,54 @@ Pickers, notifications, dashboard, terminal and scratch buffers all come from
 LSP servers, formatters, linters and debug adapters are installed by Mason.
 Add a server to `lua/garbray/servers.lua` and it is both installed and enabled.
 
+### Oil (file explorer)
+
+[oil.nvim](https://github.com/stevearc/oil.nvim) replaces netrw. A directory is a normal
+buffer with one line per file: you change the filesystem by editing text, then `:w`.
+
+Open it with `-` (directory of the current file; press again to go up), `<leader>pv`, or
+`nvim .` / `:e some/dir`.
+
+| Do this | In oil | Was (netrw) |
+|---|---|---|
+| open file / enter dir | `<CR>` | `<CR>` |
+| go up a directory | `-` | `-` |
+| new file | `o`, type `name.lua`, `:w` | `%` |
+| new directory | `o`, type `name/`, `:w` | `d` |
+| rename | edit the line (`cw`, `ciw`…), `:w` | `R` |
+| delete | `dd`, `:w` | `D` |
+| move | `dd` here, `p` in another oil buffer, `:w` | mark + `mm` |
+| copy | `yy` here, `p` in another oil buffer, `:w` | mark + `mc` |
+| refresh | `gR` | `<C-l>` |
+
+Nothing touches the disk until `:w`; oil then lists the changes and asks to confirm. Undo
+(`u`) or close the buffer to throw edits away. Batch work is plain vim: `:%s/foo/bar/`
+renames many files, `dj` deletes two, a macro can rename a whole directory. Nested paths
+work too: `o` then `a/b/c.lua` creates both directories and the file.
+
+Other keys inside oil (`g?` lists them all):
+
+| Keys | |
+|---|---|
+| `<C-s>` / `<C-x>` / `<C-t>` | open in vertical split / horizontal split / tab |
+| `<C-p>` | preview file under cursor |
+| `_` | jump to cwd |
+| `` ` `` | `:cd` into the directory |
+| `gs` | change sort |
+| `g.` | toggle hidden files (shown by default) |
+| `gx` | open with the system app |
+| `<C-c>` | close oil |
+| `<leader>AS` | add file to Claude Code |
+
+`<C-h>` and `<C-l>` stay on harpoon inside oil, so horizontal split is `<C-x>` and refresh is
+`gR` instead of oil's defaults. Deleted files are removed for good, not sent to the trash.
+
 ## Dependencies
 
 macOS: [`install/macos/Brewfile`](./install/macos/Brewfile). omarchy:
-[`install/omarchy/packages.txt`](./install/omarchy/packages.txt). Highlights:
+[`install/omarchy/packages.txt`](./install/omarchy/packages.txt). Ubuntu:
+[`install/ubuntu/apt.txt`](./install/ubuntu/apt.txt) +
+[`install/ubuntu/Brewfile`](./install/ubuntu/Brewfile). Highlights:
 
 - **Editor**: neovim, tree-sitter-cli
 - **Languages/runtimes**: python, go, lua, luarocks, node, deno, bun, pnpm, openjdk, uv
@@ -197,5 +282,7 @@ Host alias
 - [CLAUDE.md](./CLAUDE.md) — repo structure and commands
 - [docs/commands.md](./docs/commands.md) — command notes
 - [docs/mise.md](./docs/mise.md) — runtime version management
-- [docs/task-warrior.md](./docs/task-warrior.md) — taskwarrior setup
+- [docs/task-warrior.md](./docs/task-warrior.md) — taskwarrior cheat sheet
+- [docs/task-warrior-sync.md](./docs/task-warrior-sync.md) — taskwarrior LAN sync server
+- [docs/github-accounts.md](./docs/github-accounts.md) — personal/work GitHub accounts
 - [cursor/config.md](./cursor/config.md) — VSCode/Cursor keybindings

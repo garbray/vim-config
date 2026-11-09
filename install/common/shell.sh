@@ -8,7 +8,7 @@ if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
     KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
 
-# omarchy defaults to bash
+# omarchy and ubuntu default to bash
 zsh_path="$(command -v zsh)"
 if [[ "$(basename "${SHELL:-}")" != zsh ]]; then
     log "setting login shell to $zsh_path"

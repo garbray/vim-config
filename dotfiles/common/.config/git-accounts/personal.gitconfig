@@ -1,0 +1,11 @@
+# Default GitHub identity (personal). Included from ~/.gitconfig by
+# install/common/git.sh; see docs/github-accounts.md.
+[user]
+	name = bryan garzon
+	email = bryangarzonb@gmail.com
+[core]
+	# pin the key so ssh-agent can't offer the work one first
+	sshCommand = ssh -i ~/.ssh/github_personal -o IdentitiesOnly=yes
+# own repos over ssh, so https remotes don't depend on keychain credentials
+[url "git@github.com:garbray/"]
+	insteadOf = https://github.com/garbray/

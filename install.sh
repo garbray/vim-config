@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# Usage: ./install.sh [all|packages|link|setup]
+# Usage: ./install.sh [all|packages|link|setup|<step> [args]]
 #
-#   packages  OS packages (Homebrew on macOS, pacman/yay on omarchy)
+#   packages  OS packages (Homebrew on macOS, yay on omarchy, apt + Homebrew on ubuntu)
 #   link      stow dotfiles/common + dotfiles/<os> into $HOME
-#   setup     runtimes (mise), shell (oh-my-zsh), git
-#   all       the three above, in that order (default)
+#   setup     every step below: mise, shell, git, taskwarrior
+#   all       packages, link, setup, in that order (default)
+#   <step>    one setup step, e.g. `git` or `git --check` (install/common/<step>.sh)
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -12,7 +13,7 @@ export REPO
 source "$REPO/install/lib.sh"
 
 OS="$(detect_os)"
-[[ "$OS" == unsupported ]] && { warn "only macOS and omarchy are supported"; exit 1; }
+[[ "$OS" == unsupported ]] && { warn "only macOS, omarchy and ubuntu are supported"; exit 1; }
 log "detected $OS"
 
 packages() {
@@ -34,7 +35,7 @@ link() {
 }
 
 setup() {
-    for step in mise shell git; do
+    for step in mise shell git taskwarrior; do
         bash "$REPO/install/common/$step.sh"
     done
 }
@@ -44,6 +45,7 @@ case "${1:-all}" in
     link) link ;;
     setup) setup ;;
     all) packages && link && setup ;;
+    mise | shell | git | taskwarrior) bash "$REPO/install/common/$1.sh" "${@:2}" ;;
     *) sed -n '2,8p' "$0"; exit 1 ;;
 esac
 

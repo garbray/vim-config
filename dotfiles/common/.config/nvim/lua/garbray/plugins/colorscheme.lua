@@ -15,7 +15,6 @@ return {
 				end
 				vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#21262d" })
 				vim.api.nvim_set_hl(0, "LineNr", { fg = "#d35e5e" })
-				vim.api.nvim_set_hl(0, "netrwDir", { fg = "#5eacd3" })
 				vim.api.nvim_set_hl(0, "qfFileName", { fg = "#aed75f" })
 
 				-- Floating terminals keep a solid background: with Normal and

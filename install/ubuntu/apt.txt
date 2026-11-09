@@ -1,0 +1,20 @@
+# Ubuntu base packages, installed with `apt-get install`.
+# Everything else comes from Homebrew (install/ubuntu/Brewfile): apt ships old
+# neovim and taskwarrior 2.x, which can't use the sync server.
+
+# Homebrew requirements
+build-essential
+procps
+curl
+file
+git
+
+# Shell (zsh from apt so it's in /etc/shells for chsh)
+zsh
+stow
+
+# Desktop
+fontconfig
+kitty
+wl-clipboard
+xz-utils

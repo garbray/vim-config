@@ -42,15 +42,4 @@ vim.opt.guifont = "FiraCode Nerd Font:h11"
 vim.opt.showmode = false
 vim.opt.conceallevel = 1
 
--- netrw
--- Netrw banner
--- 0 : Disable banner
--- 1 : Enable banner
-vim.g.netrw_banner = 0
--- didn't like the tree view :(
--- vim.g.netrw_liststyle = 3
--- Patterns for hiding files, e.g. node_modules
--- NOTE: this works by reading '.gitignore' file
--- vim.g.netrw_list_hide = vim.fn["netrw_gitignore#Hide"]()
-
 -- vim.opt.encoding = "uft-8"

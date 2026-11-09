@@ -10,6 +10,8 @@ return {
 			lint.linters_by_ft = {
 				markdown = { "markdownlint" },
 			}
+			-- no line-length rule: prose and tables run past 80 columns
+			lint.linters.markdownlint.args = { "--stdin", "--disable", "MD013" }
 
 			vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
 				group = vim.api.nvim_create_augroup("garbray-lint", { clear = true }),

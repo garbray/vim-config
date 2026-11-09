@@ -1,0 +1,59 @@
+# Homebrew on Linux, for Ubuntu. CLI tools only: casks don't work on Linux,
+# terminals and fonts are handled in install/ubuntu/packages.sh.
+# Keep in sync with install/macos/Brewfile.
+
+# Taps
+tap "oven-sh/bun"
+
+# Shell
+brew "fzf"
+brew "htop"
+brew "lazygit"
+brew "peco"
+brew "ranger"
+brew "ripgrep"
+brew "speedtest-cli"
+brew "tmux"
+brew "z"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
+# Dev tools
+brew "act"
+brew "ansible"
+brew "bun"
+brew "csvlens"
+brew "deno"
+brew "efm-langserver"
+brew "eza"
+brew "go"
+brew "lua"
+brew "luarocks"
+brew "ninja"
+brew "node"
+brew "openjdk"
+brew "pnpm"
+brew "python"
+brew "tree-sitter"
+brew "tree-sitter-cli"
+brew "uv"
+
+# Neovim
+brew "neovim"
+
+# Git
+brew "gh"
+
+# Utils
+brew "curlie"
+brew "ffmpeg"
+brew "imagemagick"
+brew "jq"
+brew "just"
+brew "task"
+brew "taskwarrior-tui"
+brew "tidy-html5"
+brew "trash-cli"
+brew "webp"
+brew "xh"
+brew "yt-dlp"

@@ -1,12 +1,11 @@
+# Homebrew on Linux (ubuntu); on macOS ~/.zprofile does this
+[ -x /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 # tmuxSelector and mise live here
 export PATH="$HOME/.local/bin:$PATH"
 
 # deactivate magic functions
 export DISABLE_MAGIC_FUNCTIONS=true
-
-# Enable colors and change prompt:
-autoload -U colors && colors
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -25,8 +24,6 @@ bindkey '^e' edit-command-line
 # HYPHEN_INSENSITIVE="true"
 bindkey -s '^k' 'clear\n'
 
-autoload autosuggest-excute; zle -N autosuggest-excute
-bindkey '^\' autosuggest-excute
 # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#999,bg=cyan,bold,underline"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#999"
 
@@ -43,11 +40,7 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='nvim'
 
-# basic auto/tab complete
-# autoload -U componit
-# zstyle ':completion:*' menu select
-# zmodload zsh/complist
-# compinit
+# compinit runs in oh-my-zsh; include dotfiles in completion
 _comp_options+=(globdots)
 
 # =============== terminal colors ========================
@@ -68,18 +61,15 @@ export BAT_THEME="gruvbox"
 
 # =============== shell plugins ========================
 
-# first match wins: homebrew (macOS), then arch (omarchy)
+# first match wins: homebrew (macOS), linuxbrew (ubuntu), then arch (omarchy)
 for f in \
   /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
+  /home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
   /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh; do
   [ -f "$f" ] && source "$f" && break
 done
-for f in \
-  /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
-  /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh; do
-  [ -f "$f" ] && source "$f" && break
-done
-for f in /opt/homebrew/etc/profile.d/z.sh /usr/share/z/z.sh; do
+bindkey '^\' autosuggest-execute
+for f in /opt/homebrew/etc/profile.d/z.sh /home/linuxbrew/.linuxbrew/etc/profile.d/z.sh /usr/share/z/z.sh; do
   [ -f "$f" ] && source "$f" && break
 done
 command -v fzf >/dev/null && source <(fzf --zsh)
@@ -127,7 +117,17 @@ alias lg="lazygit"
 
 # Load localenv variables
 [ -f "$HOME/.localenv" ] && source "$HOME/.localenv"
+# gh account per directory (needs GH_WORK_USER from .localenv)
+[ -f "$HOME/.config/zsh/ghAccount" ] && source "$HOME/.config/zsh/ghAccount"
 
 # Google Cloud SDK
 if [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"; fi
 if [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"; fi
+
+# must be sourced last so it wraps every widget defined above
+for f in \
+  /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh; do
+  [ -f "$f" ] && source "$f" && break
+done

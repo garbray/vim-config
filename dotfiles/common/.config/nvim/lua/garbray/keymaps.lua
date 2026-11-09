@@ -3,8 +3,6 @@
 
 local map = vim.keymap.set
 
-map("n", "<leader>pv", vim.cmd.Ex, { desc = "Open netrw (file explorer)" })
-
 map("i", "jk", "<ESC>", { noremap = true, silent = true, desc = "Escape insert mode" })
 
 -- window navigation

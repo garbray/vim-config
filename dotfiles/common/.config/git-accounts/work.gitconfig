@@ -1,0 +1,9 @@
+# Work GitHub identity, for every repo under ~/workspace/work/. Included after
+# personal.gitconfig, so it overrides it. The work email is machine-local (not in
+# this public repo): ~/.config/git/work.gitconfig, created by install/common/git.sh.
+[core]
+	sshCommand = ssh -i ~/.ssh/github_work -o IdentitiesOnly=yes
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[include]
+	path = ~/.config/git/work.gitconfig

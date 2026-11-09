@@ -1,0 +1,41 @@
+# Per-directory GitHub CLI account: exports GH_TOKEN for the work account under
+# ~/workspace/work/ and the personal one elsewhere. Per shell, so terminals
+# don't fight over `gh auth switch`. See docs/github-accounts.md.
+#
+# GH_WORK_USER comes from ~/.localenv (not in the repo); unset = always personal.
+
+: "${GH_PERSONAL_USER:=garbray}"
+typeset -gA _gh_tokens
+
+_gh_use() {
+  local user=$1
+  [[ -n $user && $user == "$_gh_user" ]] && return
+  [[ -z ${_gh_tokens[$user]} ]] && _gh_tokens[$user]=$(gh auth token --user "$user" 2>/dev/null)
+  if [[ -n ${_gh_tokens[$user]} ]]; then
+    export GH_TOKEN=${_gh_tokens[$user]}
+    _gh_user=$user
+  else
+    unset GH_TOKEN _gh_user
+    print -u2 "ghAccount: no gh login for '$user' (run: gh auth login)"
+  fi
+}
+
+_gh_account_hook() {
+  [[ -n $_gh_pinned ]] && return
+  if [[ -n $GH_WORK_USER && $PWD/ == $HOME/workspace/work/* ]]; then
+    _gh_use "$GH_WORK_USER"
+  else
+    _gh_use "$GH_PERSONAL_USER"
+  fi
+}
+
+# manual override for this shell; `gha` goes back to automatic
+ghw() { _gh_pinned=1; _gh_use "$GH_WORK_USER"; gh api user -q .login; }
+ghp() { _gh_pinned=1; _gh_use "$GH_PERSONAL_USER"; gh api user -q .login; }
+gha() { unset _gh_pinned; _gh_account_hook; gh api user -q .login; }
+
+if command -v gh >/dev/null; then
+  autoload -Uz add-zsh-hook
+  add-zsh-hook chpwd _gh_account_hook
+  _gh_account_hook
+fi

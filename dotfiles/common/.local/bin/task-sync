@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# task-sync — run `task sync` if this machine has a sync server configured.
+# Called from cron (see install/common/taskwarrior.sh); safe to run by hand.
+set -euo pipefail
+
+export PATH="/opt/homebrew/bin:/home/linuxbrew/.linuxbrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+export TASKRC="${TASKRC:-$HOME/.config/task-warrior/.taskrc}"
+
+grep -q '^sync\.server\.url=' "$HOME/.local/share/task/sync.rc" 2>/dev/null || exit 0
+exec task sync
