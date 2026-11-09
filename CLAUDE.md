@@ -40,6 +40,8 @@ Conventions:
 ./install.sh                 # everything
 ./install.sh link            # restow dotfiles after adding/moving files
 ./install.sh packages        # sync packages after editing Brewfile / packages.txt
+./install.sh git             # one setup step (mise|shell|git|taskwarrior)
+./install.sh git --check     # test personal/work GitHub accounts
 tmuxSelector                 # tmux session selector
 mise install                 # sync runtimes after editing .tool-versions
 ```

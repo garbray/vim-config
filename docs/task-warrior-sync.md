@@ -58,7 +58,7 @@ Each client also has a full copy, so losing the server only loses unsynced histo
 
 ## 2. Client config (every machine)
 
-`./install.sh setup` (step `install/common/taskwarrior.sh`) does the local part:
+`./install.sh setup` (or only this step: `./install.sh taskwarrior`) does the local part:
 
 - creates `~/.local/share/task/` (task data, outside the repo)
 - creates `~/.local/share/task/sync.rc` (mode 600) with commented placeholders;

@@ -87,28 +87,31 @@ Desktop, 25.04 or newer. Base packages come from apt; CLI tools from Homebrew on
 
 ### GitHub accounts (personal + work)
 
-Git author, ssh key and `gh` account follow the directory: work under
-`~/workspace/work/`, personal everywhere else. Details:
+The folder picks the account: repos under `~/workspace/work/` commit, push and use `gh`
+as work; everything else as personal. Full guide:
 [docs/github-accounts.md](./docs/github-accounts.md).
 
-1. Make one ssh key per account and add each public key to its GitHub account.
-2. In `~/.ssh/config`, set `Host github.com` with `IdentitiesOnly yes` and no `IdentityFile`.
-3. Run `./install.sh setup` in a terminal. It prompts for the work email, work ssh key and
-   work GitHub username, logs in to any gh account missing (browser), removes the old
-   setup and warns about anything still wrong. Re-run it until it prints no warnings.
+**Set up** (once per machine):
+
+1. One ssh key per account, each added to its GitHub account.
+2. `~/.ssh/config`: `Host github.com` with `IdentitiesOnly yes` and **no** `IdentityFile`.
+3. `./install.sh git` in a terminal: asks for work email, work key, work GitHub user,
+   logs in to gh, then checks everything.
 4. Open a new terminal.
-5. Clone work repos into `~/workspace/work/`. Check from inside a repo:
-   ```sh
-   git config user.email && gh api user -q .login
-   ```
-6. One-off override in the current shell: `ghw` (work), `ghp` (personal), `gha` (back to automatic).
+
+**Test**: `./install.sh git --check`. Prints a `✓`/`✗` per item and what to fix.
+
+**Switch**: `cd` into the repo. Override `gh` in the current terminal with `ghw` (work),
+`ghp` (personal), `gha` (back to automatic).
 
 ### Running one step
 
 ```sh
 ./install.sh packages    # after editing Brewfile / packages.txt / apt.txt
 ./install.sh link        # after adding, moving or removing files in dotfiles/
-./install.sh setup       # runtimes, shell, git again
+./install.sh setup       # runtimes, shell, git, taskwarrior again
+./install.sh git         # only the git/accounts step (any setup step works: mise, shell, taskwarrior)
+./install.sh git --check # test the GitHub accounts
 ```
 
 Every step can be re-run safely. `link` needs `stow`, which the `packages` step installs.
